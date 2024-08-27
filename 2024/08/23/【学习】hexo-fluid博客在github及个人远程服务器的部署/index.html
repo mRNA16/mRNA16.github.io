@@ -41,8 +41,12 @@
 <meta property="og:image" content="http://example.com/img/%E3%80%90%E5%AD%A6%E4%B9%A0%E3%80%91hexo-fluid%E5%8D%9A%E5%AE%A2%E5%9C%A8github%E5%8F%8A%E4%B8%AA%E4%BA%BA%E8%BF%9C%E7%A8%8B%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E9%83%A8%E7%BD%B2/p13.png">
 <meta property="og:image" content="http://example.com/img/%E3%80%90%E5%AD%A6%E4%B9%A0%E3%80%91hexo-fluid%E5%8D%9A%E5%AE%A2%E5%9C%A8github%E5%8F%8A%E4%B8%AA%E4%BA%BA%E8%BF%9C%E7%A8%8B%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E9%83%A8%E7%BD%B2/p14.png">
 <meta property="og:image" content="http://example.com/img/%E3%80%90%E5%AD%A6%E4%B9%A0%E3%80%91hexo-fluid%E5%8D%9A%E5%AE%A2%E5%9C%A8github%E5%8F%8A%E4%B8%AA%E4%BA%BA%E8%BF%9C%E7%A8%8B%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E9%83%A8%E7%BD%B2/p15.png">
+<meta property="og:image" content="http://example.com/img/%E3%80%90%E5%AD%A6%E4%B9%A0%E3%80%91hexo-fluid%E5%8D%9A%E5%AE%A2%E5%9C%A8github%E5%8F%8A%E4%B8%AA%E4%BA%BA%E8%BF%9C%E7%A8%8B%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E9%83%A8%E7%BD%B2/p16.png">
+<meta property="og:image" content="http://example.com/img/%E3%80%90%E5%AD%A6%E4%B9%A0%E3%80%91hexo-fluid%E5%8D%9A%E5%AE%A2%E5%9C%A8github%E5%8F%8A%E4%B8%AA%E4%BA%BA%E8%BF%9C%E7%A8%8B%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E9%83%A8%E7%BD%B2/p17.png">
+<meta property="og:image" content="http://example.com/img/%E3%80%90%E5%AD%A6%E4%B9%A0%E3%80%91hexo-fluid%E5%8D%9A%E5%AE%A2%E5%9C%A8github%E5%8F%8A%E4%B8%AA%E4%BA%BA%E8%BF%9C%E7%A8%8B%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E9%83%A8%E7%BD%B2/p11.png">
+<meta property="og:image" content="http://example.com/img/%E3%80%90%E5%AD%A6%E4%B9%A0%E3%80%91hexo-fluid%E5%8D%9A%E5%AE%A2%E5%9C%A8github%E5%8F%8A%E4%B8%AA%E4%BA%BA%E8%BF%9C%E7%A8%8B%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E9%83%A8%E7%BD%B2/p18.png">
 <meta property="article:published_time" content="2024-08-23T11:45:01.000Z">
-<meta property="article:modified_time" content="2024-08-27T07:10:36.918Z">
+<meta property="article:modified_time" content="2024-08-27T09:44:27.539Z">
 <meta property="article:author" content="mRNA">
 <meta property="article:tag" content="Hexo">
 <meta property="article:tag" content="git">
@@ -277,7 +281,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.5k 字
+          4.9k 字
         
       </span>
     
@@ -288,7 +292,7 @@
         
         
         
-          29 分钟
+          41 分钟
         
       </span>
     
@@ -461,8 +465,16 @@
             <p>我购买的是阿里云ECS服务器最基础的2核2G版本，装载的Linux发行版系统镜像为<code>Ubuntu 22.04</code>版本，以下教程适合于同样搭载<code>Ubuntu</code>或<code>Debian</code>的服务器，因为Ubuntu和基于Ubuntu的Debian搭载的软件包管理工具为<code>apt</code>，而CentOS等其他发行版本搭载的软件包管理工具为<code>yum</code>。所以安装Ubuntu&#x2F;Debian的uu在查阅其他教程时会发现无法执行<code>sudo yum install -y nginx</code>命令的情况，不建议因此在Ubuntu上安装yum，这就像在安卓手机上安装苹果App Store，将命令改为<code>sudo apt-get install -y nginx</code>即可。在服务器上创建实例时，添加安全组时，由于我们需要通过SSH方式与本地连接，因此需要勾选<code>SSH(22)</code>端口，同时为了保证使用HTTP和HTTPS协议能够访问服务器，我们需要勾选<code>HTTP(80)</code>和<code>HTTPS(443)</code>端口，其余端口如<code>MySQL(3306)</code>,<code>Redis(6379)</code>等也可以勾选。</p>
           </div>
 
-<h1 id="云服务器"><a href="#云服务器" class="headerlink" title="云服务器"></a>云服务器</h1><p>我们的整体思路是，在服务器上配置Git，并且将本地与服务器上的远程仓库相连接，通过将本地静态文件以Git形式推送到远程仓库，并通过钩子自动将网页文件检出到工作目录下，通过Nginx反向代理将我们的静态网页文件呈现在Web界面上。下面将从服务器端<code>Git配置</code>，<code>Nginx代理配置</code>等几个方面介绍。</p>
-<h2 id="Git配置"><a href="#Git配置" class="headerlink" title="Git配置"></a>Git配置</h2><h2 id="安装Git"><a href="#安装Git" class="headerlink" title="安装Git"></a>安装Git</h2><p>首先我们切换到超级用户<code>root</code>：</p>
+<h1 id="云服务器配置"><a href="#云服务器配置" class="headerlink" title="云服务器配置"></a>云服务器配置</h1><p>我们的整体思路是，在服务器上配置Git，并且将本地与服务器上的远程仓库相连接，通过将本地静态文件以Git形式推送到远程仓库，并通过钩子自动将网页文件检出到工作目录下，通过Nginx反向代理将我们的静态网页文件呈现在Web界面上。</p>
+<h2 id="创建博客根目录"><a href="#创建博客根目录" class="headerlink" title="创建博客根目录"></a>创建博客根目录</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd /home<br>mkdir www<br>cd /www<br>mkdir blog<br></code></pre></td></tr></table></figure>
+
+<h2 id="Nodejs及Nginx环境安装"><a href="#Nodejs及Nginx环境安装" class="headerlink" title="Nodejs及Nginx环境安装"></a>Nodejs及Nginx环境安装</h2><p>安装Nodejs及Nginx：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo apt-get install nodejs<br>sudo apt-get install nginx<br></code></pre></td></tr></table></figure>
+
+<p>安装后检查版本号:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">node -v<br>nginx -v<br></code></pre></td></tr></table></figure>
+
+<h2 id="Git配置"><a href="#Git配置" class="headerlink" title="Git配置"></a>Git配置</h2><h3 id="安装Git"><a href="#安装Git" class="headerlink" title="安装Git"></a>安装Git</h3><p>首先我们切换到超级用户<code>root</code>：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo su root<br></code></pre></td></tr></table></figure>
 
 <p>安装Git：</p>
@@ -472,7 +484,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git --version<br></code></pre></td></tr></table></figure>
 
 <p><img src="/img/%E3%80%90%E5%AD%A6%E4%B9%A0%E3%80%91hexo-fluid%E5%8D%9A%E5%AE%A2%E5%9C%A8github%E5%8F%8A%E4%B8%AA%E4%BA%BA%E8%BF%9C%E7%A8%8B%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E9%83%A8%E7%BD%B2/p12.png" srcset="/img/loading.gif" lazyload alt="Git安装成功"></p>
-<h2 id="配置Git账户"><a href="#配置Git账户" class="headerlink" title="配置Git账户"></a>配置Git账户</h2><h3 id="添加账户"><a href="#添加账户" class="headerlink" title="添加账户"></a>添加账户</h3><p>为服务器添加名为<code>git</code>的用户：</p>
+<h3 id="添加账户"><a href="#添加账户" class="headerlink" title="添加账户"></a>添加账户</h3><p>为服务器添加名为<code>git</code>的用户：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">adduser git<br></code></pre></td></tr></table></figure>
 
 <h3 id="修改权限"><a href="#修改权限" class="headerlink" title="修改权限"></a>修改权限</h3><p>添加后修改用户权限，使git用户能通过<code>sudo</code>以root用户身份来执行命令。为了修改配置用户权限的文件<code>/etc/sudoers</code><br>输入以下命令更改权限：</p>
@@ -520,7 +532,83 @@
             <p><code>-v</code>意为以详细模式（verbose mode）打开，可省略</p>
           </div>
 <p>出现以下提示，即连接成功：<br><img src="/img/%E3%80%90%E5%AD%A6%E4%B9%A0%E3%80%91hexo-fluid%E5%8D%9A%E5%AE%A2%E5%9C%A8github%E5%8F%8A%E4%B8%AA%E4%BA%BA%E8%BF%9C%E7%A8%8B%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E9%83%A8%E7%BD%B2/p15.png" srcset="/img/loading.gif" lazyload alt="远程连接成功"></p>
+<h2 id="仓库配置"><a href="#仓库配置" class="headerlink" title="仓库配置"></a>仓库配置</h2><p>首先切换至git账户：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">su git<br></code></pre></td></tr></table></figure>
 
+<p>创建仓库目录和钩子文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd ~ # 进入主目录<br>git init --bare blog.git # 初始化裸仓库blog.git<br>chown -R git:git blog.git # 递归地更改所有者为git，所属组为git<br>vim ~/blog.git/hooks/post-receive # 创建并编辑钩子<br></code></pre></td></tr></table></figure>
+
+<div class="note note-info">
+            <p>钩子（hooks）可理解为在进行某种Git操作时自动触发的脚本，我们通过钩子来使仓库分支发生变更时自动将文件检出至工作目录下，实现自动更新的目的。</p>
+          </div>
+
+<p>编辑post-receive内容为：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/bash</span><br>git --work-tree=/home/www/blog --git-dir=/home/git/blog.git checkout -f<br></code></pre></td></tr></table></figure>
+
+<div class="note note-info">
+            <p>脚本中，工作目录设置为<code>/home/www/blog</code>，仓库目录设置为<code>/home/git/blog.git</code>，<code>checkout</code>为检出操作，将仓库中文件检出至工作目录，<code>-f</code>意为强制执行。</p>
+          </div>
+<p>赋予钩子可执行权限和<code>/home/www/blog</code>目录可写权限：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo chmod +x ~/blog.git/hooks/post-receive<br>sudo chmod +x go+w /home/www/blog<br></code></pre></td></tr></table></figure>
+
+<p>为了使我们的钩子脚本能够正常执行，我们还需要配置仓库的<code>dentCurrentBranch</code>选项：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">vim /home/git/blog.git/config<br></code></pre></td></tr></table></figure>
+
+<p>打开文件后在文件末尾添加：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[receive]</span><br>	<span class="hljs-attr">denyCurrentBranch</span> = ignore<br></code></pre></td></tr></table></figure>
+
+<p><img src="/img/%E3%80%90%E5%AD%A6%E4%B9%A0%E3%80%91hexo-fluid%E5%8D%9A%E5%AE%A2%E5%9C%A8github%E5%8F%8A%E4%B8%AA%E4%BA%BA%E8%BF%9C%E7%A8%8B%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E9%83%A8%E7%BD%B2/p16.png" srcset="/img/loading.gif" lazyload alt="接收推送"></p>
+<div class="note note-danger">
+            <p>在 Git 的早期版本中，默认的行为是禁止向当前检出的分支推送新提交，以防止“非快进式”(non-fast-forward)的推送覆盖掉远程仓库中其他人可能正在工作的内容。这是因为如果远程仓库的分支被意外覆盖，那么正在该分支上工作的其他用户可能会丢失他们的工作。所以我们需要关闭<code>denyCurrentBranch</code>，我们的钩子脚本才能正常执行。</p>
+          </div>
+<div class="note note-info">
+            <p>检查钩子脚本是否正常执行，可以在<code>/home/git(或其他位置)</code>新建一个<code>check.txt</code>文本文件(<code>vim /home/git/check.txt</code>)，在<code>post-receive</code>钩子中添加一行<code>echo &quot;okk&quot; &gt;&gt; /home/git/check.txt</code>，检查文本文件内容判断钩子文件是否执行。</p>
+          </div>
+
+<h2 id="Nginx代理配置"><a href="#Nginx代理配置" class="headerlink" title="Nginx代理配置"></a>Nginx代理配置</h2><h3 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h3><p>首先我们先来了解Nginx目录下相关目录和文件：<br><img src="/img/%E3%80%90%E5%AD%A6%E4%B9%A0%E3%80%91hexo-fluid%E5%8D%9A%E5%AE%A2%E5%9C%A8github%E5%8F%8A%E4%B8%AA%E4%BA%BA%E8%BF%9C%E7%A8%8B%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E9%83%A8%E7%BD%B2/p17.png" srcset="/img/loading.gif" lazyload alt="Nginx目录"></p>
+<ul>
+<li><code>nginx.conf</code>为配置文件，其内容中<ul>
+<li><code>include /etc/nginx/conf.d/*.conf;</code> 意为包含&#x2F;etc&#x2F;nginx&#x2F;conf.d目录下所有以.conf为后缀的文件。</li>
+<li><code>include /etc/nginx/sites-enabled/*;</code>意为包含&#x2F;etc&#x2F;nginx&#x2F;sites-enabled目录下所有文件。</li>
+</ul>
+</li>
+<li><code>sites-available</code>为监听的所有请求。</li>
+<li><code>sites-enabled</code>为允许访问的所有请求，其内容为指向<code>sites-available</code>中文件的软链接。<div class="note note-danger">
+            <p>注意：可自行阅读<code>sites-available</code>中的<code>default</code>默认文件，之后删除<code>sites-available</code>中的<code>default</code>文件和<code>sites-enabled</code>中对应的<code>default</code>链接。因为<code>default</code>中默认的根目录为<code>var/www/index.html</code>，并且<code>default</code>链接是被<code>nginx.conf</code>include在内的，如果不删除，访问服务器公网地址仅能看见Nginx默认的欢迎页面。</p>
+          </div></li>
+</ul>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>我们来配置访问请求对应服务，下面所举的例子均以我的域名<code>mrna16.top</code>为例：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">vim /etc/nginx/sites-available/mrna16<br></code></pre></td></tr></table></figure>
+
+<p>编辑内容为：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-section">server</span> &#123; <br>        <span class="hljs-attribute">listen</span> <span class="hljs-number">80</span>; <br>        <span class="hljs-attribute">server_name</span> mrna16.top; <br>        <span class="hljs-attribute">root</span> /home/www/blog;<br>         <span class="hljs-attribute">index</span> index.html; <br>         <span class="hljs-section">location</span> / &#123; <br>         <span class="hljs-attribute">try_files</span> <span class="hljs-variable">$uri</span> <span class="hljs-variable">$uri</span>/ =<span class="hljs-number">404</span>; <br>         &#125; <br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>为了能使<code>www.mrna16.top</code>也能访问：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">vim /etc/nginx/sites-available/wwwmrna16<br></code></pre></td></tr></table></figure>
+
+<p>编辑内容为：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-section">server</span> &#123; <br>        <span class="hljs-attribute">listen</span> <span class="hljs-number">80</span>; <br>        <span class="hljs-attribute">server_name</span> www.mrna16.top; <br>        <span class="hljs-attribute">root</span> /home/www/blog;<br>         <span class="hljs-attribute">index</span> index.html; <br>         <span class="hljs-section">location</span> / &#123; <br>         <span class="hljs-attribute">try_files</span> <span class="hljs-variable">$uri</span> <span class="hljs-variable">$uri</span>/ =<span class="hljs-number">404</span>; <br>         &#125; <br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>完成编辑后我们通过以下命令在<code>sites-enabled</code>目录中产生软链接：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo ln -s /etc/nginx/sites-available/mrna /etc/nginx/sites-enabled/mrna  <br>sudo ln -s /etc/nginx/sites-available/wwwmrna /etc/nginx/sites-enabled/wwwmrna<br></code></pre></td></tr></table></figure>
+
+<div class="note note-info">
+            <p><code>-s</code>即为产生软链接&#x2F;符号链接（symbolic link）。我们的文件都在磁盘中放置，想要找到某一文件，我们需要知道它的索引，当索引条数为0时，文件将无法找到，内核将文件内容从磁盘上删除（多个文件名可以指向同一索引节点，类似链表）。硬链接就相当于链接到这里的索引节点，而软链接则相当于创建一个新的文件，作为索引的指针，记录索引的位置，当我们访问软链接时，获取到的是索引，系统通过索引再找到真正想要访问的文件。形象地说，我们的文件就像药店的药材，放在不同的抽屉里，硬链接相当于给抽屉贴上标签，标明什么药在抽屉里；软链接则相当于拿一张纸，专门来记录哪味药在哪个抽屉里。药换位置，标签换位置，但是纸上记下的信息没有改变。软硬链接各有特点。<br>硬链接：</p><ul><li>无法给目录创建硬链接</li><li>硬链接无法跨文件系统访问</li><li>文件位置移动时，硬链接仍然可以访问到</li><li>硬链接大小和文件大小相同<br>软链接：</li><li>可以给目录创建软链接</li><li>软连接可以跨文件系统甚至跨设备访问</li><li>文件位置移动，软连接无法访问</li><li>软链接需要系统额外分配空间建立索引节点和存储文件路径</li><li>软链接不会增加文件的索引条数</li></ul>
+          </div>
+
+<h2 id="本地推送"><a href="#本地推送" class="headerlink" title="本地推送"></a>本地推送</h2><p>打开hexo目录下的<code>_config.yml</code>，修改<code>deploy</code>选项：<br><img src="/img/%E3%80%90%E5%AD%A6%E4%B9%A0%E3%80%91hexo-fluid%E5%8D%9A%E5%AE%A2%E5%9C%A8github%E5%8F%8A%E4%B8%AA%E4%BA%BA%E8%BF%9C%E7%A8%8B%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E9%83%A8%E7%BD%B2/p11.png" srcset="/img/loading.gif" lazyload alt="deploy配置"></p>
+<div class="note note-info">
+            <p>@后为服务器公网IP</p>
+          </div>
+<p>保存后，在hexo目录下打开Git命令行，输入命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo clean<br>$ hexo g<br>$ hexo d<br></code></pre></td></tr></table></figure>
+
+<p>出现以下提示则推送成功：<br><img src="/img/%E3%80%90%E5%AD%A6%E4%B9%A0%E3%80%91hexo-fluid%E5%8D%9A%E5%AE%A2%E5%9C%A8github%E5%8F%8A%E4%B8%AA%E4%BA%BA%E8%BF%9C%E7%A8%8B%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E9%83%A8%E7%BD%B2/p18.png" srcset="/img/loading.gif" lazyload alt="推送成功"></p>
+<hr>
+<p><strong>完</strong></p>
+<div class="note note-success">
+            <p>这是我的第一篇技术博客，经验不足，还望多多包涵。如果这篇文章能帮到你，那就太好了！如果对于文章内容有问题和建议，欢迎移步<a href="/about/index.html">关于页</a>获取我的联系方式，感谢批评指正，期待多多交流！</p>
+          </div>
                 
               </div>
             
