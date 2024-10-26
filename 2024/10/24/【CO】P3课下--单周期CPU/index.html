@@ -41,8 +41,9 @@
 <meta property="og:image" content="http://example.com/img/%E3%80%90CO%E3%80%91P3%E8%AF%BE%E4%B8%8B%E2%80%94%E2%80%94%E5%8D%95%E5%91%A8%E6%9C%9FCPU/p13.png">
 <meta property="og:image" content="http://example.com/img/%E3%80%90CO%E3%80%91P3%E8%AF%BE%E4%B8%8B%E2%80%94%E2%80%94%E5%8D%95%E5%91%A8%E6%9C%9FCPU/p14.png">
 <meta property="og:image" content="http://example.com/img/%E3%80%90CO%E3%80%91P3%E8%AF%BE%E4%B8%8B%E2%80%94%E2%80%94%E5%8D%95%E5%91%A8%E6%9C%9FCPU/p15.png">
+<meta property="og:image" content="http://example.com/img/%E3%80%90CO%E3%80%91P3%E8%AF%BE%E4%B8%8B%E2%80%94%E2%80%94%E5%8D%95%E5%91%A8%E6%9C%9FCPU/p16.png">
 <meta property="article:published_time" content="2024-10-24T01:32:20.000Z">
-<meta property="article:modified_time" content="2024-10-26T13:46:21.329Z">
+<meta property="article:modified_time" content="2024-10-26T15:00:22.095Z">
 <meta property="article:author" content="mRNA">
 <meta property="article:tag" content="CO">
 <meta property="article:tag" content="Logisim">
@@ -272,7 +273,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.8k 字
+          3k 字
         
       </span>
     
@@ -283,7 +284,7 @@
         
         
         
-          15 分钟
+          26 分钟
         
       </span>
     
@@ -654,7 +655,219 @@
 </tbody></table>
 <p>CTRL输出的控制信号可以分为模块控制信号和数据通路控制信号，模块控制信号使模块进行不同的操作，数据通路控制信号控制进入模块的数据来源。根据指令码和操作码的不同，CTRL输出不同的控制信号。具体的指令和控制信号的控制关系我们在数据通路分析部分给出。</p>
 <h4 id="实现电路-4"><a href="#实现电路-4" class="headerlink" title="实现电路"></a>实现电路</h4><p>实现电路可分为两部分：与逻辑和或逻辑，与逻辑负责识别指令，或逻辑负责提供指令对应的控制信号，将这两部分分开有助于添加指令，在连线时可以先把对应的操作码和功能码输入，然后根据颜色与门电路连接，可以减小犯错误的概率。<br><img src="/img/%E3%80%90CO%E3%80%91P3%E8%AF%BE%E4%B8%8B%E2%80%94%E2%80%94%E5%8D%95%E5%91%A8%E6%9C%9FCPU/p14.png" srcset="/img/loading.gif" lazyload alt="与逻辑"><br><img src="/img/%E3%80%90CO%E3%80%91P3%E8%AF%BE%E4%B8%8B%E2%80%94%E2%80%94%E5%8D%95%E5%91%A8%E6%9C%9FCPU/p15.png" srcset="/img/loading.gif" lazyload alt="或逻辑"></p>
-<h2 id="数据通路分析"><a href="#数据通路分析" class="headerlink" title="数据通路分析"></a>数据通路分析</h2>
+<h2 id="数据通路分析"><a href="#数据通路分析" class="headerlink" title="数据通路分析"></a>数据通路分析</h2><p>数据通路控制着每条指令从读入到执行数据在各个模块间的流动轨迹，根据不同的指令控制数据的流向是实现指令的关键，利用多路选择器和其选择信号对数据的流向进行控制。<br>在电路设计中，我在三处设置了选择器。<br><img src="/img/%E3%80%90CO%E3%80%91P3%E8%AF%BE%E4%B8%8B%E2%80%94%E2%80%94%E5%8D%95%E5%91%A8%E6%9C%9FCPU/p16.png" srcset="/img/loading.gif" lazyload alt="数据通路"><br>WRSlt对应的选择器选择进行写入操作的寄存器编号:</p>
+<table>
+<thead>
+<tr>
+<th>WRSlt</th>
+<th>来源</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2’b00</td>
+<td>rd</td>
+</tr>
+<tr>
+<td>2’b01</td>
+<td>rt</td>
+</tr>
+<tr>
+<td>2’b10</td>
+<td>$ra</td>
+</tr>
+</tbody></table>
+<p>WDSlt对应的选择器选择写入寄存器的数据：</p>
+<table>
+<thead>
+<tr>
+<th>WDSlt</th>
+<th>来源</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2’b00</td>
+<td>pc+4</td>
+</tr>
+<tr>
+<td>2’b01</td>
+<td>ALU计算得到的ans</td>
+</tr>
+<tr>
+<td>2’b10</td>
+<td>DM读取的数据</td>
+</tr>
+</tbody></table>
+<p>ALUSlt对应的选择器选择进入ALU模块的第二个数：</p>
+<table>
+<thead>
+<tr>
+<th>ALUSlt</th>
+<th>来源</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1’b0</td>
+<td>RD2</td>
+</tr>
+<tr>
+<td>1’b1</td>
+<td>EXT扩展后的结果</td>
+</tr>
+</tbody></table>
+<p>综上，我们给出每条指令对应的各个控制信号，这也是CTRL连线的重要依据：</p>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th>NPCOp</th>
+<th>WE</th>
+<th>ALUOp</th>
+<th>DMOp</th>
+<th>WRSlt</th>
+<th>WDSlt</th>
+<th>ALUSlt</th>
+<th>EXTOp</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>add(u)</td>
+<td>2’b00</td>
+<td>1’b1</td>
+<td>3’b000</td>
+<td>1’b1</td>
+<td>2’b00</td>
+<td>2’b01</td>
+<td>1’b0</td>
+<td>1’b0</td>
+</tr>
+<tr>
+<td>sub(u)</td>
+<td>2’b00</td>
+<td>1’b1</td>
+<td>3’b001</td>
+<td>1’b1</td>
+<td>2’b00</td>
+<td>2’b01</td>
+<td>1’b0</td>
+<td>1’b0</td>
+</tr>
+<tr>
+<td>sll</td>
+<td>2’b00</td>
+<td>1’b1</td>
+<td>3’b011</td>
+<td>1’b1</td>
+<td>2’b00</td>
+<td>2’b01</td>
+<td>1’b0</td>
+<td>1’b0</td>
+</tr>
+<tr>
+<td>ori</td>
+<td>2’b00</td>
+<td>1’b1</td>
+<td>3’b010</td>
+<td>1’b1</td>
+<td>2’b01</td>
+<td>2’b01</td>
+<td>1’b1</td>
+<td>1’b0</td>
+</tr>
+<tr>
+<td>lui</td>
+<td>2’b00</td>
+<td>1’b1</td>
+<td>3’b100</td>
+<td>1’b1</td>
+<td>2’b01</td>
+<td>2’b01</td>
+<td>1’b1</td>
+<td>1’b0</td>
+</tr>
+<tr>
+<td>beq</td>
+<td>2’b11</td>
+<td>1’b0</td>
+<td>3’b001</td>
+<td>1’b1</td>
+<td>2’b00</td>
+<td>2’b00</td>
+<td>1’b0</td>
+<td>1’b0</td>
+</tr>
+<tr>
+<td>lw</td>
+<td>2’b00</td>
+<td>1’b1</td>
+<td>3’b000</td>
+<td>1’b1</td>
+<td>2’b01</td>
+<td>2’b10</td>
+<td>1’b1</td>
+<td>1’b1</td>
+</tr>
+<tr>
+<td>sw</td>
+<td>2’b00</td>
+<td>1’b0</td>
+<td>3’b000</td>
+<td>1’b0</td>
+<td>2’b00</td>
+<td>2’b00</td>
+<td>1’b1</td>
+<td>1’b1</td>
+</tr>
+<tr>
+<td>j</td>
+<td>2’b01</td>
+<td>1’b0</td>
+<td>3’b000</td>
+<td>1’b1</td>
+<td>2’b10</td>
+<td>2’b00</td>
+<td>1’b0</td>
+<td>1’b0</td>
+</tr>
+<tr>
+<td>jal</td>
+<td>2’b01</td>
+<td>1’b1</td>
+<td>3’b000</td>
+<td>1’b1</td>
+<td>2’b00</td>
+<td>2’b00</td>
+<td>1’b0</td>
+<td>1’b0</td>
+</tr>
+<tr>
+<td>jr</td>
+<td>2’b10</td>
+<td>1’b0</td>
+<td>3’b000</td>
+<td>1’b1</td>
+<td>2’b10</td>
+<td>2’b00</td>
+<td>1’b0</td>
+<td>1’b0</td>
+</tr>
+</tbody></table>
+<p>有了这张表，我们便可以在CTRL中进行连线为每条指令规划数据通路。当我们添加指令时，按该表的逻辑分析数据通路再进行CTRL中的连线即可。    </p>
+<h2 id="思考题"><a href="#思考题" class="headerlink" title="思考题"></a>思考题</h2><ol>
+<li>上面我们介绍了通过 FSM 理解单周期 CPU 的基本方法。请大家指出单周期 CPU 所用到的模块中，哪些发挥状态存储功能，哪些发挥状态转移功能。   <div class="note note-info">
+            <p>答： 状态存储功能：PC、GRF、DM<br>状态转移功能：NPC、CTRL、GRF、DM</p>
+          </div></li>
+<li>现在我们的模块中 IM 使用 ROM， DM 使用 RAM， GRF 使用 Register，这种做法合理吗？ 请给出分析，若有改进意见也请一并给出。<div class="note note-info">
+            <p>答：我认为在理论上是合理的，在实践中有些不合理。IM对使用过程来说只需要只读即可，所以采用一个ROM是合理的。DM和GRF都是读取和写入都需要。DM每次仅进行读或写，所以可以采用一个读写分离的RAM实现，并且每个周期仅进行一次读或写，对读写速度要求不高，所以没必要使用寄存器构建，那样会占用大量的寄存器。GRF读和写可以认为是相互不干预的，并且需要高速读写，所以用寄存器搭建是很好的选择。以上说明了本次作业模块实现器件是合理的，但是仍然可以优化，比如用一个RAM来作为存储器，既存储指令，又存储数据，在实践中可以更节省成本。</p>
+          </div></li>
+<li>在上述提示的模块之外，你是否在实际实现时设计了其他的模块？如果是的话，请给出介绍和设计的思路。<div class="note note-info">
+            <p>答：设计了NPC（Next Program Counter），PC的指向可以简单分为三种情况：PC+4，分支指向，跳转指向，这三种不同的情况如何转移，如果全在PC模块中实现有些臃肿复杂，并且参考状态机的状态转移，可以将此部分抽离出来作为一个状态转移电路，这是该模块的设计的初衷。具体设计中，根据指令的不同要求，对指令的不同部分进行不同的操作，这些数学操作并不引入到ALU中完成，而是在模块内部完成，一是这些数学操作的结果对于其他非IFU模块来说没有用，无法合并数据通路，导致走线混乱，二是这些数学操作特殊，并不仅是简单的加减乘除，更适合在模块内部单独考虑完成。需要哪些数据，便从外部引入，通过控制信号和内部计算，将下一条指令的地址返回PC即可。</p>
+          </div></li>
+<li>事实上，实现 <code>nop</code> 空指令，我们并不需要将它加入控制信号真值表，为什么？<div class="note note-info">
+            <p>答：从语义上来看，<code>nop</code>指令不进行任何操作，不会对数据或者状态进行修改，因此保持控制信号的默认状态或者保持上一条指令的状态即可。从机器码上来看，<code>nop</code>即为<code>sll $0,$0,0</code>，而GRF中<code>$zero</code>不会改变，并且该操作的数据通路不会影响其他模块，所以控制信号也就无所谓了。在我的设计中，由于添加了<code>sll</code>指令，<code>nop</code>也就顺带可以作为<code>sll $0,$0,0</code>执行了，但是控制信号是为<code>sll</code>设计的，<code>nop</code>不需要控制信号，自然可以被兼容至设计的控制信号中</p>
+          </div></li>
+<li>阅读 Pre 的 <a target="_blank" rel="noopener" href="http://cscore.buaa.edu.cn/tutorial/mips/mips-6/mips6-1/">“MIPS 指令集及汇编语言”</a> 一节中给出的测试样例，评价其强度（可从各个指令的覆盖情况，单一指令各种行为的覆盖情况等方面分析），并指出具体的不足之处。</li>
+</ol>
+
                 
               </div>
             
