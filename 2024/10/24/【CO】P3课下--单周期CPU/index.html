@@ -31,8 +31,18 @@
 <meta property="og:image" content="http://example.com/img/%E3%80%90CO%E3%80%91P3%E8%AF%BE%E4%B8%8B%E2%80%94%E2%80%94%E5%8D%95%E5%91%A8%E6%9C%9FCPU/p3.png">
 <meta property="og:image" content="http://example.com/img/%E3%80%90CO%E3%80%91P3%E8%AF%BE%E4%B8%8B%E2%80%94%E2%80%94%E5%8D%95%E5%91%A8%E6%9C%9FCPU/p4.png">
 <meta property="og:image" content="http://example.com/img/%E3%80%90CO%E3%80%91P3%E8%AF%BE%E4%B8%8B%E2%80%94%E2%80%94%E5%8D%95%E5%91%A8%E6%9C%9FCPU/p5.png">
+<meta property="og:image" content="http://example.com/img/%E3%80%90CO%E3%80%91P3%E8%AF%BE%E4%B8%8B%E2%80%94%E2%80%94%E5%8D%95%E5%91%A8%E6%9C%9FCPU/p6.png">
+<meta property="og:image" content="http://example.com/img/%E3%80%90CO%E3%80%91P3%E8%AF%BE%E4%B8%8B%E2%80%94%E2%80%94%E5%8D%95%E5%91%A8%E6%9C%9FCPU/p7.png">
+<meta property="og:image" content="http://example.com/img/%E3%80%90CO%E3%80%91P3%E8%AF%BE%E4%B8%8B%E2%80%94%E2%80%94%E5%8D%95%E5%91%A8%E6%9C%9FCPU/p8.png">
+<meta property="og:image" content="http://example.com/img/%E3%80%90CO%E3%80%91P3%E8%AF%BE%E4%B8%8B%E2%80%94%E2%80%94%E5%8D%95%E5%91%A8%E6%9C%9FCPU/p9.png">
+<meta property="og:image" content="http://example.com/img/%E3%80%90CO%E3%80%91P3%E8%AF%BE%E4%B8%8B%E2%80%94%E2%80%94%E5%8D%95%E5%91%A8%E6%9C%9FCPU/p10.png">
+<meta property="og:image" content="http://example.com/img/%E3%80%90CO%E3%80%91P3%E8%AF%BE%E4%B8%8B%E2%80%94%E2%80%94%E5%8D%95%E5%91%A8%E6%9C%9FCPU/p11.png">
+<meta property="og:image" content="http://example.com/img/%E3%80%90CO%E3%80%91P3%E8%AF%BE%E4%B8%8B%E2%80%94%E2%80%94%E5%8D%95%E5%91%A8%E6%9C%9FCPU/p12.png">
+<meta property="og:image" content="http://example.com/img/%E3%80%90CO%E3%80%91P3%E8%AF%BE%E4%B8%8B%E2%80%94%E2%80%94%E5%8D%95%E5%91%A8%E6%9C%9FCPU/p13.png">
+<meta property="og:image" content="http://example.com/img/%E3%80%90CO%E3%80%91P3%E8%AF%BE%E4%B8%8B%E2%80%94%E2%80%94%E5%8D%95%E5%91%A8%E6%9C%9FCPU/p14.png">
+<meta property="og:image" content="http://example.com/img/%E3%80%90CO%E3%80%91P3%E8%AF%BE%E4%B8%8B%E2%80%94%E2%80%94%E5%8D%95%E5%91%A8%E6%9C%9FCPU/p15.png">
 <meta property="article:published_time" content="2024-10-24T01:32:20.000Z">
-<meta property="article:modified_time" content="2024-10-26T10:37:49.067Z">
+<meta property="article:modified_time" content="2024-10-26T13:46:21.329Z">
 <meta property="article:author" content="mRNA">
 <meta property="article:tag" content="CO">
 <meta property="article:tag" content="Logisim">
@@ -262,7 +272,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          842 字
+          1.8k 字
         
       </span>
     
@@ -273,7 +283,7 @@
         
         
         
-          8 分钟
+          15 分钟
         
       </span>
     
@@ -396,10 +406,255 @@
 </tr>
 <tr>
 <td>IMM</td>
-<td>接收当前J型指令的偏移量</td>
+<td>接收当前J型指令的26位转移地址</td>
+</tr>
+<tr>
+<td>beq_offset</td>
+<td>接收beq指令中16位偏移量</td>
+</tr>
+<tr>
+<td>RA</td>
+<td>接收读出的jr指令转移至$31指向的地址（仅设计了jr $ra）</td>
+</tr>
+<tr>
+<td>zero</td>
+<td>接收ALU返回的rs rt寄存器值是否相等的信号，用于beq</td>
+</tr>
+<tr>
+<td>NPCOp</td>
+<td>接收CTRL返回的下一个PC所指向的位置类型控制信号</td>
+</tr>
+<tr>
+<td>npc</td>
+<td>向PC传递经NPC模块得到的下一条执行指令的位置</td>
 </tr>
 </tbody></table>
+<p>其中，控制信号NPCOp的功能具体如下：</p>
+<table>
+<thead>
+<tr>
+<th>信号</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2’b00</td>
+<td>npc为pc+4</td>
+</tr>
+<tr>
+<td>2’b01</td>
+<td>npc为j&#x2F;jal指向的指令</td>
+</tr>
+<tr>
+<td>2’b10</td>
+<td>npc为$ra指向的指令</td>
+</tr>
+<tr>
+<td>2’b11</td>
+<td>npc为pc+4&#x2F;beq分支的指令，取决于zero的输入</td>
+</tr>
+</tbody></table>
+<h4 id="实现电路-1"><a href="#实现电路-1" class="headerlink" title="实现电路"></a>实现电路</h4><p><img src="/img/%E3%80%90CO%E3%80%91P3%E8%AF%BE%E4%B8%8B%E2%80%94%E2%80%94%E5%8D%95%E5%91%A8%E6%9C%9FCPU/p6.png" srcset="/img/loading.gif" lazyload alt="电路图"></p>
+<div class="note note-danger">
+            <p>注意：此处pc接收的应未减0x00003000，并且输出npc前减去0x00003000以保持与pc的配合</p>
+          </div>
 
+<h3 id="IM"><a href="#IM" class="headerlink" title="IM"></a>IM</h3><p>结构相对简单，输入为希望读取的地址，输出为读到的指令机器码。</p>
+<h3 id="GRF"><a href="#GRF" class="headerlink" title="GRF"></a>GRF</h3><h4 id="端口说明-2"><a href="#端口说明-2" class="headerlink" title="端口说明"></a>端口说明</h4><p><img src="/img/%E3%80%90CO%E3%80%91P3%E8%AF%BE%E4%B8%8B%E2%80%94%E2%80%94%E5%8D%95%E5%91%A8%E6%9C%9FCPU/p7.png" srcset="/img/loading.gif" lazyload alt="示意图"></p>
+<table>
+<thead>
+<tr>
+<th>端口</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A1</td>
+<td>读取的第一个寄存器编号（rs）</td>
+</tr>
+<tr>
+<td>A2</td>
+<td>读取的第二个寄存器编号（rt）</td>
+</tr>
+<tr>
+<td>WR</td>
+<td>写入数据的目标寄存器（rd&#x2F;rt&#x2F;$ra）</td>
+</tr>
+<tr>
+<td>WD</td>
+<td>写入目标寄存器的数据</td>
+</tr>
+<tr>
+<td>RD1</td>
+<td>A1中的数据</td>
+</tr>
+<tr>
+<td>RD2</td>
+<td>A2中的数据</td>
+</tr>
+<tr>
+<td>clk</td>
+<td>时钟信号</td>
+</tr>
+<tr>
+<td>reset</td>
+<td>异步复位信号</td>
+</tr>
+<tr>
+<td>WE</td>
+<td>写入信号</td>
+</tr>
+</tbody></table>
+<h4 id="实现电路-2"><a href="#实现电路-2" class="headerlink" title="实现电路"></a>实现电路</h4><p><img src="/img/%E3%80%90CO%E3%80%91P3%E8%AF%BE%E4%B8%8B%E2%80%94%E2%80%94%E5%8D%95%E5%91%A8%E6%9C%9FCPU/p8.png" srcset="/img/loading.gif" lazyload alt="电路图"><br>实现思路很简单，注意对应关系不要混乱即可，推荐自动化对.circ文件内容进行修改。</p>
+<h3 id="ALU"><a href="#ALU" class="headerlink" title="ALU"></a>ALU</h3><h4 id="端口说明-3"><a href="#端口说明-3" class="headerlink" title="端口说明"></a>端口说明</h4><p> <img src="/img/%E3%80%90CO%E3%80%91P3%E8%AF%BE%E4%B8%8B%E2%80%94%E2%80%94%E5%8D%95%E5%91%A8%E6%9C%9FCPU/p9.png" srcset="/img/loading.gif" lazyload alt="示意图"></p>
+<table>
+<thead>
+<tr>
+<th>端口</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A</td>
+<td>进行运算的第一个数</td>
+</tr>
+<tr>
+<td>B</td>
+<td>进行运算的第二个数</td>
+</tr>
+<tr>
+<td>sll</td>
+<td>进行sll操作需要左移的位数</td>
+</tr>
+<tr>
+<td>ALUOp</td>
+<td>控制信号，选择ALU进行的操作</td>
+</tr>
+<tr>
+<td>zero</td>
+<td>输出两个寄存器中的值是否相等，为beq指令时的NPC提供是否分支的依据</td>
+</tr>
+<tr>
+<td>ans</td>
+<td>输出运算结果</td>
+</tr>
+</tbody></table>
+<p>其中，控制信号ALUOp的功能具体如下：</p>
+<table>
+<thead>
+<tr>
+<th>信号</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>3’b000</td>
+<td>A+B</td>
+</tr>
+<tr>
+<td>3’b001</td>
+<td>A-B</td>
+</tr>
+<tr>
+<td>3’b010</td>
+<td>A</td>
+</tr>
+<tr>
+<td>3’b011</td>
+<td>B&lt;&lt;sll</td>
+</tr>
+<tr>
+<td>3’b100</td>
+<td>B&lt;&lt;16</td>
+</tr>
+</tbody></table>
+<h4 id="实现电路-3"><a href="#实现电路-3" class="headerlink" title="实现电路"></a>实现电路</h4><p><img src="/img/%E3%80%90CO%E3%80%91P3%E8%AF%BE%E4%B8%8B%E2%80%94%E2%80%94%E5%8D%95%E5%91%A8%E6%9C%9FCPU/p10.png" srcset="/img/loading.gif" lazyload alt="电路图"><br>利用Logisim自带的元件进行算术操作，实现较为简单。ALU关键在于数据通路，在下面分析。</p>
+<h3 id="DM"><a href="#DM" class="headerlink" title="DM"></a>DM</h3><p><img src="/img/%E3%80%90CO%E3%80%91P3%E8%AF%BE%E4%B8%8B%E2%80%94%E2%80%94%E5%8D%95%E5%91%A8%E6%9C%9FCPU/p11.png" srcset="/img/loading.gif" lazyload alt="电路图"><br>想法也较为简单，使用之前提到的RAM即可，其中DMOp作为读写控制信号，其功能具体如下:</p>
+<table>
+<thead>
+<tr>
+<th>信号</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1’b0</td>
+<td>写入数据</td>
+</tr>
+<tr>
+<td>1’b1</td>
+<td>读出数据</td>
+</tr>
+</tbody></table>
+<h3 id="EXT"><a href="#EXT" class="headerlink" title="EXT"></a>EXT</h3><p><img src="/img/%E3%80%90CO%E3%80%91P3%E8%AF%BE%E4%B8%8B%E2%80%94%E2%80%94%E5%8D%95%E5%91%A8%E6%9C%9FCPU/p12.png" srcset="/img/loading.gif" lazyload alt="电路图"><br>选择0扩展或符号扩展</p>
+<table>
+<thead>
+<tr>
+<th>信号</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1’b0</td>
+<td>0扩展</td>
+</tr>
+<tr>
+<td>1’b1</td>
+<td>符号扩展</td>
+</tr>
+</tbody></table>
+<h3 id="CTRL"><a href="#CTRL" class="headerlink" title="CTRL"></a>CTRL</h3><h4 id="端口说明-4"><a href="#端口说明-4" class="headerlink" title="端口说明"></a>端口说明</h4><p> <img src="/img/%E3%80%90CO%E3%80%91P3%E8%AF%BE%E4%B8%8B%E2%80%94%E2%80%94%E5%8D%95%E5%91%A8%E6%9C%9FCPU/p13.png" srcset="/img/loading.gif" lazyload alt="示意图"></p>
+<table>
+<thead>
+<tr>
+<th>端口</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>OpCode</td>
+<td>获取指令的操作码</td>
+</tr>
+<tr>
+<td>FuncCode</td>
+<td>获取指令的功能码</td>
+</tr>
+<tr>
+<td>NPCOp</td>
+<td>模块控制信号，控制NPC操作</td>
+</tr>
+<tr>
+<td>ALUOp</td>
+<td>模块控制信号，控制ALU操作</td>
+</tr>
+<tr>
+<td>WE</td>
+<td>模块控制信号，控制GRF读写</td>
+</tr>
+<tr>
+<td>DMOp</td>
+<td>模块控制信号，控制DM读写</td>
+</tr>
+<tr>
+<td>WRSlt</td>
+<td>数据通路控制信号，控制写入的寄存器来源</td>
+</tr>
+<tr>
+<td>WDSlt</td>
+<td>数据通路控制信号，控制写入的数据来源</td>
+</tr>
+<tr>
+<td>ALUSlt</td>
+<td>数据通路控制信号，控制进入ALU的第二个数来源</td>
+</tr>
+<tr>
+<td>EXTOp</td>
+<td>模块控制信号，控制EXT扩展方式</td>
+</tr>
+</tbody></table>
+<p>CTRL输出的控制信号可以分为模块控制信号和数据通路控制信号，模块控制信号使模块进行不同的操作，数据通路控制信号控制进入模块的数据来源。根据指令码和操作码的不同，CTRL输出不同的控制信号。具体的指令和控制信号的控制关系我们在数据通路分析部分给出。</p>
+<h4 id="实现电路-4"><a href="#实现电路-4" class="headerlink" title="实现电路"></a>实现电路</h4><p>实现电路可分为两部分：与逻辑和或逻辑，与逻辑负责识别指令，或逻辑负责提供指令对应的控制信号，将这两部分分开有助于添加指令，在连线时可以先把对应的操作码和功能码输入，然后根据颜色与门电路连接，可以减小犯错误的概率。<br><img src="/img/%E3%80%90CO%E3%80%91P3%E8%AF%BE%E4%B8%8B%E2%80%94%E2%80%94%E5%8D%95%E5%91%A8%E6%9C%9FCPU/p14.png" srcset="/img/loading.gif" lazyload alt="与逻辑"><br><img src="/img/%E3%80%90CO%E3%80%91P3%E8%AF%BE%E4%B8%8B%E2%80%94%E2%80%94%E5%8D%95%E5%91%A8%E6%9C%9FCPU/p15.png" srcset="/img/loading.gif" lazyload alt="或逻辑"></p>
+<h2 id="数据通路分析"><a href="#数据通路分析" class="headerlink" title="数据通路分析"></a>数据通路分析</h2>
                 
               </div>
             
