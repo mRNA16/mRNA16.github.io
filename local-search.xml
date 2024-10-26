@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>P3课下——单周期CPU</title>
+    <link href="/2024/10/24/%E3%80%90CO%E3%80%91P3%E8%AF%BE%E4%B8%8B--%E5%8D%95%E5%91%A8%E6%9C%9FCPU/"/>
+    <url>/2024/10/24/%E3%80%90CO%E3%80%91P3%E8%AF%BE%E4%B8%8B--%E5%8D%95%E5%91%A8%E6%9C%9FCPU/</url>
+    
+    <content type="html"><![CDATA[<div class="note note-primary">            <p>本文为P3课下单周期CPU设计思路与具体细节，仅供参考</p>          </div><h1 id="P3课下–单周期CPU的Logisim实现"><a href="#P3课下–单周期CPU的Logisim实现" class="headerlink" title="P3课下–单周期CPU的Logisim实现"></a>P3课下–单周期CPU的Logisim实现</h1><h2 id="总体设计方案"><a href="#总体设计方案" class="headerlink" title="总体设计方案"></a>总体设计方案</h2><h3 id="指令集合"><a href="#指令集合" class="headerlink" title="指令集合"></a>指令集合</h3><p>课下提交要求实现的指令包括add(u),sub(u),ori,lui,beq,lw,sw,nop,具体实现过程中在此基础上又添加了j,jal,jr等跳转指令和移位指令sll。根据机器码类别将其分类：</p><table><thead><tr><th>R型指令</th><th>I型指令</th><th>J型指令</th></tr></thead><tbody><tr><td>add(u),sub(u),sll(nop),jr</td><td>ori,lui,beq,lw,sw</td><td>j,jal</td></tr></tbody></table><h3 id="模块设计"><a href="#模块设计" class="headerlink" title="模块设计"></a>模块设计</h3><p>根据功能划分需要设计以下模块：</p><ul><li>取指令——IFU，包括PC（程序计数器），NPC（Next PC），IM（指令存储器）。其中要求PC用寄存器实现并且具有异步复位功能，起始地址为<strong>0x00003000</strong>。地址范围要求为0x00003000~0x00006FFF。<div class="note note-info">            <p>由地址范围可知，地址宽度为0x00004000,即为2^14，但每条指令大小为32bit，每个地址对应的容量为1个字节（8bit），因此相邻两条指令的地址差异为4，我们引入指令字的概念，利用ROM作为IM，每个位置储存一条指令，那么我们仅需要2^12个指令字，即12位ROM便可以满足我们的需要。</p>          </div></li><li>寄存器读写——GRF，由32个寄存器组成的寄存器堆，具有异步复位功能</li><li>内存读写——DM，数据存储器，可以理解为内存，要求使用RAM实现，具有异步复位功能，地址范围为0x00000000~0x00002FFF。<div class="note note-danger">            <p>地址宽度为0x00003000，即为3*2^12，根据和指令字相同的原理，12位RAM即可满足我们的需要。注意！这样做我们仅能以字为单位对内存进行操作。但是转念再去想，如果不指定内存的对齐方式，如何去存储都会产生问题：按字对齐那么对于半字、字节操作很麻烦，按字节对齐那么会多占用两位地址，同时如果储存字或半字需要对多个地址的内存进行操作。因此仍然选择按字存储，选择地址位数为12，数据位数为32的RAM作为DM。</p>          </div></li><li>数学运算——ALU，算数逻辑单元，实现的运算包括加、减、或、逻辑左移、lui（高位存储）。</li><li>位数扩展——EXT，位扩展单元，根据指令的不同进行0扩展（ori，lui）或符号扩展（beq，lw，sw）</li><li>控制器——CTRL，根据输入指令的操作码和功能码输出各个模块和数据通路的控制信号。</li></ul>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>CO</tag>
+      
+      <tag>Logisim</tag>
+      
+      <tag>P3课下</tag>
+      
+      <tag>单周期CPU</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>【学习】hexo+fluid博客在github及个人远程服务器的部署</title>
     <link href="/2024/08/23/%E3%80%90%E5%AD%A6%E4%B9%A0%E3%80%91hexo-fluid%E5%8D%9A%E5%AE%A2%E5%9C%A8github%E5%8F%8A%E4%B8%AA%E4%BA%BA%E8%BF%9C%E7%A8%8B%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E9%83%A8%E7%BD%B2/"/>
     <url>/2024/08/23/%E3%80%90%E5%AD%A6%E4%B9%A0%E3%80%91hexo-fluid%E5%8D%9A%E5%AE%A2%E5%9C%A8github%E5%8F%8A%E4%B8%AA%E4%BA%BA%E8%BF%9C%E7%A8%8B%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E9%83%A8%E7%BD%B2/</url>
