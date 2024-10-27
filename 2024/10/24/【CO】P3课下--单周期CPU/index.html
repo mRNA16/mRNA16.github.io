@@ -43,7 +43,7 @@
 <meta property="og:image" content="http://example.com/img/%E3%80%90CO%E3%80%91P3%E8%AF%BE%E4%B8%8B%E2%80%94%E2%80%94%E5%8D%95%E5%91%A8%E6%9C%9FCPU/p15.png">
 <meta property="og:image" content="http://example.com/img/%E3%80%90CO%E3%80%91P3%E8%AF%BE%E4%B8%8B%E2%80%94%E2%80%94%E5%8D%95%E5%91%A8%E6%9C%9FCPU/p16.png">
 <meta property="article:published_time" content="2024-10-24T01:32:20.000Z">
-<meta property="article:modified_time" content="2024-10-26T15:00:22.095Z">
+<meta property="article:modified_time" content="2024-10-27T13:17:38.256Z">
 <meta property="article:author" content="mRNA">
 <meta property="article:tag" content="CO">
 <meta property="article:tag" content="Logisim">
@@ -273,7 +273,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3k 字
+          3.9k 字
         
       </span>
     
@@ -284,7 +284,7 @@
         
         
         
-          26 分钟
+          33 分钟
         
       </span>
     
@@ -865,8 +865,29 @@
 <li>事实上，实现 <code>nop</code> 空指令，我们并不需要将它加入控制信号真值表，为什么？<div class="note note-info">
             <p>答：从语义上来看，<code>nop</code>指令不进行任何操作，不会对数据或者状态进行修改，因此保持控制信号的默认状态或者保持上一条指令的状态即可。从机器码上来看，<code>nop</code>即为<code>sll $0,$0,0</code>，而GRF中<code>$zero</code>不会改变，并且该操作的数据通路不会影响其他模块，所以控制信号也就无所谓了。在我的设计中，由于添加了<code>sll</code>指令，<code>nop</code>也就顺带可以作为<code>sll $0,$0,0</code>执行了，但是控制信号是为<code>sll</code>设计的，<code>nop</code>不需要控制信号，自然可以被兼容至设计的控制信号中</p>
           </div></li>
-<li>阅读 Pre 的 <a target="_blank" rel="noopener" href="http://cscore.buaa.edu.cn/tutorial/mips/mips-6/mips6-1/">“MIPS 指令集及汇编语言”</a> 一节中给出的测试样例，评价其强度（可从各个指令的覆盖情况，单一指令各种行为的覆盖情况等方面分析），并指出具体的不足之处。</li>
+<li>阅读 Pre 的 <a target="_blank" rel="noopener" href="http://cscore.buaa.edu.cn/tutorial/mips/mips-6/mips6-1/">“MIPS 指令集及汇编语言”</a> 一节中给出的测试样例，评价其强度（可从各个指令的覆盖情况，单一指令各种行为的覆盖情况等方面分析），并指出具体的不足之处。<br>答：从指令覆盖情况来看，没有涉及sub(u)指令，而这是很容易出现溢出的操作，也是设计的易错点。同时<code>sw</code>和<code>lw</code>指令在涉及偏移量时，仅考虑了正整数，没有测试出现负数的情况，从而无法测试设计时扩展方式的正误。综上，测试数据较弱，仅测试了容易想到的地方，容易出现Bug的地方没有进行相应测试。</li>
 </ol>
+<h2 id="测试方案"><a href="#测试方案" class="headerlink" title="测试方案"></a>测试方案</h2><h3 id="测试用例"><a href="#测试用例" class="headerlink" title="测试用例"></a>测试用例</h3><p>给出的测试用例：</p>
+<figure class="highlight mips"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs mips"><span class="hljs-keyword">ori </span>$<span class="hljs-built_in">a0</span>, $<span class="hljs-number">0</span>, <span class="hljs-number">123</span> <br><span class="hljs-keyword">ori </span>$<span class="hljs-built_in">a1</span>, $<span class="hljs-built_in">a0</span>, <span class="hljs-number">456</span>  <br><span class="hljs-keyword">lui </span>$<span class="hljs-built_in">a2</span>, <span class="hljs-number">123</span>  <span class="hljs-comment"># 符号位为 0  </span><br><span class="hljs-keyword">lui </span>$<span class="hljs-built_in">a3</span>, <span class="hljs-number">0xffff</span>  <span class="hljs-comment"># 符号位为 1  </span><br><span class="hljs-keyword">ori </span>$<span class="hljs-built_in">a3</span>, $<span class="hljs-built_in">a3</span>, <span class="hljs-number">0xffff</span>  <span class="hljs-comment"># $a3 = -1  </span><br><span class="hljs-keyword">add </span>$<span class="hljs-built_in">s0</span>, $<span class="hljs-built_in">a0</span>, $<span class="hljs-built_in">a2</span>  <span class="hljs-comment"># 正正  </span><br><span class="hljs-keyword">add </span>$<span class="hljs-built_in">s1</span>, $<span class="hljs-built_in">a0</span>, $<span class="hljs-built_in">a3</span>  <span class="hljs-comment"># 正负  </span><br><span class="hljs-keyword">add </span>$<span class="hljs-built_in">s2</span>, $<span class="hljs-built_in">a3</span>, $<span class="hljs-built_in">a3</span>  <span class="hljs-comment"># 负负  </span><br><span class="hljs-keyword">ori </span>$<span class="hljs-built_in">t0</span>, $<span class="hljs-number">0</span>, <span class="hljs-number">0x0000</span>  <br><span class="hljs-keyword">sw </span>$<span class="hljs-built_in">a0</span>, <span class="hljs-number">0</span>($<span class="hljs-built_in">t0</span>) <br><span class="hljs-keyword">sw </span>$<span class="hljs-built_in">a1</span>, <span class="hljs-number">4</span>($<span class="hljs-built_in">t0</span>) <br><span class="hljs-keyword">sw </span>$<span class="hljs-built_in">a2</span>, <span class="hljs-number">8</span>($<span class="hljs-built_in">t0</span>) <br><span class="hljs-keyword">sw </span>$<span class="hljs-built_in">a3</span>, <span class="hljs-number">12</span>($<span class="hljs-built_in">t0</span>) <br><span class="hljs-keyword">sw </span>$<span class="hljs-built_in">s0</span>, <span class="hljs-number">16</span>($<span class="hljs-built_in">t0</span>) <br><span class="hljs-keyword">sw </span>$<span class="hljs-built_in">s1</span>, <span class="hljs-number">20</span>($<span class="hljs-built_in">t0</span>) <br><span class="hljs-keyword">sw </span>$<span class="hljs-built_in">s2</span>, <span class="hljs-number">24</span>($<span class="hljs-built_in">t0</span>) <br><span class="hljs-keyword">lw </span>$<span class="hljs-built_in">a0</span>, <span class="hljs-number">0</span>($<span class="hljs-built_in">t0</span>) <br><span class="hljs-keyword">lw </span>$<span class="hljs-built_in">a1</span>, <span class="hljs-number">12</span>($<span class="hljs-built_in">t0</span>) <br><span class="hljs-keyword">sw </span>$<span class="hljs-built_in">a0</span>, <span class="hljs-number">28</span>($<span class="hljs-built_in">t0</span>) <br><span class="hljs-keyword">sw </span>$<span class="hljs-built_in">a1</span>, <span class="hljs-number">32</span>($<span class="hljs-built_in">t0</span>) <br><span class="hljs-keyword">ori </span>$<span class="hljs-built_in">a0</span>, $<span class="hljs-number">0</span>, <span class="hljs-number">1</span>  <br><span class="hljs-keyword">ori </span>$<span class="hljs-built_in">a1</span>, $<span class="hljs-number">0</span>, <span class="hljs-number">2</span>  <br><span class="hljs-keyword">ori </span>$<span class="hljs-built_in">a2</span>, $<span class="hljs-number">0</span>, <span class="hljs-number">1</span>  <br><span class="hljs-keyword">beq </span>$<span class="hljs-built_in">a0</span>, $<span class="hljs-built_in">a1</span>, loop1 <span class="hljs-comment"># 不相等  </span><br><span class="hljs-keyword">beq </span>$<span class="hljs-built_in">a0</span>, $<span class="hljs-built_in">a2</span>, loop2 <span class="hljs-comment"># 相等</span><br><span class="hljs-symbol">loop1:</span><span class="hljs-keyword">sw </span>$<span class="hljs-built_in">a0</span>, <span class="hljs-number">36</span>($<span class="hljs-built_in">t0</span>) <br><span class="hljs-symbol">loop2:</span><span class="hljs-keyword">sw </span>$<span class="hljs-built_in">a1</span>, <span class="hljs-number">40</span>($<span class="hljs-built_in">t0</span>)<br></code></pre></td></tr></table></figure>
+
+<p>在此基础上添加了<code>sub</code>指令的测试和<code>sw</code>与<code>lw</code>偏移量为负数的指令：</p>
+<figure class="highlight mips"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs mips"><span class="hljs-keyword">ori </span>$<span class="hljs-built_in">t0</span>,$<span class="hljs-number">0</span>,<span class="hljs-number">3</span><br><span class="hljs-keyword">ori </span>$<span class="hljs-built_in">t1</span>,$<span class="hljs-number">0</span>,<span class="hljs-number">2</span><br><span class="hljs-keyword">sub </span>$<span class="hljs-built_in">t2</span>,$<span class="hljs-built_in">t1</span>,$<span class="hljs-built_in">t0</span><br><span class="hljs-keyword">ori </span>$<span class="hljs-built_in">s1</span>,$<span class="hljs-number">0</span>,<span class="hljs-number">4</span><br><span class="hljs-keyword">sw </span>$<span class="hljs-built_in">t2</span>,-<span class="hljs-number">4</span>($<span class="hljs-built_in">s1</span>)<br><span class="hljs-keyword">lw </span>$<span class="hljs-built_in">t3</span>,-<span class="hljs-number">4</span>($<span class="hljs-built_in">s1</span>)<br></code></pre></td></tr></table></figure>
+
+<h3 id="自动化测试"><a href="#自动化测试" class="headerlink" title="自动化测试"></a>自动化测试</h3><p>最初的思路是把Mars源码进行修改，使其能输出所需格式的信息。但是在解压缩Jar包并反编译后对源码修改完成（我也不知道是否成功）后，再次打包回Jar包时遇到了麻烦，JDK报错类重复，在编译环节似乎就出现了问题，当时已经是凌晨四点左右了，我的精力已经达到了极限，实在是不想，也无力去寻找解决办法，于是回宿舍睡觉去了。<br>第二天醒来，我打算尝试新的方法，即不利用Mars，自行模拟CPU执行指令，并输出我想要的信息。而最关键的就是内存和寄存器实现。一开始我的想法是直接在Python脚本中完成模拟，但是本人Python水平实在有限，并且C对于指针、内存操作的便利性又让我不舍得放弃。于是打算在脚本中通过命令行编译、执行C程序，执行Logisim并处理其输出，最终将二者输出对比，进行评测。<br>但是实现的过程并不是一帆风顺，在脚本中通过gcc编译C程序的过程中出现了问题，这一步索性手动完成。于是，我的半自动评测机完成了 :relieved: 。<br>需要手动完成的部分有：</p>
+<ol>
+<li>在Mars中将16进制文件导出，命名为<code>&quot;tst_hex.txt&quot;</code></li>
+<li>复制一份”tst_hex.txt”取别名并在其第一行添加一行<code>v2.0 raw</code></li>
+<li>将副本导入<code>p3_cpu.circ</code>的ROM中</li>
+<li>执行py脚本</li>
+</ol>
+<p>需要的环境和工具有：</p>
+<ol>
+<li>JDK包</li>
+<li>GCC等C语言编译器</li>
+</ol>
+<h2 id="其中支持的指令包括上面已实现的所有指令。受限于时间，需手动完成的部分实在是无法自动化（22：00前就要提交了，现在是21：15），第一次手写评测机，实在是仓促，也没有经验，让大家见笑了。不过我还是蛮开心自豪的，在这个过程中我也学到了很多。"><a href="#其中支持的指令包括上面已实现的所有指令。受限于时间，需手动完成的部分实在是无法自动化（22：00前就要提交了，现在是21：15），第一次手写评测机，实在是仓促，也没有经验，让大家见笑了。不过我还是蛮开心自豪的，在这个过程中我也学到了很多。" class="headerlink" title="其中支持的指令包括上面已实现的所有指令。受限于时间，需手动完成的部分实在是无法自动化（22：00前就要提交了，现在是21：15），第一次手写评测机，实在是仓促，也没有经验，让大家见笑了。不过我还是蛮开心自豪的，在这个过程中我也学到了很多。 
+   "></a>其中支持的指令包括上面已实现的所有指令。<br>受限于时间，需手动完成的部分实在是无法自动化（22：00前就要提交了，现在是21：15），第一次手写评测机，实在是仓促，也没有经验，让大家见笑了。不过我还是蛮开心自豪的，在这个过程中我也学到了很多。 
+   </h2><p> <em><strong>完</strong></em></p>
 
                 
               </div>
