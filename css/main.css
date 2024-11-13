@@ -443,7 +443,7 @@ sup > a::before,
   .navbar .dropdown-collapse,
   .top-nav-collapse,
   .navbar-col-show {
-    background: #2f4154;
+    background: #00000003;
   }
 }
 @media (max-width: 767px) {
