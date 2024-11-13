@@ -5,9 +5,15 @@ newDiv.innerHTML = `
       <script src="/js/time.js"></script>
       `;
 
-// 获取目标插入位置，div1 和 div2 之间
-var div1 = document.getElementsByClassName("statistics")[0];
-var div2 = document.getElementsByClassName("beian")[0];
+document.addEventListener("DOMContentLoaded", function() {
+    var div1 = document.getElementsByClassName("statistics")[0];
+    var div2 = document.getElementsByClassName("beian")[0];
 
-// 将新 div 插入到 div1 和 div2 之间
-div1.parentNode.insertBefore(newDiv, div2);
+    console.log(div1);  // 调试检查
+    console.log(div2);  // 调试检查
+
+    if (div1 && div2) {
+        div1.parentNode.insertBefore(newDiv, div2);
+    }
+});
+
