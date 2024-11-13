@@ -7,7 +7,6 @@ navbarBrand.innerHTML = `
 </g>
 </svg>
 `;
-
-const paths = document.querySelector('.container .navbar-brand .svg path')
+const paths = document.querySelector("#svgGroup > path")
 const len = paths.getTotalLength()
 paths.style.setProperty('--l', len)
