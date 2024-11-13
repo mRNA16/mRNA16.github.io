@@ -8,6 +8,6 @@ navbarBrand.innerHTML = `
 </svg>
 `;
 
-const paths = document.querySelector('.container .navbar-brand .svg .g path')
+const paths = document.querySelector('.container .navbar-brand .svg path')
 const len = paths.getTotalLength()
 paths.style.setProperty('--l', len)
