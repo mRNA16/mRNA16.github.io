@@ -47,9 +47,9 @@
       
       <tag>CO</tag>
       
-      <tag>Verilog</tag>
-      
       <tag>ISE</tag>
+      
+      <tag>Verilog</tag>
       
     </tags>
     
@@ -76,9 +76,9 @@
       
       <tag>CO</tag>
       
-      <tag>单周期CPU</tag>
-      
       <tag>Verilog</tag>
+      
+      <tag>单周期CPU</tag>
       
       <tag>P4课下</tag>
       
