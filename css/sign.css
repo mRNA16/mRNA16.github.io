@@ -9,7 +9,7 @@
   stroke-linecap: round;
   stroke-dasharray: var(--l);
   stroke-dashoffset: var(--l);
-  fill: none;
+  fill: white;
   fill-rule: nonzero;
   animation: stroke 25s forwards;
   -webkit-animation: stroke 25s forwards;
