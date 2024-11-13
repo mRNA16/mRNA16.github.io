@@ -6,8 +6,8 @@ newDiv.innerHTML = `
       `;
 
 // 获取目标插入位置，div1 和 div2 之间
-var div1 = document.getElementsByClassName("statistics");
-var div2 = document.getElementsByClassName("beian");
+var div1 = document.getElementsByClassName("statistics")[0];
+var div2 = document.getElementsByClassName("beian")[0];
 
 // 将新 div 插入到 div1 和 div2 之间
 div1.parentNode.insertBefore(newDiv, div2);
