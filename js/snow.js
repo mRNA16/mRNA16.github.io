@@ -55,8 +55,8 @@ function flakeMove(canvasWidth, canvasHeight, flakeSize, fallSpeed) {
     this.fallSpeed = fallSpeed;                         /* 坠落速度 */
     this.velY = this.speed;                             /* Y方向速度 */
     this.velX = 0;                                      /* X方向速度 */
-    this.stepSize = Math.random() / 30;                 /* 步长 */
-    this.step = Math.random()/5;                        /* 步数 */
+    this.stepSize = Math.random() / 50;                 /* 步长 */
+    this.step = Math.random()*Math.PI*2;                /* 步数 */
 }
 flakeMove.prototype.update = function() {
     var x = this.x,
