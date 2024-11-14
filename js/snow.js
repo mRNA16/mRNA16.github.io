@@ -51,7 +51,7 @@ function flakeMove(canvasWidth, canvasHeight, flakeSize, fallSpeed) {
     this.y = Math.floor(Math.random() * canvasHeight);  /* y坐标 */
     this.size = Math.random() * flakeSize + 2;          /* 形状 */
     this.maxSize = flakeSize;                           /* 最大形状 */
-    this.speed = Math.random() * 0.5 + fallSpeed;         /* 坠落速度 */
+    this.speed = Math.random() * 0.2 + fallSpeed;         /* 坠落速度 */
     this.fallSpeed = fallSpeed;                         /* 坠落速度 */
     this.velY = this.speed;                             /* Y方向速度 */
     this.velX = 0;                                      /* X方向速度 */
