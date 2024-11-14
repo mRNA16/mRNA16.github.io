@@ -30,6 +30,35 @@
   
   <entry>
     <title>【CO】ISE的仿真工作流程浅析</title>
+    <link href="/2024/11/06/%E3%80%90CO%E3%80%91ISE%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E6%B5%85%E6%9E%90%20-%20%E5%89%AF%E6%9C%AC/"/>
+    <url>/2024/11/06/%E3%80%90CO%E3%80%91ISE%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E6%B5%85%E6%9E%90%20-%20%E5%89%AF%E6%9C%AC/</url>
+    
+    <content type="html"><![CDATA[<div class="note note-primary">            <p>对于ISE的仿真工作流程的一些个人见解</p>          </div><h1 id="ISE的仿真工作流程浅析"><a href="#ISE的仿真工作流程浅析" class="headerlink" title="ISE的仿真工作流程浅析"></a>ISE的仿真工作流程浅析</h1><h2 id="仿真是什么"><a href="#仿真是什么" class="headerlink" title="仿真是什么"></a>仿真是什么</h2><p>我们编写Verilog程序，是通过代码来模拟硬件操作。将代码转化为硬件行为并反映出来，这是ISE仿真去做的事情。至于我们看到的图形化界面所呈现的波形等信息，只是对仿真结果的呈现。并不是真正的仿真。</p><h2 id="ISE仿真工作流程"><a href="#ISE仿真工作流程" class="headerlink" title="ISE仿真工作流程"></a>ISE仿真工作流程</h2><p>在编写P4评测机时，对于ISE执行的命令其实只有两条：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">1. ISE 的安装路径/bin/nt64/fuse -nodebug -prj mips.prj -o mips.exe mips_tb<br>2. mips.exe -nolog -tclbatch mips.tcl<br></code></pre></td></tr></table></figure><p>第一条命令是对mips_tb进行编译，编译结果为mips.exe文件。执行这一步骤会在当前工作目录下产生两项关键文件（当然还有一些fuse的脚本之类的不过不在讨论范围内）：isim文件夹和mips.exe可执行程序。如果我们把产生的该.exe文件移至其他目录下执行，则会报错找不到isim文件夹，这告诉我们两条信息： </p><ol><li>.exe的执行依赖于执行的工作目录 </li><li>这里编译产生的.exe依赖于isim文件夹。</li></ol><p>这里的isim文件夹即为mips.exe进行仿真所依赖的文件，是必不可少的。同时我们还应该知道，<code>.exe</code>的执行是和当前工作目录有关的，故应当把isim文件夹和生成的mips.exe程序放在同一目录下。</p><p>mips.prj是执行的项目所包含的所有文件，内容如：</p><figure class="highlight isbl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs isbl"><span class="hljs-variable">verilog</span> <span class="hljs-variable"><span class="hljs-class">work</span></span> <span class="hljs-string">&quot;C:\Users\UserX\Desktop\p4_auto_test\mips\ALU.v&quot;</span><br><span class="hljs-variable">verilog</span> <span class="hljs-variable"><span class="hljs-class">work</span></span> <span class="hljs-string">&quot;C:\Users\UserX\Desktop\p4_auto_test\mips\CTRL.v&quot;</span><br><span class="hljs-variable">verilog</span> <span class="hljs-variable"><span class="hljs-class">work</span></span> <span class="hljs-string">&quot;C:\Users\UserX\Desktop\p4_auto_test\mips\datapath.v&quot;</span><br><span class="hljs-variable">verilog</span> <span class="hljs-variable"><span class="hljs-class">work</span></span> <span class="hljs-string">&quot;C:\Users\UserX\Desktop\p4_auto_test\mips\DM.v&quot;</span><br><span class="hljs-variable">verilog</span> <span class="hljs-variable"><span class="hljs-class">work</span></span> <span class="hljs-string">&quot;C:\Users\UserX\Desktop\p4_auto_test\mips\EXT.v&quot;</span><br><span class="hljs-variable">verilog</span> <span class="hljs-variable"><span class="hljs-class">work</span></span> <span class="hljs-string">&quot;C:\Users\UserX\Desktop\p4_auto_test\mips\grf.v&quot;</span><br><span class="hljs-variable">verilog</span> <span class="hljs-variable"><span class="hljs-class">work</span></span> <span class="hljs-string">&quot;C:\Users\UserX\Desktop\p4_auto_test\mips\IM.v&quot;</span><br><span class="hljs-variable">verilog</span> <span class="hljs-variable"><span class="hljs-class">work</span></span> <span class="hljs-string">&quot;C:\Users\UserX\Desktop\p4_auto_test\mips\mips.v&quot;</span><br><span class="hljs-variable">verilog</span> <span class="hljs-variable"><span class="hljs-class">work</span></span> <span class="hljs-string">&quot;C:\Users\UserX\Desktop\p4_auto_test\mips\mips_tb.v&quot;</span><br><span class="hljs-variable">verilog</span> <span class="hljs-variable"><span class="hljs-class">work</span></span> <span class="hljs-string">&quot;C:\Users\UserX\Desktop\p4_auto_test\mips\npc.v&quot;</span><br><span class="hljs-variable">verilog</span> <span class="hljs-variable"><span class="hljs-class">work</span></span> <span class="hljs-string">&quot;C:\Users\UserX\Desktop\p4_auto_test\mips\pc.v&quot;</span><br></code></pre></td></tr></table></figure><div class="note note-info">            <p>如果verilog程序中使用了<code>$readmemh()</code>来读取相对路径指向的文件，那么当前目录为工作目录。</p>          </div><p>第二条命令是按照mips_tcl中规定的方式执行mips.exe，mips_tcl中的内容如：</p><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">run <span class="hljs-number">200</span>us;<br><span class="hljs-keyword">exit</span><br></code></pre></td></tr></table></figure><p>所以总结一下ISE的仿真流程：</p><ol><li>编译文件产生.exe可执行程序和isim文件夹（仿真依赖文件）。</li><li>运行.exe并产生输出。</li></ol><p>运行评测命令后目录结构如下：<br><img src="/img/ise/p1.png" alt="目录结构"></p><h2 id="Add-Source和New-Source的一些区别"><a href="#Add-Source和New-Source的一些区别" class="headerlink" title="Add Source和New Source的一些区别"></a>Add Source和New Source的一些区别</h2><p>Add Source是通过相对路径进行调用而不是通过拷贝，即Add Source的文件并没有在当前项目的工作目录下，只是被当前项目调用。New Source是在当前项目目录（即工作目录）下新建文件。<br>但是在实例化过程中并不会产生影响:<br><img src="/img/ise/p3.png" alt="p3"><br><img src="/img/ise/p4.png" alt="p4"><br>因为这些文件都在.prj中被包括进了项目内：<br><img src="/img/ise/p2.png" alt="prj文件"><br>同时我们也可有这样的猜想：<br>在寻找文件时，会优先在当前项目目录下进行查找：第一张图中没有导入datapath时有一个问号标志，后面的路径是<code>E:\ise\</code>。</p><hr><p>这是我在讨论区回答问题时的一些总结。原文连接：<a href="http://cscore.buaa.edu.cn/#/discussion_area/1494/1798/posts">http://cscore.buaa.edu.cn/#/discussion_area/1494/1798/posts</a></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>技术</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>CO</tag>
+      
+      <tag>ISE</tag>
+      
+      <tag>Verilog</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>【CO】ISE的仿真工作流程浅析</title>
     <link href="/2024/11/06/%E3%80%90CO%E3%80%91ISE%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E6%B5%85%E6%9E%90/"/>
     <url>/2024/11/06/%E3%80%90CO%E3%80%91ISE%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E6%B5%85%E6%9E%90/</url>
     
