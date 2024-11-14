@@ -8,7 +8,7 @@ document.addEventListener('visibilitychange', function () {
     else {
         document.title = '( つ•̀ω•́)つ欢迎回来！';
         titleTime = setTimeout(function () {
-            document.title = OriginTitle;
+        document.title = OriginTitle;
         }, 2000);
     }
 });
