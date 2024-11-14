@@ -51,11 +51,11 @@ function flakeMove(canvasWidth, canvasHeight, flakeSize, fallSpeed) {
     this.y = Math.floor(Math.random() * canvasHeight);  /* y坐标 */
     this.size = Math.random() * flakeSize + 2;          /* 形状 */
     this.maxSize = flakeSize;                           /* 最大形状 */
-    this.speed = Math.random() * 1 + fallSpeed;         /* 坠落速度 */
+    this.speed = Math.random() * 0.5 + fallSpeed;         /* 坠落速度 */
     this.fallSpeed = fallSpeed;                         /* 坠落速度 */
     this.velY = this.speed;                             /* Y方向速度 */
     this.velX = 0;                                      /* X方向速度 */
-    this.stepSize = Math.random() / 50;                 /* 步长 */
+    this.stepSize = Math.random() / 30;                 /* 步长 */
     this.step = Math.random()*Math.PI*2;                /* 步数 */
 }
 flakeMove.prototype.update = function() {
@@ -67,7 +67,6 @@ flakeMove.prototype.update = function() {
         this.velY = this.speed
     }
     this.velX += Math.cos(this.step += .05) * this.stepSize;
-
     this.y += this.velY;
     this.x += this.velX;
     /* 飞出边界的处理 */
