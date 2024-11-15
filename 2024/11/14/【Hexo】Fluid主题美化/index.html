@@ -29,7 +29,7 @@
 <meta property="og:image" content="http://example.com/img/%E7%BE%8E%E5%8C%96/p1.png">
 <meta property="og:image" content="http://example.com/img/%E7%BE%8E%E5%8C%96/p2.png">
 <meta property="article:published_time" content="2024-11-14T08:33:32.000Z">
-<meta property="article:modified_time" content="2024-11-15T03:54:45.297Z">
+<meta property="article:modified_time" content="2024-11-15T10:31:08.343Z">
 <meta property="article:author" content="mRNA">
 <meta property="article:tag" content="Hexo">
 <meta property="article:tag" content="Fluid">
@@ -115,7 +115,7 @@
 <meta name="generator" content="Hexo 7.3.0"></head>
 
 
-<body>
+<body><!-- hexo injector body_begin start --><div id="web_bg"></div><!-- hexo injector body_begin end -->
   
 
   <header>
@@ -267,7 +267,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.1k 字
+          3.2k 字
         
       </span>
     
@@ -347,7 +347,11 @@
 
 <p>我们再来观察HTML代码：    </p>
 <p><img src="/img/%E7%BE%8E%E5%8C%96/p1.png" srcset="/img/loading.gif" lazyload alt="HTML">     </p>
-<p>这里我们可以看到<code>&lt;!-- hexo injector body_begin start --&gt;</code>和<code>&lt;!-- hexo injector body_begin end --&gt;</code>之间有我们在injector中注入的诸多<code>div</code>块，同时<code>&lt;!-- hexo injector body_end start --&gt;</code>和<code>&lt;!-- hexo injector body_end end --&gt;</code>之间有我们注入的Js脚本块和canvas画布。相信到这里已经可以明白注入器的工作效果。    </p>
+<p>这里我们可以看到body_begin的两条注释之间有我们在injector中注入的诸多<code>div</code>块，同时两条注释之间有我们注入的Js脚本块和canvas画布。相信到这里已经可以明白注入器的工作效果。  </p>
+<div class="note note-danger">
+            <p>在写这里时，我发现了一个Hexo的bug，有时间会在另一篇文章中详细写出。我对injector的源码进行了更改，现在我的Pull Request仍在审核，如果通过那么我将很高兴！ </p>
+          </div> 
+
 <h3 id="一般流程"><a href="#一般流程" class="headerlink" title="一般流程"></a>一般流程</h3><p>想要自定义美化效果，我们只需要引入Js文件和CSS文件。<br>首先在注入器中加入我们希望注入的代码块，建议将Js脚本注入<code>body_end</code>部分，同时对照开发者工具中的HTML代码选择适当的注入位置。注入器中的Js文件都会被自动加入到网页资源中，因此不需要在<code>_config.fluid.yml</code>中的<code>custom_js</code>中重复引入。</p>
 <div class="note note-info">
             <p>注意这里的Js文件存放的位置应该在博客根目录下的<code>source</code>文件夹新建一个<code>js</code>文件夹目录，存放我们所有的Javascript文件。</p>
@@ -836,5 +840,5 @@
   <noscript>
     <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
   </noscript>
-</body>
+<!-- hexo injector body_end start --><script src="/js/backgroundize.js"></script><script src="/js/snow.js"></script><script src="/js/title.js"></script><script src="/js/sign.js"></script><script src="/js/scrollAnimation.js"></script><script src="/js/time-insert.js"></script><script src="/js/time.js"></script><!-- hexo injector body_end end --></body>
 </html>
