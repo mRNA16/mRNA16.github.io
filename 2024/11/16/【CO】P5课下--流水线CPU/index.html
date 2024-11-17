@@ -19,21 +19,23 @@
   <meta name="author" content="mRNA">
   <meta name="keywords" content="">
   
-    <meta name="description" content="来自mRNA的学习与生活">
+    <meta name="description" content="本文为P5课下流水线CPU的设计思路和具体细节，仅供参考。            写在前面进入P5，计组实验进入了流水线环节，搭完流水线和写这篇文章相隔两周（多谢P3课下的RAM给了我这次机会），这两周真是给自己放了一个长假。神经高度紧张后的放松是十分必要的，连续好几周的计组实在让我心力交瘁。不过太过放松自然也不是好事，就像现在，我的P5设计文档刚开始写，评测机也没有搭，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【CO】P5课下--流水线CPU">
 <meta property="og:url" content="http://example.com/2024/11/16/%E3%80%90CO%E3%80%91P5%E8%AF%BE%E4%B8%8B--%E6%B5%81%E6%B0%B4%E7%BA%BFCPU/index.html">
 <meta property="og:site_name" content="mRNA的碎碎念Blog">
-<meta property="og:description" content="来自mRNA的学习与生活">
+<meta property="og:description" content="本文为P5课下流水线CPU的设计思路和具体细节，仅供参考。            写在前面进入P5，计组实验进入了流水线环节，搭完流水线和写这篇文章相隔两周（多谢P3课下的RAM给了我这次机会），这两周真是给自己放了一个长假。神经高度紧张后的放松是十分必要的，连续好几周的计组实在让我心力交瘁。不过太过放松自然也不是好事，就像现在，我的P5设计文档刚开始写，评测机也没有搭，">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/p5/p1.png">
 <meta property="article:published_time" content="2024-11-16T06:59:13.000Z">
-<meta property="article:modified_time" content="2024-11-16T07:02:36.147Z">
+<meta property="article:modified_time" content="2024-11-17T06:40:30.419Z">
 <meta property="article:author" content="mRNA">
 <meta property="article:tag" content="CO">
 <meta property="article:tag" content="Verilog">
 <meta property="article:tag" content="P5课下">
 <meta property="article:tag" content="流水线CPU">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/p5/p1.png">
   
   
   
@@ -263,7 +265,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          0 字
+          1.5k 字
         
       </span>
     
@@ -274,7 +276,7 @@
         
         
         
-          1 分钟
+          13 分钟
         
       </span>
     
@@ -325,7 +327,35 @@
             
               <div class="markdown-body">
                 
-                
+                <div class="note note-primary">
+            <p>本文为P5课下流水线CPU的设计思路和具体细节，仅供参考。</p>
+          </div>
+<h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>进入P5，计组实验进入了流水线环节，搭完流水线和写这篇文章相隔两周（多谢P3课下的RAM给了我这次机会），这两周真是给自己放了一个长假。神经高度紧张后的放松是十分必要的，连续好几周的计组实在让我心力交瘁。不过太过放松自然也不是好事，就像现在，我的P5设计文档刚开始写，评测机也没有搭，理论作业今晚ddl，不过我还是有信心完成的。</p>
+<h1 id="【CO】P5课下–流水线CPU"><a href="#【CO】P5课下–流水线CPU" class="headerlink" title="【CO】P5课下–流水线CPU"></a>【CO】P5课下–流水线CPU</h1><h2 id="总体设计思路"><a href="#总体设计思路" class="headerlink" title="总体设计思路"></a>总体设计思路</h2><p>在流水线CPU的搭建这部分，我认为最重要的是理解流水线的工作机制：1.每一流水级同一周期内执行的指令是不同的。2.每到一流水级，获取自己需要的数据（上一级传递，转发与阻塞），每离开一流水级，把自己的东西全部打包打走（传递到下一级）。只要能准确地做到这两件事，就可以实现流水线的流动。和之前的单周期CPU相比，区别我们可以从两个方面去看：物理结构上区分了流水级，指令并且无论是否需要在某一流水级实现功能，都必须流过，并且是单向的；数据通路上不同流水级之间相互影响，数据需要在不同流水级之间传递，传递方向不是单向的。基于这样的特点，我们在介绍物理结构时以流水级为单位，在介绍数据通路时以指令为单位，重点关注指令在每个流水级的行为。</p>
+<h3 id="指令集合"><a href="#指令集合" class="headerlink" title="指令集合"></a>指令集合</h3><p>与P4相同，课下提交要求实现的指令包括add(u),sub(u),ori,lui,beq,lw,sw,nop,j,jal,jr。在此基础上添加了移位指令sll。分类如下：</p>
+<table>
+<thead>
+<tr>
+<th>R型指令</th>
+<th>I型指令</th>
+<th>J型指令</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>add(u),sub(u),sll(nop),jr</td>
+<td>ori,lui,beq,lw,sw</td>
+<td>j,jal</td>
+</tr>
+</tbody></table>
+<h3 id="模块设计"><a href="#模块设计" class="headerlink" title="模块设计"></a>模块设计</h3><p>之前的CPU模块包括：PC，IM，NPC，GRF，EXT，ALU，DM，CTRL等模块。流水线部分为了清晰地区分流水级，我们做出调整，将PC和IM合并作为F（Fetch）级的IFU模块；添加一个CMP模块，负责分支指令的比较（之前这部分是在ALU通过减法判断的，为了流水线的效率我们将CMP提取出来），与NPC，GRF，EXT构成D（Decode）级。ALU构成E（Execute）级，DM构成M（Memory）级。同时还有W（Write Back）回写级，将数据回写入GRF内，所以可以认为GRF既是D级元件也是W级元件。<br>同时，为了实现数据在流水线间的流动传递，在两流水级之间我们都要有一个流水线寄存器，负责接收上一流水级传递来的数据。所以抽象一下，我们的流水线寄存器其实就是这样：<code>F | D | E | M | W</code>。<br>对于CTRL，我们有两种选择，一是分布式译码，每一流水级都对CTRL进行实例化，获取在该流水级需要的数据，这样做的好处是在数据流水时只需要把指令和在该级获得的数据流水，而不需要把大量的控制信号流水，缺点是需要多次实例化控制器。二是集中式译码，在D级便将所有控制信号全部得出，优点在于只需要实例化一次控制器，缺点在于控制信号需要随指令一直流水传递。我认为，对于课程要求来说，分布式译码便于我们添加指令，如果有新的指令需要我们在某一级之后才能判断信号的值，分布式译码会让这样的过程更清晰；同时如果有新的控制信号出现，采用集中式译码需要在每一级流水线寄存器都添加新的端口；再加上我不喜欢把太多数据流水下去，更希望模块化独立化减少流水级之间的耦合，便于debug，所以选择采用分布式译码。当然，译码方式的选择仁者见仁，根据自己的喜好选择即可。<br>以上的模块我们之前都接触过，除此之外我们还需要一个STALL模块来控制阻塞信号的产生，用来处理数据冒险，具体内容我们在下面介绍。<br>综上我们的模块包括IFU，NPC，GRF，CMP，EXT，ALU，DM，CTRL，STALL，以及各流水线寄存器。顶层模块为mips，在模块命名和顶层进行模块实例化时，我们采用以下命名规则：</p>
+<ol>
+<li>模块命名为<code>大写流水级_大写模块名</code>，如：<code>D_CMP</code>,<code>E_ALU</code>。特别的，阻塞器和控制器模块分别为<code>STALL</code>和<code>CTRL</code>。</li>
+<li>流水线寄存器命名为<code>大写两流水级_REG</code>，如<code>EM_REG</code>。</li>
+<li>模块实例化时命名为小写模块名，如<code>ifu</code>，<code>npc</code>。特别的，阻塞器实例化名称为<code>Stall</code>，控制器实例化名称为<code>大写流水级_ctrl</code>，如：<code>D_ctrl</code>,<code>E_ctrl</code>。</li>
+<li>流水线寄存器实例化命名为<code>大写两流水级_reg</code>，如<code>DE_reg</code>。<br>总体结构如下：<br><img src="/img/p5/p1.png" srcset="/img/loading.gif" lazyload alt="总体结构"></li>
+</ol>
+<h3 id="数据通路"><a href="#数据通路" class="headerlink" title="数据通路"></a>数据通路</h3><p>除了一般的流水通路外，我们还需要转发和阻塞的策略来处理冒险情况的发生。转发的情况可以这样理解：需要的数据已经产生，不过在更后面的流水级中，这时候通过旁路转发便可以获得数据。阻塞的情况是：需要的数据还未产生，此时我们必须要阻塞流水线，直到需要的数据产生。我们采用AT法进行判断，具体内容我们在后面介绍。</p>
+<h2 id="具体模块设计"><a href="#具体模块设计" class="headerlink" title="具体模块设计"></a>具体模块设计</h2>
                 
               </div>
             
