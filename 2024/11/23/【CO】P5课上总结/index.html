@@ -19,24 +19,27 @@
   <meta name="author" content="mRNA">
   <meta name="keywords" content="">
   
-    <meta name="description" content="午后琐记  今天上午一觉醒来，已经是十点五十了。不同的是这一觉睡得很踏实，应该跟昨天人体工程和打球消耗很大的体力有关，不用起来上课，不用debug，虽然起床的那一刻起我就决定了下午去自习写作业。起床洗漱后，把堆积很久的衣服带到洗衣机里洗一洗。令我有些讨厌的是，洗衣机里留下了上个人的袜子，我想，尼玛啊有点素质吗袜子都要放洗衣机洗。还好洗衣机可以筒自洁，缓解了我的一些膈应。不过我还是克制住了把他的袜子">
+    <meta name="description" content="P5第一次上机出了一些很不好的问题，归根到底还是准备不充分吧。趁这个机会把P5课上总结一下，指导一下两天后的第二次上机。            P5课上总结P5课上添加的指令可以分为计算类指令，分支跳转类指令，访存类指令。下面分别分析并总结一些方法。 计算类指令计算类指令较为容易，对ALU进行修改即可。然后在ALU中自上而下对不同的信号添加新指令。 分支跳转类指令分支跳转">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【随笔】午后琐记">
-<meta property="og:url" content="http://example.com/2024/11/16/%E3%80%90%E9%9A%8F%E7%AC%94%E3%80%91%E5%8D%88%E5%90%8E%E7%90%90%E8%AE%B0/index.html">
+<meta property="og:title" content="【CO】P5课上总结">
+<meta property="og:url" content="http://example.com/2024/11/23/%E3%80%90CO%E3%80%91P5%E8%AF%BE%E4%B8%8A%E6%80%BB%E7%BB%93/index.html">
 <meta property="og:site_name" content="mRNA的碎碎念Blog">
-<meta property="og:description" content="午后琐记  今天上午一觉醒来，已经是十点五十了。不同的是这一觉睡得很踏实，应该跟昨天人体工程和打球消耗很大的体力有关，不用起来上课，不用debug，虽然起床的那一刻起我就决定了下午去自习写作业。起床洗漱后，把堆积很久的衣服带到洗衣机里洗一洗。令我有些讨厌的是，洗衣机里留下了上个人的袜子，我想，尼玛啊有点素质吗袜子都要放洗衣机洗。还好洗衣机可以筒自洁，缓解了我的一些膈应。不过我还是克制住了把他的袜子">
+<meta property="og:description" content="P5第一次上机出了一些很不好的问题，归根到底还是准备不充分吧。趁这个机会把P5课上总结一下，指导一下两天后的第二次上机。            P5课上总结P5课上添加的指令可以分为计算类指令，分支跳转类指令，访存类指令。下面分别分析并总结一些方法。 计算类指令计算类指令较为容易，对ALU进行修改即可。然后在ALU中自上而下对不同的信号添加新指令。 分支跳转类指令分支跳转">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/img/%E5%8D%88%E5%90%8E%E7%90%90%E8%AE%B0/IMG_7778.JPG">
-<meta property="article:published_time" content="2024-11-16T07:05:11.000Z">
-<meta property="article:modified_time" content="2024-11-16T08:01:57.791Z">
+<meta property="og:image" content="http://example.com/img/IMG_7804.PNG">
+<meta property="article:published_time" content="2024-11-23T08:33:56.000Z">
+<meta property="article:modified_time" content="2024-11-23T10:06:03.210Z">
 <meta property="article:author" content="mRNA">
-<meta property="article:tag" content="随笔">
+<meta property="article:tag" content="CO">
+<meta property="article:tag" content="Verilog">
+<meta property="article:tag" content="流水线CPU">
+<meta property="article:tag" content="P5课上">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/img/%E5%8D%88%E5%90%8E%E7%90%90%E8%AE%B0/IMG_7778.JPG">
+<meta name="twitter:image" content="http://example.com/img/IMG_7804.PNG">
   
   
   
-  <title>【随笔】午后琐记 - mRNA的碎碎念Blog</title>
+  <title>【CO】P5课上总结 - mRNA的碎碎念Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -234,7 +237,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="【随笔】午后琐记"></span>
+            <span id="subtitle" data-typed-text="【CO】P5课上总结"></span>
           
         </div>
 
@@ -250,8 +253,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-11-16 15:05" pubdate>
-          2024年11月16日 下午
+        <time datetime="2024-11-23 16:33" pubdate>
+          2024年11月23日 下午
         </time>
       </span>
     
@@ -262,7 +265,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1k 字
+          1.1k 字
         
       </span>
     
@@ -273,7 +276,7 @@
         
         
         
-          9 分钟
+          10 分钟
         
       </span>
     
@@ -319,12 +322,26 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">【随笔】午后琐记</h1>
+            <h1 id="seo-header">【CO】P5课上总结</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="午后琐记"><a href="#午后琐记" class="headerlink" title="午后琐记"></a>午后琐记</h1><p>  今天上午一觉醒来，已经是十点五十了。不同的是这一觉睡得很踏实，应该跟昨天人体工程和打球消耗很大的体力有关，不用起来上课，不用debug，虽然起床的那一刻起我就决定了下午去自习写作业。起床洗漱后，把堆积很久的衣服带到洗衣机里洗一洗。令我有些讨厌的是，洗衣机里留下了上个人的袜子，我想，尼玛啊有点素质吗袜子都要放洗衣机洗。还好洗衣机可以筒自洁，缓解了我的一些膈应。不过我还是克制住了把他的袜子扔到地上的冲动，放到了洗衣机对面的饮水机顶上，希望那里还有很多灰可以给他来点教训。<br>  处理完可以用洗衣机洗的衣服，我开始洗裤头和袜子，用的是老爸教我的方法，用很烫的热水泡了一会儿，这样确实洗的挺干净的。然后我拿来了浴巾和毛巾，最近几周我发觉我的浴巾有一股很难闻的味道，应该是每天洗澡然后浴巾根本晾不干，并且挂浴巾的地方晒不到太阳导致的。我倒了很多洗衣液，当然还是用的很烫的热水。说实话毛巾和浴巾还是很难洗的，冲水也不是不冲也不是，只能一遍一遍稀释，让上面残留的洗衣液少一些。哦差点忘了，我回去拿浴巾和毛巾的时候发现有两件衣服被落下没丢到洗衣机里，只好手洗。手洗和机洗的差别还是挺大的，因为机洗会有一个脱水环节，洗完的衣服会更干一些，不像我手洗的衣服还会往下滴答水。<br>  晾衣服也是一个考验，衣服架子不是很够，所以我选择把那些速干的衣服三件放在一起晾，样子显得十分滑稽。就这样上午就过去了。去合一吃了一碗麻辣烫，再去快递站拿托老爸老妈给我买的卫生纸。回去给手机充了会儿电，就出来自习了。<br>  作业还是挺多的，但是我不是很想写。计组让我很疲惫，这几天本想给自己休息一下，在写博客的时候发现hexo的一个bug，修了好几天bug想了很多解决方案，最后受测试数据的限制只在源代码基础上更改了六个字符，其中还有一个是空格。拉取申请提交上去了不过还没有审核，我感觉自己的拉取申请写的像一坨狗屎，不过也就那样吧，我也写不出更好的、更有说服力的话了。希望Hexo项目组能采纳我的建议吧，要是能把我的完全体更改方案也接纳那就太好了！我觉得Hexo的test里的情况没有实际意义，不能说明什么，不过谁知道呢？或许是我的认知太狭隘了吧。<br>  唉，感觉好累啊。上了大二以来好像越来越没有自己的生活了。生活节奏一团乱麻，熬夜，不想吃饭，没有食欲但是每次吃的还挺多。TD，博雅一次没有刷过，阳光打卡也很久没打了。每天就是写作业，玩手机，睡觉。相册里的照片没多几张，之前看到美好的东西都会拍照的，现在没有拍过。只有自己去动物园的时候拍了很多。挺羡慕动物园里的小动物的。这样挺不好的，但是我感觉好累啊，没有力量去让自己的生活更有色彩一点，这几天还是先多睡觉吧，休息休息。神经和身体高度紧张劳累后的调节还是得慢慢学慢慢探索啊！<br>  放几张大熊猫吧！<br><img src="/img/%E5%8D%88%E5%90%8E%E7%90%90%E8%AE%B0/9ae6f1c27143804d46d8a0dfead59c3.jpg" srcset="/img/loading.gif" lazyload alt="IMG_7664"><br><img src="/img/%E5%8D%88%E5%90%8E%E7%90%90%E8%AE%B0/e2ced732bdf1ec0907b3044d18f4c86.jpg" srcset="/img/loading.gif" lazyload alt="IMG_7664"><br><img src="/img/%E5%8D%88%E5%90%8E%E7%90%90%E8%AE%B0/462002ffa5682047749dd6033cb1066.jpg" srcset="/img/loading.gif" lazyload alt="IMG_7664"><br><img src="/img/%E5%8D%88%E5%90%8E%E7%90%90%E8%AE%B0/74ca407ce1983f5d0a6bed030cec291.jpg" srcset="/img/loading.gif" lazyload alt="IMG_7664"><br><img src="/img/%E5%8D%88%E5%90%8E%E7%90%90%E8%AE%B0/ebc23173dd22fd12c0663741bcc0909.jpg" srcset="/img/loading.gif" lazyload alt="IMG_7664"></p>
+                <div class="note note-primary">
+            <p>P5第一次上机出了一些很不好的问题，归根到底还是准备不充分吧。趁这个机会把P5课上总结一下，指导一下两天后的第二次上机。</p>
+          </div>
+<h1 id="P5课上总结"><a href="#P5课上总结" class="headerlink" title="P5课上总结"></a>P5课上总结</h1><p>P5课上添加的指令可以分为计算类指令，分支跳转类指令，访存类指令。下面分别分析并总结一些方法。</p>
+<h2 id="计算类指令"><a href="#计算类指令" class="headerlink" title="计算类指令"></a>计算类指令</h2><p>计算类指令较为容易，对ALU进行修改即可。然后在ALU中自上而下对不同的信号添加新指令。</p>
+<h2 id="分支跳转类指令"><a href="#分支跳转类指令" class="headerlink" title="分支跳转类指令"></a>分支跳转类指令</h2><p>分支跳转类指令进一步可以根据链接方式分为条件链接、无条件链接和无链接。分支跳转部分其实也存在条件的问题，一般来说，分支指令都是有条件的，跳转指令不需要条件（分支条件和链接条件往往是相同的，即如果分支则发生一种行为，否则进行另一种行为）。分支跳转部分可以在D级完成，对于条件的判断对CMP模块进行扩展即可。问题的关键在于链接方式。下面分开来具体分析。</p>
+<h3 id="无链接"><a href="#无链接" class="headerlink" title="无链接"></a>无链接</h3><p>这种指令当然十分简单，和beq、j没什么区别，对CTRL，NPC进行修改即可。</p>
+<h3 id="无条件链接"><a href="#无条件链接" class="headerlink" title="无条件链接"></a>无条件链接</h3><p>无条件链接比如jal，如果是分支指令的话，则是有条件分支，无条件链接。这个时候由于对寄存器有写操作，会涉及转发和阻塞的问题。在CTRL里要记得在A那里指定写入的目标寄存器（应该是RA吧，不过如果是rt或者rd也无妨），在jump_and_link那里记得加上该新指令，以便于转发的判断。这种无条件链接不需要在流水中传递额外的信号，和jal基本上一样。</p>
+<h3 id="有条件链接"><a href="#有条件链接" class="headerlink" title="有条件链接"></a>有条件链接</h3><p>这种指令需要特别注意。是否分支（和是否链接）在D级完成判断，这时注意！！！<br>第一，一定要把是否链接的判断信号流水下去，因为是否链接会影响到CTRL中对新指令写入寄存器(A)的判断和是否链接(jump_and_link)以及各种其他信号的判断，并且在CTRL中一定要是<code>新指令&amp;&amp;链接条件成立</code>这样去添加新指令，这样才能把两种情况分开。对于一般信号，AT信号，jump_and_link都是如此，所以要在流水线寄存器中从D级开始流水链接信号，同时CTRL增加端口接收链接信号。分支信号不需要传入流水线和CTRL，因为其在D级作用于NPC即可，只需要对NPC接收信号的端口和内部适当修改。<br>第二，对于清空延迟槽的操作，实现的操作是清空FD寄存器，清空延迟槽信号的产生一定要判断此时是否阻塞，因为如果阻塞，那么对于是否清空延迟槽这一行为的判断信号是不准确的，如果此时清空，那么会误删延迟槽。所以，清空延迟槽时一定要判断此时是否阻塞。FD寄存器的清空信号在数据通路中产生即可（判断npc_op，stall和清空延迟槽对应的条件（CMP中产生））。</p>
+<h2 id="访存类指令"><a href="#访存类指令" class="headerlink" title="访存类指令"></a>访存类指令</h2><p>相比于一般的lw和sw，课上添加的访存指令可能存在这样的情况：存入寄存器时有条件判断到底存入哪个寄存器，这种情况下我们只能在新指令到达W级时才能知道到底写入哪个寄存器。所以新指令在E、M时的阻塞条件我们都无法判断，一种思路是暴力阻塞，即只要E、M级的指令是新指令就阻塞，这样大概率会超时。不超时的思路是，在新指令在E、M级时，同时判断D级的指令是否需要新指令可能写入的寄存器的数据，如果需要那么阻塞。这里在对stall进行改写时，最好和原来的AT法隔离开来，另写一个判断然后再或上去得到要输出的stall，这样不会干扰其他指令通过AT法实现的stall的判断。</p>
+<hr>
+<p>此外还为npc和ext预留了一位信号，防止上机现加产生遗漏。</p>
+<blockquote>
+<p>希望两天后上机顺利吧</p>
+</blockquote>
 
                 
               </div>
@@ -343,7 +360,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E7%94%9F%E6%B4%BB/" class="category-chain-item">生活</a>
+  <a href="/categories/%E6%8A%80%E6%9C%AF/" class="category-chain-item">技术</a>
   
   
 
@@ -358,7 +375,13 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E9%9A%8F%E7%AC%94/" class="print-no-link">#随笔</a>
+        <a href="/tags/CO/" class="print-no-link">#CO</a>
+      
+        <a href="/tags/Verilog/" class="print-no-link">#Verilog</a>
+      
+        <a href="/tags/%E6%B5%81%E6%B0%B4%E7%BA%BFCPU/" class="print-no-link">#流水线CPU</a>
+      
+        <a href="/tags/P5%E8%AF%BE%E4%B8%8A/" class="print-no-link">#P5课上</a>
       
     </div>
   
@@ -370,8 +393,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>【随笔】午后琐记</div>
-      <div>http://example.com/2024/11/16/【随笔】午后琐记/</div>
+      <div>【CO】P5课上总结</div>
+      <div>http://example.com/2024/11/23/【CO】P5课上总结/</div>
     </div>
     <div class="license-meta">
       
@@ -383,7 +406,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年11月16日</div>
+          <div>2024年11月23日</div>
         </div>
       
       
@@ -415,18 +438,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/11/23/%E3%80%90CO%E3%80%91P5%E8%AF%BE%E4%B8%8A%E6%80%BB%E7%BB%93/" title="【CO】P5课上总结">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">【CO】P5课上总结</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/11/16/%E3%80%90CO%E3%80%91P5%E8%AF%BE%E4%B8%8B--%E6%B5%81%E6%B0%B4%E7%BA%BFCPU/" title="【CO】P5课下--流水线CPU">
-                        <span class="hidden-mobile">【CO】P5课下--流水线CPU</span>
+                      <a href="/2024/11/16/%E3%80%90%E9%9A%8F%E7%AC%94%E3%80%91%E5%8D%88%E5%90%8E%E7%90%90%E8%AE%B0/" title="【随笔】午后琐记">
+                        <span class="hidden-mobile">【随笔】午后琐记</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
