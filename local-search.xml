@@ -4,6 +4,37 @@
   
   
   <entry>
+    <title>【CO】P7课下--支持异常中断处理的流水线CPU</title>
+    <link href="/2024/12/08/%E3%80%90CO%E3%80%91P7%E8%AF%BE%E4%B8%8B-%E6%94%AF%E6%8C%81%E5%BC%82%E5%B8%B8%E4%B8%AD%E6%96%AD%E5%A4%84%E7%90%86%E7%9A%84%E6%B5%81%E6%B0%B4%E7%BA%BFCPU/"/>
+    <url>/2024/12/08/%E3%80%90CO%E3%80%91P7%E8%AF%BE%E4%B8%8B-%E6%94%AF%E6%8C%81%E5%BC%82%E5%B8%B8%E4%B8%AD%E6%96%AD%E5%A4%84%E7%90%86%E7%9A%84%E6%B5%81%E6%B0%B4%E7%BA%BFCPU/</url>
+    
+    <content type="html"><![CDATA[<div class="note note-primary">            <p>P7在P6基础上增加了异常和中断的处理，可以处理异常指令和相应外部中断。本文为P7课下流水线CPU的设计思路和具体细节，仅供参考。</p>          </div><h1 id="【CO】P7课下–支持异常中断处理的流水线CPU"><a href="#【CO】P7课下–支持异常中断处理的流水线CPU" class="headerlink" title="【CO】P7课下–支持异常中断处理的流水线CPU"></a>【CO】P7课下–支持异常中断处理的流水线CPU</h1><h2 id="设计方案"><a href="#设计方案" class="headerlink" title="设计方案"></a>设计方案</h2><p>P7的教程实在是让人摸不着头脑，但总体上还是可以分为一些任务：</p><ol><li>增加流水线识别异常指令</li><li>增加外部中断</li><li>增加协处理器以便响应异常和中断<br>我是按照3、2、1的顺序进行的，在进行P7时，尤其能感受到模块化思想的应用！模块接入了信号并进行处理，至于信号怎么来的呢？不用管，交给别的模块就好了，有了这样的思想，才能更有条理地搭建CPU。</li></ol><h3 id="增加协处理器以便响应异常和中断"><a href="#增加协处理器以便响应异常和中断" class="headerlink" title="增加协处理器以便响应异常和中断"></a>增加协处理器以便响应异常和中断</h3><p>CP0其实要做的事情也很清晰：接收异常和中断信号，根据SR寄存器的设置，做出是否相应的判断，然后输出req异常信号，指示流水线进入异常处理程序，相应异常的同时记录EPC、Cause等信息。这里要注意优先级的问题，reset信号永远是优先级最高（教程中似乎并没强调reset是同步还是异步，应该无所谓）。然后如果收到EXLClr信号，那么将exl域置为0，表示此时可以相应异常。之后如果req信号为1，即此时出现异常，那么bd、exccode、exl、epc都要做出更新，最后才是WE时，可以对SR和EPC进行写入操作</p><h3 id="增加外部中断"><a href="#增加外部中断" class="headerlink" title="增加外部中断"></a>增加外部中断</h3><p>这里需要增加桥来进行CPU和IM、DM、TC0、TC1的交互，桥说白了就是一个交换机，CPU想对外部模块（IM、DM、TC0、TC1和外部中断）进行操作和响应，对于CPU来说，它是看不到外面的世界的，所以他能做的只有对一些特殊的内存地址进行读写操作，桥则把CPU对这些规定好的特殊地址转化为对外部模块的操作。这些外部模块都由课程组给出，TC和CPU、Bridge在顶层模块之下，IM和DM在tb中实现。</p><h3 id="增加流水线识别异常指令"><a href="#增加流水线识别异常指令" class="headerlink" title="增加流水线识别异常指令"></a>增加流水线识别异常指令</h3><p>这部分细节还是蛮多的。首先我们要在每一级判断指令是否异常，指令异常是通过流水线寄存器传递下去保证先后顺序的，不能直接给CP0处理器，否则可能会出现处理顺序错误。同时每一级之间的异常也有优先级，流水下来的异常优先级最高，其次才是本级检测的异常，同一级的不同异常间优先级无所谓，毕竟在同一级不会出现多个异常。当M级的CP0（CP0不一定非得在M级，不过M级处理起来比较方便，因为所有异常到这里都已经判断完成了）发出异常信号时，此时各流水线寄存器需要将待更新的PC设置为4180，并将其他信息全部清零，这样使流水线中正在流水的异常指令后的指令不再被处理（变为nop），直到进入异常处理程序。这个地方DE寄存器有一定的特殊性，考虑阻塞时插入空泡，如果空泡的pc和bd（是否是延迟槽信息）被清空为0，那么如果nop到达M级，此时恰有中断信号，那么写入的EPC将是错误的，同时bd会影响跳转的位置，所以这两条信息是不能被清零的，而是要继承D级。实现方式如下：</p><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs Verilog"><span class="hljs-keyword">always</span> @(<span class="hljs-keyword">posedge</span> clk) <span class="hljs-keyword">begin</span><br>        <span class="hljs-keyword">if</span>(reset===<span class="hljs-number">1&#x27;b1</span>||clear===<span class="hljs-number">1&#x27;b1</span>||req)<span class="hljs-keyword">begin</span><br>            E_pc&lt;=reset?<span class="hljs-number">0</span>:req?<span class="hljs-number">32&#x27;h00004180</span>:(clear?D_pc:<span class="hljs-number">32&#x27;b0</span>);<br>E_db&lt;=reset?<span class="hljs-number">0</span>:(clear)?D_db:<span class="hljs-number">0</span>;<br>E_exc_code&lt;=<span class="hljs-number">5&#x27;b0</span>;<br>            E_instr&lt;=<span class="hljs-number">32&#x27;b0</span>;<br>            E_RD1&lt;=<span class="hljs-number">32&#x27;b0</span>;<br>            E_RD2&lt;=<span class="hljs-number">32&#x27;b0</span>;<br>            E_EXT&lt;=<span class="hljs-number">32&#x27;b0</span>;<br>E_zero&lt;=<span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">end</span><br>        <span class="hljs-keyword">else</span> <span class="hljs-keyword">begin</span><br>            E_pc&lt;=D_pc;<br>            E_instr&lt;=D_instr;<br>            E_RD1&lt;=D_RD1;<br>            E_RD2&lt;=D_RD2;<br>            E_EXT&lt;=D_EXT;<br>E_zero&lt;=D_zero;<br>E_db&lt;=D_db;<br>E_exc_code&lt;=D_exc_code;<br>        <span class="hljs-keyword">end</span><br>    <span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure><p>同时仍要注意优先级，reset优先级始终是最高的，检查的时候不妨问问自己reset、stall、req分别同时到来时，会发生什么。</p><h2 id="思考题"><a href="#思考题" class="headerlink" title="思考题"></a>思考题</h2><ol><li>请查阅相关资料，说明鼠标和键盘的输入信号是如何被 CPU 知晓的？<br>鼠标和键盘的输入信号能够被 CPU 知晓，是通过硬件生成信号、控制器缓存与传输、中断机制触发、CPU 响应处理、以及操作系统和应用程序进一步解析和使用的层层协作实现的。</li><li>请思考为什么我们的 CPU 处理中断异常必须是已经指定好的地址？如果你的 CPU 支持用户自定义入口地址，即处理中断异常的程序由用户提供，其还能提供我们所希望的功能吗？如果可以，请说明这样可能会出现什么问题？否则举例说明。（假设用户提供的中断处理程序合法）<br>如果用户自定义入口地址，理论上是可以实现我们希望的功能的，但是可能会导致用户程序占用共享资源与其他部件产生冲突，同时还应该考虑权限问题，如果服务器等大型多用户计算机允许用户自定义入口，那么有可能会通过入口程序获得本没有权限获得的数据，导致可能发生安全问题。</li><li>为何与外设通信需要 Bridge？<br>Bridge为所有外设和CPU提供了桥梁。对于CPU来说，CPU并不知道外面的世界是什么样的，只能读写内存，我们的桥中可以对一些特殊位置的读写指令进行处理，使其实现与外设的交流。对于外设来说，如果没有桥的存在，那么每当增加一项外设，那么就要在硬件接口等方面做出许多更改，这显然是不切实际的，桥使外设的添加更加方便。同时桥也可以起到缓冲和统一的作用，缓冲数据的读写，同时使不同协议之间的数据传输能正常进行。</li><li>请阅读官方提供的定时器源代码，阐述两种中断模式的异同，并针对每一种模式绘制状态移图。<br>模式0下中断信号将在响应后再进入下一个周期，需要手动重启。模式1下中断信号将自动周期性产生。<br><img src="/img/0.png" alt="0"><br><img src="/img/1.png" alt="1"></li><li>倘若中断信号流入的时候，在检测宏观 PC 的一级如果是一条空泡（你的 CPU 该级所有信息均为空）指令，此时会发生什么问题？在此例基础上请思考：在 P7 中，清空流水线产生的空泡指令应该保留原指令的哪些信息？<br>如果所有信息均为空，那么写入的EPC会出现错误。所以为了避免这样的问题，在DE流水线寄存器插入气泡时，应当保留原pc和bd（是否为延迟槽指令），这样才能保证写入EPC的正确。</li><li>为什么 <code>jalr</code> 指令为什么不能写成 <code>jalr $31, $31</code>？<br>因为如果该指令的延迟槽为宏观PC时，此时若发生中断，那么写入操作将无法正确进行。</li></ol>]]></content>
+    
+    
+    <categories>
+      
+      <category>技术</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>CO</tag>
+      
+      <tag>Verilog</tag>
+      
+      <tag>流水线CPU</tag>
+      
+      <tag>P7课下</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>【CO】P6课下--支持更多指令的流水线CPU</title>
     <link href="/2024/11/28/%E3%80%90CO%E3%80%91P6%E8%AF%BE%E4%B8%8B-%E6%94%AF%E6%8C%81%E6%9B%B4%E5%A4%9A%E6%8C%87%E4%BB%A4%E7%9A%84%E6%B5%81%E6%B0%B4%E7%BA%BFCPU/"/>
     <url>/2024/11/28/%E3%80%90CO%E3%80%91P6%E8%AF%BE%E4%B8%8B-%E6%94%AF%E6%8C%81%E6%9B%B4%E5%A4%9A%E6%8C%87%E4%BB%A4%E7%9A%84%E6%B5%81%E6%B0%B4%E7%BA%BFCPU/</url>
@@ -22,9 +53,11 @@
       
       <tag>CO</tag>
       
-      <tag>Verilog流水线CPU</tag>
+      <tag>Verilog</tag>
       
-      <tag>P6课上</tag>
+      <tag>流水线CPU</tag>
+      
+      <tag>P6课下</tag>
       
     </tags>
     
