@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/u1/13387257702454410.jpg">
 <meta property="article:published_time" content="2025-03-24T02:27:56.000Z">
-<meta property="article:modified_time" content="2025-03-24T02:45:55.269Z">
+<meta property="article:modified_time" content="2025-03-24T02:50:01.783Z">
 <meta property="article:author" content="mRNA">
 <meta property="article:tag" content="OO">
 <meta property="article:tag" content="U1">
@@ -264,7 +264,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.9k 字
+          3.8k 字
         
       </span>
     
@@ -275,7 +275,7 @@
         
         
         
-          33 分钟
+          32 分钟
         
       </span>
     
@@ -331,7 +331,157 @@
           </div>
 <h2 id="程序结构分析"><a href="#程序结构分析" class="headerlink" title="程序结构分析"></a>程序结构分析</h2><p><img src="/img/u1/%E7%B1%BB%E5%9B%BE.png" srcset="/img/loading.gif" lazyload alt="类图"></p>
 <h3 id="设计考虑"><a href="#设计考虑" class="headerlink" title="设计考虑"></a>设计考虑</h3><p>本次作业架构中设计的类可以分为<strong>主类</strong>，<strong>解析类</strong>，<strong>工具类</strong>，<strong>结构类</strong>，<strong>运算类</strong>。<br><strong>主类</strong>是程序的入口，是抽象层次的最高层，负责输入输出的交互和其他类与方法的调用。每次迭代根据新的要求在主类中都会做出相应的更改，但是仍要遵循保持主类的高度抽象和简洁的原则。<br><strong>解析类</strong>包括 Parser 和 Lexer 两部分，通过递归下降的方法将 Lexer 扫描到的 token 解析为表达式的组成成分。Parser 根据 Lexer 中当前 token 的不同，采取不同层次的解析方法。<br><strong>工具类</strong>中包含预处理类 PreProcessor和函数相关的处理类。PreProcessor是对输入的内容进行简化和处理，使处理后的结果更简洁并且更符合直觉，如去除空白字符，去除前导零，合并连续的加减运算符号，从而简化输出。函数相关的处理方法包括对递推函数的解析类 RecursiveFunctionHelper，递推函数的实例化类 RecursiveFunction和对自定义函数的解析类 CommonFunctionHelper和自定义函数实例化类CommonFunction。预处理类的设计考虑在于将所有可能用到的字符串处理静态方法提取出来，作为一个静态工具类。函数处理类的设计考虑，以递推函数为例，递推函数的解析类 Helper，第一负责对递推函数的关键信息进行解析，如 形参列表是什么，实参列表是什么，系数是多少，跟随的表达式是什么；第二负责实现递推函数的计算，也就是让递推函数能够递推下去，我的考虑是，字符串是无法运算的，想进行递推运算应该将字符串转化为结构类，进一步转化为运算类进行运算得到结果。我的具体实现是将形参替换为实参再将替换后得到的函数对应的字符串替换掉递推中的函数，然后将替换完成后的字符串再进行解析，得到解析并运算后的函数表达式，将这一过程封装成的 callFunc()方法实现了让递推函数计算递推下去的设计。而递推函数的实例化类 Function 则是通过调用 Helper 中的 callFunc()方法得到该函数的表达式，并作为属性储存下来，实现了递推函数的实例化 。<br><strong>结构类</strong>由解析类通过递归下降法解析出，由 Expr、Term、Factor 组成层次结构。其中 Factor 作为最底层结构具有统一的行为，通过 toPoly()方法转化为运算类，运算还需要其实现深克隆方法和求导方法，因此将 Factor 设计为接口，由各种具体因子类实现。具体因子类的设计中将其内容设计为属性储存。<br><strong>运算类</strong>为实现表达式的计算而设计，包括 Mono 和 Poly 类。Mono 的具体形式为 a<em>x^b</em>y^c*sin(i)*cos(j)。其中三角函数因子以 Hashmap 的形式储存，key 为其内部因子转化成的 Poly ，value 为其次数。Mono 中的主要方法有字符串转化方法和求导方法、深克隆方法，在设计字符串转化方法时我选择将其组成部分分别转化为字符串后再进行连接，从而降低其耦合度。Poly 由诸多 Mono 组成，主要方法为加、乘、乘方、取反、求导等方法，在进行计算时进行合并同类项等简化操作。</p>
-<h3 id="度量分析"><a href="#度量分析" class="headerlink" title="度量分析"></a>度量分析</h3><p>| Class | OCavg | OCmax | WMC | LCOM |<br>|–|–|–|–|–|–|–|–|–|–|–|–|–|–|–|–|–|–|–|–|–|–|<br>| CommonFuncFactor | 1 | 1 | 7 | 0.42857142857142855 |<br>| CommonFuncHelper | 2.5 | 4 | 5 | 0 |<br>| CommonFunction | 1.71 | 4 | 12 | 0.5714285714285714 |<br>| DerivationFactor | 1 | 1 | 4 | 0.5 |<br>| Expr | 2 | 3 | 8 | 0 |<br>| FuncFactor | 1 | 1 | 7 | 0.42857142857142855 |<br>| Lexer | 2.4 | 8 | 12 | 0 |<br>| MainClass | 4 | 4 | 4 | -1 |<br>| Mono | 3 | 9 | 60 | 0.2 |<br>| Num | 1 | 1 | 6 | 0.3333333333333333 |<br>| Parser | 3.82 | 11 | 42 | 0 |<br>| Poly | 3.82 | 11 | 42 | 0.36363636363636365 |<br>| PreProcessor | 4.33 | 12 | 26 | -1 |<br>| RecursiveFuncHelper | 3.5 | 9 | 21 | 0.3333333333333333 |<br>| RecursiveFunction | 3.08 | 9 | 40 | 0.5384615384615384 |<br>| SubExpr | 1 | 1 | 4 | 0.75 |<br>| Term | 1.67 | 2 | 5 | 0 |<br>| Trigonometric | 1.5 | 5 | 15 | 0 |<br>| Var | 1.86 | 6 | 13 | 0 |<br>| Average | 2.485074626865672 | 5.368421052631579 | 17.526315789473685 |</p>
+<h3 id="度量分析"><a href="#度量分析" class="headerlink" title="度量分析"></a>度量分析</h3><table>
+<thead>
+<tr>
+<th>Class</th>
+<th>OCavg</th>
+<th>OCmax</th>
+<th>WMC</th>
+<th>LCOM</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>CommonFuncFactor</td>
+<td>1</td>
+<td>1</td>
+<td>7</td>
+<td>0.42857142857142855</td>
+</tr>
+<tr>
+<td>CommonFuncHelper</td>
+<td>2.5</td>
+<td>4</td>
+<td>5</td>
+<td>0</td>
+</tr>
+<tr>
+<td>CommonFunction</td>
+<td>1.71</td>
+<td>4</td>
+<td>12</td>
+<td>0.5714285714285714</td>
+</tr>
+<tr>
+<td>DerivationFactor</td>
+<td>1</td>
+<td>1</td>
+<td>4</td>
+<td>0.5</td>
+</tr>
+<tr>
+<td>Expr</td>
+<td>2</td>
+<td>3</td>
+<td>8</td>
+<td>0</td>
+</tr>
+<tr>
+<td>FuncFactor</td>
+<td>1</td>
+<td>1</td>
+<td>7</td>
+<td>0.42857142857142855</td>
+</tr>
+<tr>
+<td>Lexer</td>
+<td>2.4</td>
+<td>8</td>
+<td>12</td>
+<td>0</td>
+</tr>
+<tr>
+<td>MainClass</td>
+<td>4</td>
+<td>4</td>
+<td>4</td>
+<td>-1</td>
+</tr>
+<tr>
+<td>Mono</td>
+<td>3</td>
+<td>9</td>
+<td>60</td>
+<td>0.2</td>
+</tr>
+<tr>
+<td>Num</td>
+<td>1</td>
+<td>1</td>
+<td>6</td>
+<td>0.3333333333333333</td>
+</tr>
+<tr>
+<td>Parser</td>
+<td>3.82</td>
+<td>11</td>
+<td>42</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Poly</td>
+<td>3.82</td>
+<td>11</td>
+<td>42</td>
+<td>0.36363636363636365</td>
+</tr>
+<tr>
+<td>PreProcessor</td>
+<td>4.33</td>
+<td>12</td>
+<td>26</td>
+<td>-1</td>
+</tr>
+<tr>
+<td>RecursiveFuncHelper</td>
+<td>3.5</td>
+<td>9</td>
+<td>21</td>
+<td>0.3333333333333333</td>
+</tr>
+<tr>
+<td>RecursiveFunction</td>
+<td>3.08</td>
+<td>9</td>
+<td>40</td>
+<td>0.5384615384615384</td>
+</tr>
+<tr>
+<td>SubExpr</td>
+<td>1</td>
+<td>1</td>
+<td>4</td>
+<td>0.75</td>
+</tr>
+<tr>
+<td>Term</td>
+<td>1.67</td>
+<td>2</td>
+<td>5</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Trigonometric</td>
+<td>1.5</td>
+<td>5</td>
+<td>15</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Var</td>
+<td>1.86</td>
+<td>6</td>
+<td>13</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Average</td>
+<td>2.485074626865672</td>
+<td>5.368421052631579</td>
+<td>17.526315789473685</td>
+<td></td>
+</tr>
+</tbody></table>
 <p>由以上度量分析可见，圈复杂度（OC）较高的类有MainClass， Parser，Poly，PreProcessor ，RecursiveFuncHelper等，这些类中，Parser为对表达式不同层次进行解析，不得不存在大量分支，Poly，PreProcessor ，RecursiveFuncHelper等在设计中为保持连贯性我并没有选择对一些操作单独提取方法出来，导致OC较高。从<strong>LCOM（Lack of Cohesion in Methods）</strong> 来看，代码内聚程度整体表现我个人觉得还可以，个别如<strong>SubExpr</strong>类由于要调用父类方法导致LCOM较高也可以理解。</p>
 <h2 id="架构设计体验"><a href="#架构设计体验" class="headerlink" title="架构设计体验"></a>架构设计体验</h2><h3 id="第一次迭代"><a href="#第一次迭代" class="headerlink" title="第一次迭代"></a>第一次迭代</h3><p>第一次迭代主要重点在于语法的解析，存在两种方法：递归下降法和正则解析法。为了保证后续迭代的可扩展性，我选择用层次更加清晰的递归下降法，这样可以建立起层次分明的语法树，也有助于指导类与方法的设计，后续根据新的迭代要求可以在语法树的某个层次结构上逐步添加代码，而不需要推倒重来。就像画一棵大树一样，我选择先把树枝高低错落地画出，后续画叶子的工作就可以在各自的树枝上进行，树叶枯萎也不会导致整棵树的倒塌。</p>
 <h3 id="第二次迭代"><a href="#第二次迭代" class="headerlink" title="第二次迭代"></a>第二次迭代</h3><p>第二次迭代任务量较大，可以分为两大部分：三角函数和递推函数。对于三角函数，由于其引入导致Mono的统一形式不再是简单的a*x^b，因此我需要对Mono类进行调整，我选择用HashMap储存三角函数中的因子和其指数，由于在Poly类中计算时会对Mono进行合并同类项，而自定义类型作为键时就不得不重写hashcode和equals方法，对是否为同类项进行判断。同时为保证运算过程的正确性，要对Mono进行深克隆也需要重新实现clone方法。但是好在由于第一次的设计过程中对Poly及Mono的方法封装较好，因此只需要在方法内部修改即可，在更高层次看上去结构依然没有发生变化，这也让明显体会到了合适的封装和抽象的重要性。对于递推函数，我选择将其功能实现分为两部分进行，一部分告诉我递推函数是怎么算的（解析出关键信息如系数，参数等），另一部分帮助我算递推函数（转化为运算类进行计算）。实践证明这样确实可以减少内聚，更容易发现程序的漏洞。</p>
