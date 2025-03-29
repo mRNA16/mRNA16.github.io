@@ -40,6 +40,20 @@
     <content type="html"><![CDATA[<h1 id="Lab0-实验报告"><a href="#Lab0-实验报告" class="headerlink" title="Lab0 实验报告"></a>Lab0 实验报告</h1><h2 id="思考题"><a href="#思考题" class="headerlink" title="思考题"></a>思考题</h2><h3 id="Thinking-0-1"><a href="#Thinking-0-1" class="headerlink" title="Thinking 0.1"></a>Thinking 0.1</h3><p>不一样，第一次执行 add 命令前暂存区中并无文件，README.txt 并未被跟踪；此后执行了 add 命令将 README.txt 加入了暂存区，并进行提交，将此时的目录树提交到版本库。再次修改 README.txt 后，此时其内容相比于版本库中的内容发生变化，处于已修改状态，此时执行 git status 命令显示 README.txt 处于 Modified 状态。</p><h3 id="Thinking-0-2"><a href="#Thinking-0-2" class="headerlink" title="Thinking 0.2"></a>Thinking 0.2</h3><p>add the file 对应着 git add 命令<br>stage the file 对应着 git add 命令<br>commit 对应着 git commit 命令</p><h3 id="Thinking-0-3"><a href="#Thinking-0-3" class="headerlink" title="Thinking 0.3"></a>Thinking 0.3</h3><p>1.printf.c 被错误删除，使用 git checkout – printf.c 命令可以将其恢复。<br>2.printf.c 被删除后又执行了 git rm printf.c，此时工作区和暂存区中均无 printf.c 文件，使用 git reset HEAD printf.c 命令，使暂存区中恢复 printf.c，再使用 git checkout – printf.c 命令恢复工作区中的 printf.c<br>3.使用 git rm –cached hello.txt 可以将其移出暂存区</p><h3 id="Thinking-0-4"><a href="#Thinking-0-4" class="headerlink" title="Thinking 0.4"></a>Thinking 0.4</h3><p>进行3次提交后执行<code>git log</code>，有三次提交信息及其哈希值。执行<code>git reset --hard HEAD^</code>后再执行<code>git log</code>发现只有前两次的提交信息和哈希值。找到提交1的哈希值后执行<code>git reset --hard &lt;hash&gt;</code>再执行<code>git log</code>发现只有第一次的提交信息和哈希值。再执行<code>git reset --hard &lt;hash&gt;</code>可以回到新版本。<br><img src="/img/lab0/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-03-14%20225142.png" alt="屏幕截图 2025-03-14 225142"></p><h3 id="Thinking-0-5"><a href="#Thinking-0-5" class="headerlink" title="Thinking 0.5"></a>Thinking 0.5</h3><p>执行结果如下：<br><img src="/img/lab0/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-03-14%20225425.png" alt="屏幕截图 2025-03-14 225425"></p><h3 id="Thinking-0-6"><a href="#Thinking-0-6" class="headerlink" title="Thinking 0.6"></a>Thinking 0.6</h3><p>command和test内容分别如下：<br><img src="/img/lab0/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-03-14%20230713.png" alt="屏幕截图 2025-03-14 230713"><br><img src="/img/lab0/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-03-14%20230736.png" alt="屏幕截图 2025-03-14 230736"><br>其解释为：执行command产生了test，执行test时，将a赋值为1，将b赋值为2，c赋值为a+b即3，然后将c的值重定向到file1，b的值重定向到file2，a的值重定向到file3，在把file4的值覆盖为file1的内容，再把file2，file3的内容依次跟随到file4中，再将file4的内容跟随到result中。因此得到的result内容为<code>3 2 1</code>。<br><code>echo echo Shell Start</code>和<code>echo &#39;echo Shell Start&#39;</code>效果没有区别。<br><code>echo echo $c&gt;file1</code>会将”echo c的值“覆盖到file1中，具体效果如下：<br><img src="/img/lab0/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-03-14%20231729.png" alt="屏幕截图 2025-03-14 231729"><br>而<code>echo &#39;echo $c&gt;file1&#39;</code>则是会将“echo $c&gt;file1”字符串打印到终端。</p><h2 id="难点分析"><a href="#难点分析" class="headerlink" title="难点分析"></a>难点分析</h2><p><img src="C9009474709A736E5AE3BC735B20A5A1.png" alt="C9009474709A736E5AE3BC735B20A5A1"></p><h2 id="实验体会"><a href="#实验体会" class="headerlink" title="实验体会"></a>实验体会</h2><p>本次实验虽内容基础，但仍然需要灵活运用来实现想要的效果，其中知识的全面性和熟练度是必不可少的，要明白什么指令能做到什么，至少要有一个全面但不一定完全记忆的印象。还要学会通过man指令和–help查看并理解指令功能。更重要的一点是不能迷信指导书，虽然指导书提供的内容可以解决遇到的问题，但是这只是理论上的。一定不能忽视指导书外知识的学习和积累，这样才能取得长足且全面的进步。</p><h2 id="原创说明"><a href="#原创说明" class="headerlink" title="原创说明"></a>原创说明</h2><p>本报告为本人原创</p>]]></content>
     
     
+    <categories>
+      
+      <category>技术</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>OS</tag>
+      
+      <tag>Lab0</tag>
+      
+    </tags>
     
   </entry>
   
