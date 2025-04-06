@@ -4,6 +4,58 @@
   
   
   <entry>
+    <title>【OS】BUAA-OS-Lab1-实验报告</title>
+    <link href="/2025/04/06/%E3%80%90OS%E3%80%91BUAA-OS-Lab1-%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/"/>
+    <url>/2025/04/06/%E3%80%90OS%E3%80%91BUAA-OS-Lab1-%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/</url>
+    
+    <content type="html"><![CDATA[<h1 id="OS-Lab1实验报告"><a href="#OS-Lab1实验报告" class="headerlink" title="OS Lab1实验报告"></a>OS Lab1实验报告</h1><h2 id="思考题"><a href="#思考题" class="headerlink" title="思考题"></a>思考题</h2><h3 id="Thinking-1-1"><a href="#Thinking-1-1" class="headerlink" title="Thinking 1.1"></a>Thinking 1.1</h3><p>在阅读 附录中的编译链接详解 以及本章内容后，尝试分别使用实验环境中 的原生 x86 工具链（gcc、ld、readelf、objdump 等）和 MIPS 交叉编译工具链（带有 mips-linux-gnu- 前缀，如 mips-linux-gnu-gcc、mips-linux-gnu-ld），重复其中的编 译和解析过程，观察相应的结果，并解释其中向objdump传入的参数的含义。<br>答：</p><ul><li>使用原生x86工具链后结果如下：<br><img src="/img/lab1/x86.png" alt="x86"><br>使用MIPS交叉编译工具链后结果如下：<br><img src="/img/lab1/mips.png" alt="mips"><br>可以看到反汇编后得到了MIPS汇编指令，其不同除了汇编指令不同外，还体现在寄存器、调用约定等方面，而当前跳板机的原生架构为x86，这就说明交叉编译工具链的作用为在某一架构中生成另一种架构的代码。这对于系统架构迁移会有极大的便利。</li><li>objdump中传入的参数如下：<ol><li><p><code>-d</code>&#x2F;<code>--disassemble</code>：反汇编包含指令的节(section)</p></li><li><p><code>-D</code>&#x2F;<code>--disassemble-all</code>：反汇编所有节(section)</p></li><li><p><code>-S</code>&#x2F;<code>--source</code>：混合显示源代码和汇编代码(需要编译时使用<code>-g</code>选项)</p></li><li><p><code>-h</code>&#x2F;<code>--section-headers</code>：显示节头部信息</p></li><li><p><code>-x</code>&#x2F;<code>--all-headers</code>：显示所有头信息</p></li><li><p><code>-t</code>&#x2F;<code>--syms</code>：显示符号表</p></li></ol></li></ul><h3 id="Thinking-1-2"><a href="#Thinking-1-2" class="headerlink" title="Thinking 1.2"></a>Thinking 1.2</h3><p> 思考下述问题：<br> • 尝试使用我们编写的readelf程序，解析之前在target目录下生成的内核ELF文 件。<br> • 也许你会发现我们编写的readelf程序是不能解析readelf 文件本身的，而我们刚 才介绍的系统工具readelf 则可以解析，这是为什么呢？（提示：尝试使用readelf-h，并阅读tools&#x2F;readelf 目录下的 Makefile，观察 readelf 与 hello 的不同）<br> 答：使用自己的readelf程序，解析结果如下：<br><img src="/img/lab1/my.png" alt="my"><br>使用系统自带的readelf工具解析hello和readelf，结果如下：<br><img src="/img/lab1/hello.png" alt="hello"><br><img src="/img/lab1/rd.png" alt="rd"><br>可以看到hello的类别为ELF32，readelf的类别为ELF64，这与Makefile中的内容有关：</p><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs Makefile"><span class="hljs-section">hello: hello.c</span><br>        <span class="hljs-variable">$(CC)</span> <span class="hljs-variable">$^</span> -o <span class="hljs-variable">$@</span> -m32 -static -g<br></code></pre></td></tr></table></figure><p>其中<code>-m32</code>说明生成的为32位代码，而检查自己编写的readelf.c可以看到</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">is_elf_format</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">void</span> *binary, <span class="hljs-type">size_t</span> size)</span> &#123;<br>        Elf32_Ehdr *ehdr = (Elf32_Ehdr *)binary;<br>        <span class="hljs-keyword">return</span> size &gt;= <span class="hljs-keyword">sizeof</span>(Elf32_Ehdr) &amp;&amp; ehdr-&gt;e_ident[EI_MAG0] == ELFMAG0 &amp;&amp;<br>               ehdr-&gt;e_ident[EI_MAG1] == ELFMAG1 &amp;&amp; ehdr-&gt;e_ident[EI_MAG2] == ELFMAG2 &amp;&amp;<br>               ehdr-&gt;e_ident[EI_MAG3] == ELFMAG3;&#125;<br></code></pre></td></tr></table></figure><p>这里仅可以获得32位的ELF文件，这就可以说明为什么自己编写的readelf只能解析32位文件(hello)，而无法解析64位文件(readelf)。</p><h3 id="Thinking1-3"><a href="#Thinking1-3" class="headerlink" title="Thinking1.3"></a>Thinking1.3</h3><p>在理论课上我们了解到，MIPS体系结构上电时，启动入口地址为0xBFC00000 （其实启动入口地址是根据具体型号而定的，由硬件逻辑确定，也有可能不是这个地址，但 一定是一个确定的地址），但实验操作系统的内核入口并没有放在上电启动地址，而是按照 内存布局图放置。思考为什么这样放置内核还能保证内核入口被正确跳转到？ （提示：思考实验中启动过程的两阶段分别由谁执行。）<br>答：硬件上电时，首先进行stage1，由非易失存储器中的bootloader程序对硬件进行初始化，并为加载操作系统的stage2准备好了RAM并载入其中，然后设置堆栈并将CPU指令寄存器的内容设置为内核入口函数的地址。<br>这就解释了为什么上电地址不是内核入口，内核入口的进入是由stage1提供的接口进入的。</p><h2 id="难点分析"><a href="#难点分析" class="headerlink" title="难点分析"></a>难点分析</h2><p>我觉得此次实验难点是ELF内容和结构的理解。对于节和段这两种组织方式和其查找是操作上的一个难点。在理解上，虽然在阅读指导书的过程中感到晦涩难懂，但是阅读完后再从头宏观来看，就能理解内核的加载和运作机制，理解操作系统的启动，感到通透。prinf方面根据指导书学习不难理解。</p><h2 id="心得体会"><a href="#心得体会" class="headerlink" title="心得体会"></a>心得体会</h2><p>通过这一次实验内容的学习和练习，我觉得指导书的阅读要有一个宏观的眼光，即阅读完后将其综合起来以一个整体的视角来理解。练习的过程中一定要注意细节，是字符串而不是字符这种类似的错误千万不要再犯了</p><h2 id="原创性说明"><a href="#原创性说明" class="headerlink" title="原创性说明"></a>原创性说明</h2><p>本报告为本人原创</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>技术</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>OS</tag>
+      
+      <tag>Lab1</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>【随笔】忙里偷偷闲</title>
+    <link href="/2025/04/06/%E3%80%90%E9%9A%8F%E7%AC%94%E3%80%91%E5%BF%99%E9%87%8C%E5%81%B7%E5%81%B7%E9%97%B2/"/>
+    <url>/2025/04/06/%E3%80%90%E9%9A%8F%E7%AC%94%E3%80%91%E5%BF%99%E9%87%8C%E5%81%B7%E5%81%B7%E9%97%B2/</url>
+    
+    <content type="html"><![CDATA[<h2 id="忙里偷偷闲"><a href="#忙里偷偷闲" class="headerlink" title="忙里偷偷闲"></a>忙里偷偷闲</h2><p>最近好累啊，写完OO，但是还有好多事情没有做，可是我需要休息，让大脑放松一下，趁这个机会正好整理一下最近的生活。<br>从上海回来之后，我的作息前所未有的健康，这两周的时间，每天都是七点半左右就会自己醒，起床吃个早饭，装上电脑背上书包就去教室了。有课就去上课，没课找个空教室自习一会儿。刚回来的第一周，也就是上周，生活节奏非常规律。做事情效率也很高，OO就写了一两天吧就做完了，剩下的时间就可以搭一搭评测机，学学操作系统，看看深度学习，还写了一篇多线程有关的帖子，发在讨论区被吴际老师表扬了，我很开心。上一周没怎么做实验室的事情，感觉把数据截帧处理完环境配置好就万事大吉了，模型选择和训练的事情也没怎么做。<br>这一周事情就多起来了，实验室的项目得抓紧进度，这一周前几天都在搞分类，目前也只是用svm进行了分类，预处理还没有做完。操作系统还没有学，甚至指导书都没有看。百团介绍材料还没交，很快又要评级答辩了，材料也还没有准备。真是身心俱疲啊，颇有上学期P6时的程度了，比那时事情或许还要多一点。<br>哦对了，这周还有和北外的联谊，我实在是不太适应，总是觉得好聒噪啊，我没有任何说这个活动或参与者不好的意思，只是我个人的感受。周三趁联谊的时候放了一下午风筝，好在最后放起来了，还是挺不错的。不过我是越来越不喜欢一些航楠了，说话没什么意思，素质差，自以为是，情商低，实在是愚蠢啊，我不喜欢这样的人，甚至有一些厌恶了已经。<br>上周拍的花还是挺漂亮的，放在最后了。<br>我总觉得，人不是工具，不是单一化、专业化的，为什么要活得这么累呢？我是不喜欢这种活法，人是鲜活的、饱满的、立体的，要会生活，会体验，会让自己感觉快乐，会写代码，会拍照，会做饭，会做数学题，会打游戏，会欣赏美，会爱人，而不是只会学习，只会沉溺在代码和作业中，纵使环境希望培养出这样的人，我也不想成为这样，谁爱放弃生活谁放弃去，谁爱卷生卷死谁去，我只做自己想做的事，做到自己满意的程度就可以了，我才不想被逼迫得这么累，我要成为一个生动的人，这样才有意义。<br>不学了下午，散散心去。<br><img src="/img/%E5%BF%99%E9%87%8C%E5%81%B7%E5%81%B7%E9%97%B2/spring.jpg" alt="spring"></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>生活</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>随笔</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>【BUAA OO】关于多线程的一些问题</title>
     <link href="/2025/03/29/%E3%80%90OO%E3%80%91%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E8%A7%A3%E6%9E%90/"/>
     <url>/2025/03/29/%E3%80%90OO%E3%80%91%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E8%A7%A3%E6%9E%90/</url>
