@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>【OS】BUAA-OS-Lab3-实验报告</title>
+    <link href="/2025/04/25/%E3%80%90OS%E3%80%91BUAA-OS-Lab3-%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/"/>
+    <url>/2025/04/25/%E3%80%90OS%E3%80%91BUAA-OS-Lab3-%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/</url>
+    
+    <content type="html"><![CDATA[<h1 id="OS-Lab3实验报告"><a href="#OS-Lab3实验报告" class="headerlink" title="OS Lab3实验报告"></a>OS Lab3实验报告</h1><h2 id="思考题"><a href="#思考题" class="headerlink" title="思考题"></a>思考题</h2><h3 id="Thinking-3-1"><a href="#Thinking-3-1" class="headerlink" title="Thinking 3.1"></a>Thinking 3.1</h3><p>请结合MOS中的页目录自映射应用解释代码中e-&gt;env_pgdir[PDX(UVPT)] &#x3D; PADDR(e-&gt;env_pgdir) | PTE_V 的含义。<br>答：PADDR(e-&gt;env_pgdir) | PTE_V是进程页目录的物理地址被赋予有效，PDX(UVPT)是用户虚拟页表基地址对应的页目录索引，该代码意为将进程页目录中对应在UVPT虚拟地址范围的页目录项，指向页目录自身的物理地址，并标记为有效。这样做可以使得用户可以不切换内核态便可实现对内存映射的只读查询。同时便于操作系统统一管理。</p><h3 id="Thinking-3-2"><a href="#Thinking-3-2" class="headerlink" title="Thinking 3.2"></a>Thinking 3.2</h3><p>elf_load_seg 以函数指针的形式，接受外部自定义的回调函数 map_page。 请你找到与之相关的data这一参数在此处的来源，并思考它的作用。没有这个参数可不可以？为什么？<br>答：data具体在回调函数中会使用：</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">static</span> <span class="hljs-type">int</span> <span class="hljs-title function_">load_icode_mapper</span><span class="hljs-params">(<span class="hljs-type">void</span> *data, u_long va, <span class="hljs-type">size_t</span> offset, u_int perm,<span class="hljs-type">const</span> <span class="hljs-type">void</span> *src, <span class="hljs-type">size_t</span> len)</span>&#123;&#125;<br></code></pre></td></tr></table></figure><p>其中data指向的是当前进程的Env，其中有着当前进程的页表基地址、ASID等很多私有化信息，通过data指针可以使回调函数可以访问到这些私有信息，所以不能没有data。</p><h3 id="Thinking-3-3"><a href="#Thinking-3-3" class="headerlink" title="Thinking 3.3"></a>Thinking 3.3</h3><p>结合 elf_load_seg 的参数和实现，考虑该函数需要处理哪些页面加载的情况。<br>答：页面加载时可能出现以下情况：</p><ul><li>ELF 段的虚拟地址va可能未按页对齐</li><li>段中剩余的文件内容bin_size需要按完整页PAGE_SIZE映射</li><li>段的内存大小可能大于文件大小，需用零填充剩余部分</li><li>根据p_flags设置页表权限</li><li>回调函数处理映射内容到va或分配零页到va</li></ul><h3 id="Thinking3-4"><a href="#Thinking3-4" class="headerlink" title="Thinking3.4"></a>Thinking3.4</h3><p>思考上面这一段话，并根据自己在Lab2中的理解，回答：你认为这里的env_tf.cp0_epc存储的是物理地址还是虚拟地址?<br>答：虚拟地址</p><h3 id="Thinking3-5"><a href="#Thinking3-5" class="headerlink" title="Thinking3.5"></a>Thinking3.5</h3><p>试找出0、1、2、3号异常处理函数的具体实现位置。8号异常（系统调用） 涉及的do_syscall()函数将在Lab4中实现。<br>答：handle_int在genex.S中，handle_sys在syscall.S中。handle_mod和handle_tlb在genex.S中通过宏函数BUILD_HANDLER实现。</p><h3 id="Thinking3-6"><a href="#Thinking3-6" class="headerlink" title="Thinking3.6"></a>Thinking3.6</h3><p>阅读entry.S、genex.S和env_asm.S这几个文件，并尝试说出时钟中断在哪些时候开启，在哪些时候关闭。<br>答：<br>开启：</p><ul><li>内核完成初始化时</li><li>异常或中断处理完成返回时</li><li>进程切换时<br>关闭:</li><li>进程正在进行切换时</li><li>处理异常或中断时</li><li>处理页表错误时</li></ul><h3 id="Thinking-3-7"><a href="#Thinking-3-7" class="headerlink" title="Thinking 3.7"></a>Thinking 3.7</h3><p>阅读相关代码，思考操作系统是怎么根据时钟中断切换进程的。<br>答：进程块由env_free_list和env_sched_list管理，时钟中断发生时，检查当前进程是否已运行完时间片或者不再就绪，此时进程切换到调度进程链表的第一个进程，如果原来的进程仍处于可运行状态，则将其放回调度进程链表的末尾。</p><h2 id="难点分析"><a href="#难点分析" class="headerlink" title="难点分析"></a>难点分析</h2><p>这次实验难点主要在于进程的管理和时钟中断触发的进程切换，其实只需要明白了进程的工作逻辑，再结合实验代码便可很轻松地理解这部分内容</p><h2 id="实验体会"><a href="#实验体会" class="headerlink" title="实验体会"></a>实验体会</h2><p>Lab3相比于Lab2简单了许多，这次的学习内容大多均是线性的，从头到底地去学习进程的相关知识，学习体验相比于上一个Lab提高了很多</p><h2 id="原创性说明"><a href="#原创性说明" class="headerlink" title="原创性说明"></a>原创性说明</h2><p>本报告为本人原创</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>技术</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>OS</tag>
+      
+      <tag>Lab3</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>【OO】BUAA-OO-U2-电梯调度</title>
     <link href="/2025/04/20/%E3%80%90OO%E3%80%91BUAA-OO-U2%E2%80%94%E2%80%94%E7%94%B5%E6%A2%AF%E8%B0%83%E5%BA%A6/"/>
     <url>/2025/04/20/%E3%80%90OO%E3%80%91BUAA-OO-U2%E2%80%94%E2%80%94%E7%94%B5%E6%A2%AF%E8%B0%83%E5%BA%A6/</url>
