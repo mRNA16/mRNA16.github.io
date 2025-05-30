@@ -19,26 +19,25 @@
   <meta name="author" content="mRNA">
   <meta name="keywords" content="">
   
-    <meta name="description" content="BUAA OO U2 单元总结             本单元主题为面向对象中的多线程编程，经过这一单元的训练，我认为要做好多线程编程，可以大体分解为几个要点：理解和掌握多线程中的同步控制机制和线程的不同状态，保证共享对象访问时的线程安全，保证线程和线程交互时的线程安全。下面根据本次作业中的内容对以上要点进行具体体现。            多线程中的同步控制关于同步块、锁与线程的状态，我在另一篇">
+    <meta name="description" content="OS Lab5实验报告思考题Thinking 5.1如果通过 kseg0 读写设备，那么对于设备的写入会缓存到 Cache 中。这是 一种错误的行为，在实际编写代码的时候这么做会引发不可预知的问题。请思考：这么做 这会引发什么问题？对于不同种类的设备（如我们提到的串口设备和IDE磁盘）的操作会 有差异吗？可以从缓存的性质和缓存更新的策略来考虑。答：可能会出现以下问题：  写入延迟：对设备的写入可能">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【OO】BUAA-OO-U2-电梯调度">
-<meta property="og:url" content="http://example.com/2025/04/20/%E3%80%90OO%E3%80%91BUAA-OO-U2%E2%80%94%E2%80%94%E7%94%B5%E6%A2%AF%E8%B0%83%E5%BA%A6/index.html">
+<meta property="og:title" content="【OS】BUAA-OS-Lab5-实验报告">
+<meta property="og:url" content="http://example.com/2025/05/30/%E3%80%90OS%E3%80%91BUAA-OS-Lab5-%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/index.html">
 <meta property="og:site_name" content="mRNA的碎碎念Blog">
-<meta property="og:description" content="BUAA OO U2 单元总结             本单元主题为面向对象中的多线程编程，经过这一单元的训练，我认为要做好多线程编程，可以大体分解为几个要点：理解和掌握多线程中的同步控制机制和线程的不同状态，保证共享对象访问时的线程安全，保证线程和线程交互时的线程安全。下面根据本次作业中的内容对以上要点进行具体体现。            多线程中的同步控制关于同步块、锁与线程的状态，我在另一篇">
+<meta property="og:description" content="OS Lab5实验报告思考题Thinking 5.1如果通过 kseg0 读写设备，那么对于设备的写入会缓存到 Cache 中。这是 一种错误的行为，在实际编写代码的时候这么做会引发不可预知的问题。请思考：这么做 这会引发什么问题？对于不同种类的设备（如我们提到的串口设备和IDE磁盘）的操作会 有差异吗？可以从缓存的性质和缓存更新的策略来考虑。答：可能会出现以下问题：  写入延迟：对设备的写入可能">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/img/u2/index.jpg">
-<meta property="article:published_time" content="2025-04-20T11:18:21.000Z">
-<meta property="article:modified_time" content="2025-05-19T03:42:05.908Z">
+<meta property="og:image" content="http://example.com/img/lab5/index.jpg">
+<meta property="article:published_time" content="2025-05-30T15:00:19.000Z">
+<meta property="article:modified_time" content="2025-05-30T15:44:46.321Z">
 <meta property="article:author" content="mRNA">
-<meta property="article:tag" content="OO">
-<meta property="article:tag" content="Java">
-<meta property="article:tag" content="U2">
+<meta property="article:tag" content="OS">
+<meta property="article:tag" content="Lab5">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/img/u2/index.jpg">
+<meta name="twitter:image" content="http://example.com/img/lab5/index.jpg">
   
   
   
-  <title>【OO】BUAA-OO-U2-电梯调度 - mRNA的碎碎念Blog</title>
+  <title>【OS】BUAA-OS-Lab5-实验报告 - mRNA的碎碎念Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -236,7 +235,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="【OO】BUAA-OO-U2-电梯调度"></span>
+            <span id="subtitle" data-typed-text="【OS】BUAA-OS-Lab5-实验报告"></span>
           
         </div>
 
@@ -252,8 +251,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-04-20 19:18" pubdate>
-          2025年4月20日 晚上
+        <time datetime="2025-05-30 23:00" pubdate>
+          2025年5月30日 晚上
         </time>
       </span>
     
@@ -264,7 +263,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.2k 字
+          1.3k 字
         
       </span>
     
@@ -275,7 +274,7 @@
         
         
         
-          27 分钟
+          11 分钟
         
       </span>
     
@@ -321,42 +320,42 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">【OO】BUAA-OO-U2-电梯调度</h1>
+            <h1 id="seo-header">【OS】BUAA-OS-Lab5-实验报告</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="BUAA-OO-U2-单元总结"><a href="#BUAA-OO-U2-单元总结" class="headerlink" title="BUAA OO U2 单元总结"></a>BUAA OO U2 单元总结</h1><div class="note note-primary">
-            <p>本单元主题为面向对象中的多线程编程，经过这一单元的训练，我认为要做好多线程编程，可以大体分解为几个要点：理解和掌握多线程中的同步控制机制和线程的不同状态，保证共享对象访问时的线程安全，保证线程和线程交互时的线程安全。<br>下面根据本次作业中的内容对以上要点进行具体体现。</p>
-          </div>
-<h2 id="多线程中的同步控制"><a href="#多线程中的同步控制" class="headerlink" title="多线程中的同步控制"></a>多线程中的同步控制</h2><p>关于同步块、锁与线程的状态，我在<a target="_blank" rel="noopener" href="https://mrna16.github.io/2025/03/29/%25E3%2580%2590OO%25E3%2580%2591%25E5%25A4%259A%25E7%25BA%25BF%25E7%25A8%258B%25E5%25B8%25B8%25E8%25A7%2581%25E9%2597%25AE%25E9%25A2%2598%25E8%25A7%25A3%25E6%259E%2590/">另一篇博客</a>中有所总结，这里不再赘述。<br>在本单元的作业中，我采用的均是最基础的synchronized同步块，原因一是这是最初的选择，二是使用读写锁等更高级的锁经过试验在此次作业的体量下不会有肉眼可见的性能改进，于是我没有使用更高级的锁。<br>对于同步块中的语句，这一点可以说是很需要认真思考并设计的部分，如果有些带锁语句不在同步块中，锁的频繁释放和分配可能会导致意想不到的问题，如果过多的语句放在同步块中，又会导致性能的下降，同时使用不当还会产生死锁风险，因此这对我们的设计和实现都有着很强的要求，经过本单元的训练我体会到的关键点如下：</p>
+                <h1 id="OS-Lab5实验报告"><a href="#OS-Lab5实验报告" class="headerlink" title="OS Lab5实验报告"></a>OS Lab5实验报告</h1><h2 id="思考题"><a href="#思考题" class="headerlink" title="思考题"></a>思考题</h2><h3 id="Thinking-5-1"><a href="#Thinking-5-1" class="headerlink" title="Thinking 5.1"></a>Thinking 5.1</h3><p>如果通过 kseg0 读写设备，那么对于设备的写入会缓存到 Cache 中。这是 一种错误的行为，在实际编写代码的时候这么做会引发不可预知的问题。请思考：这么做 这会引发什么问题？对于不同种类的设备（如我们提到的串口设备和IDE磁盘）的操作会 有差异吗？可以从缓存的性质和缓存更新的策略来考虑。<br>答：可能会出现以下问题：</p>
 <ul>
-<li>同步块中尽量由原子操作组成</li>
-<li>同步块中避免对其他锁的获取</li>
-<li>同步块在顺序代码块中的位置要合适，尽量做到能够集中同步操作</li>
+<li><p><strong>写入延迟</strong>：对设备的写入可能不会立即生效，而是停留在 Cache 中，直到 Cache 被刷新（如通过 <code>sync</code> 或 <code>cache flush</code> 指令）。如果设备需要实时响应（如控制寄存器），会导致设备行为与预期不符。</p>
+</li>
+<li><p><strong>读取脏数据</strong>：如果设备状态被外部修改（如硬件中断更新状态寄存器），CPU 可能从 Cache 中读取旧数据，而非设备的最新状态。</p>
+</li>
+<li><p><strong>写回Cache</strong>：写入操作可能长时间停留在 Cache 中，导致设备无法及时收到数据。</p>
+</li>
 </ul>
-<p>这对设计和实现的过程是个挺强的要求，在实践过程中我觉得需要注意一些问题：</p>
+<h3 id="Thinking-5-2"><a href="#Thinking-5-2" class="headerlink" title="Thinking 5.2"></a>Thinking 5.2</h3><p>查找代码中的相关定义，试回答一个磁盘块中最多能存储多少个文件控制 块？一个目录下最多能有多少个文件？我们的文件系统支持的单个文件最大为多大？<br>答：</p>
 <ul>
-<li>对于目前操作持有的锁和尝试获得的锁要保持敏感和清醒</li>
-<li>对共享对象状态的变化保持敏感</li>
-<li>当出现线程间的交互时，警惕并排查是否可能会出现死锁</li>
+<li>一个磁盘块4KB，一个文件控制块256B，所以一个磁盘块最多存储16个文件控制块。 </li>
+<li>一个目录下最多1024个磁盘块，所以最多16384个文件。</li>
+<li>单个文件最大占满整个4MB磁盘空间</li>
 </ul>
-<p>综上，多线程中的同步控制既需要我们有清晰正确的理论知识，更需要在设计和实现过程中遵循一定的原则，保持敏感和清醒，这样才能尽可能少地犯错误。</p>
-<h2 id="调度器的设计"><a href="#调度器的设计" class="headerlink" title="调度器的设计"></a>调度器的设计</h2><p>调度器这部分的设计我认为很能体现多线程的特点，作为读写的枢纽，如何正确处理读写过程中产生的冲突，如何确定线程的结束，这些都是调度器的设计中需要重点考虑的问题，所以调度器不仅仅是把请求分配给哪部电梯这么简单。</p>
-<h3 id="调度策略"><a href="#调度策略" class="headerlink" title="调度策略"></a>调度策略</h3><p>我的想法是，尽可能符合直觉和生活经验，因此我没有选择以影子电梯为代表的有些反直觉（对于我的主观感受）的策略，而是使用更符合我的直觉的策略。<br>我在本单元的迭代过程中使用过两种调度策略，分别是<strong>打分调参</strong>和<strong>随机分配</strong>。</p>
-<h4 id="打分调参"><a href="#打分调参" class="headerlink" title="打分调参"></a>打分调参</h4><p>打分调参是通过分析各个电梯状态，根据含参数的评分标准，评估出最合适的电梯。最初我选择这个方法是因为我觉得这样可以通过黑盒测试，逼近一个全局的最优性能，这可能可以做到比影子电梯的性能还要好一点，并且比较符合直觉和实际应用。<br>我的具体实现是<strong>大量模拟，离线调参</strong>，配合评测机中的数据生成模块，通过生成大量的高并发数据点，来对不同参数组合进行测试，通过<strong>遗传算法</strong>不断进化，实现自动化探索在大量数据下平均表现最优的参数组合。<br>遗传算法离线调参这样的方法有着明显的缺陷，一是需要大量的时间来进行模拟，二是可扩展性差。根据我的实践，通过模拟使遗传算法逐渐收敛到一个较为稳定的、表现良好的参数组合需要50个小时左右，具体一点是两天不间断地进行模拟。<br>  可扩展性是另一个硬伤，根据不断的迭代，评分标准需要不断做出改变，这就需要重新寻找合适的参数组合，所以尽管调参的表现还不错，但是我还是放弃了这一策略，改用更简单的随机分配。</p>
-<h4 id="随机分配"><a href="#随机分配" class="headerlink" title="随机分配"></a>随机分配</h4><p>这个策略最初给我的感觉是离谱，凡事总往坏处想，万一一个随机不好导致超时了该怎么办，没有什么思考直接放弃大脑这样做真的合适吗。但是实践证明这是个可用的策略，可以说，在数据量的支持下，随机能够实现宏观上的平均。放弃调参策略后使用随机分配的表现也是相当不错。</p>
-<h3 id="读写冲突的处理"><a href="#读写冲突的处理" class="headerlink" title="读写冲突的处理"></a>读写冲突的处理</h3><p>调度器需要从请求队列中取出请求，将其放入合适的电梯的候乘表中，这个过程中对请求队列和候乘表这两种共享对象都存在读写，并且电梯线程还可能处于临时调度，升级等特殊状态。<br>一个很典型的例子是，如果电梯正在临时调度，那么该怎么把请求写入候乘表。这个问题hw2中困扰了我们很多人：六台电梯五台都在调度，如果全分给剩下那一台电梯会导致超时。我一开始的处理方法是如果调度器选择把请求分配给正在临时调度的电梯，那么调度器线程就等待电梯临时调度结束再进行分配，这就导致了阻塞了后续的请求，像临时调度和升级等对开始时间有着明确要求的特殊请求，就会导致其被阻塞。<br>我想能不能有一些普适性的方法去解决这样的一类问题，而不是局限在电梯调度这里一些具体又细微，针对性的策略。这个时候程序的IO启发了我：<strong>我们的终端控制台就是一个典型的读写处理器，当我们复制一大串内容进入时，控制台却能做到在main方法线程IO正常执行又不会影响到控制台的正常IO，是因为控制台的输入进入了缓冲区，main线程的IO通过缓冲区进行</strong>。我觉得这就是我想要的普适性方法，于是我的策略是，设置缓冲区，将临时调度时分配给电梯的请求放入缓冲区，等调度结束后再进行统一RECEIVE，进入候乘表。这样便可以避免很多不必要的线程安全问题，实践体验是非常好的！</p>
-<h3 id="线程结束的判断"><a href="#线程结束的判断" class="headerlink" title="线程结束的判断"></a>线程结束的判断</h3><p>在本次作业的实现中，各个线程除了请求输入装置可以自行结束以外，调度器线程和电梯线程都需要手动根据条件判断来结束。而电梯线程的结束依靠调度器发送的结束信号。在三次迭代过程中，调度器判断结束的条件都需要改变，如果简单地去根据某些共享对象的状态，很容易出现无法解决的线程安全问题。<br>我的思路是还是以<strong>生产者-消费者</strong>关系作为思考的出发点，第二、三次作业本质上就是让电梯也成为调度器的生产者，而不仅是请求输入装置这一个生产者，所以正确的判断应该是所有的生产者均不会再生产时，调度器才应该正确结束，发送结束信号。而判断生产者均不会再生产，具体到实现上，我的做法是维护产生生产的请求数量，如：临时调度请求数量、升级请求数量、换乘请求数量。这些数量不全为0时说明电梯线程仍然处于生产状态，调度器不能结束。</p>
-<h2 id="线程架构"><a href="#线程架构" class="headerlink" title="线程架构"></a>线程架构</h2><p><img src="/img/u2/1-0.png" srcset="/img/loading.gif" lazyload alt="类图">    </p>
-<p><img src="/img/u2/2-0.png" srcset="/img/loading.gif" lazyload alt="协作图">      </p>
-<p>在这三次迭代的过程中，保持不变的是整体上的两级生产者消费者模型，电梯的状态机LOOK调度算法等，迭代过程中主要的变化还是在电梯的特殊行为，如临时调度、升级等。<br>临时调度时改变的主要是调度器和电梯这两个线程之间的交互关系，升级时还有着两台电梯间的线程交互。一旦涉及线程交互，便可能会出现一些问题。</p>
-<h2 id="双轿厢"><a href="#双轿厢" class="headerlink" title="双轿厢"></a>双轿厢</h2><p>对于双轿厢的问题，主要有以下几点：改造开始和结束的同步、两个轿厢运行时不碰撞、换乘请求的分配。<br>改造开始和同步和两个轿厢运行时不碰撞的关键实现是相同的，都是通过对象锁实现。改造开始的同步实现中，先准备好的电梯需要等待后准备好的电梯，通过对象锁配合wait-notify可以很好地实现同步开始。轿厢运行不碰撞的实现，思路是很自然的，两个轿厢在换乘楼层是互斥的，这和锁和同步有着异曲同工之妙，所以可以通过同一个对象锁实现。获得锁的轿厢可以获得进入换乘楼层的权限，当然，既然同步块结束时会释放锁，那么轿厢也应该主动从换乘楼层离开，这和指导书配合得很好。<br>关于换乘请求的分配，其实也很简单，不过需要注意之前提到的需要维护换乘请求的数量，因此要保证同一换乘请求不被重复记录，这可以通过集合来实现；也要注意不要忽视某些换乘请求。</p>
-<h2 id="Bug与Debug"><a href="#Bug与Debug" class="headerlink" title="Bug与Debug"></a>Bug与Debug</h2><h3 id="Bug"><a href="#Bug" class="headerlink" title="Bug"></a>Bug</h3><p>我出现的Bug主要是死锁问题，反思主要原因，还是设计和实现的过程中不够警觉，常常是上午写一部分，下午再写的时候就忘了目前持有的锁，出现锁的嵌套，导致死锁。还是要有主动判断的意识，防止死锁的出现。还有一些问题比如输出信息的时机。其他的一些问题比如线程的结束条件和阻塞在前面都有所提及。    </p>
-<h3 id="Debug"><a href="#Debug" class="headerlink" title="Debug"></a>Debug</h3><p>关于Debug，多线程的Debug通过断点机制是无法调试的，我采用的最多的还是向控制台输出，将输出穿插在线程的运行过程中，这样不会影响线程的正常执行。对于死锁，可以通过IDEA自带的快照工具，通过对死锁时刻的快照，可以很清楚地看到每个线程持有锁和等待锁的情况，从而发现问题。</p>
-<h2 id="心得体会"><a href="#心得体会" class="headerlink" title="心得体会"></a>心得体会</h2><h3 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h3><p>一定在进行编码和设计实现的过程中保持强烈的线程安全意识，不能滥用同步块，有些简单的原子操作可能需要获取锁，但是放入监视其他锁的同步块中就有可能导致死锁，还是要保证同步块里尽量不去获取别的锁，各自的同步块尽量集中把各自的事情做完。</p>
-<h3 id="层次化设计"><a href="#层次化设计" class="headerlink" title="层次化设计"></a>层次化设计</h3><p>本次作业中的层次化设计我感觉主要是设计架构和方法上的层次化，架构上清晰的生产者消费者架构能够极大地便利问题的理解，有助于思路的产生。而电梯作为一个具有复杂行为的迭代线程对象，对其行为进行层次化设计使代码的扩展性更强，满足开闭原则。</p>
-<h3 id="实践经验"><a href="#实践经验" class="headerlink" title="实践经验"></a>实践经验</h3><p>优秀的代码是需要不断打磨的，不加雕琢的代码在我目前的水平来看不能解决所有问题，一定要耐心地对程序做好复盘检查和测试，不能因为偷懒忽视这一重要的环节！而做这一切事情都需要时间，没有充足的时间很难把事情做好，只会变得草率。要不断提高处理生活中高并发请求的能力。继续加油！</p>
+<h3 id="Thinking-5-3"><a href="#Thinking-5-3" class="headerlink" title="Thinking 5.3"></a>Thinking 5.3</h3><p>请思考，在满足磁盘块缓存的设计的前提下，我们实验使用的内核支持的最大磁盘大小是多少？<br>答：1GB</p>
+<h3 id="Thinking-5-4"><a href="#Thinking-5-4" class="headerlink" title="Thinking 5.4"></a>Thinking 5.4</h3><p>在本实验中， fs&#x2F;serv.h、 user&#x2F;include&#x2F;fs.h 等文件中出现了许多宏定义，试列举你认为较为重要的宏定义，同时进行解释，并描述其主要应用之处。<br>答：</p>
+<ul>
+<li>#define BLOCK_SIZE PAGE_SIZE ，指出块大小即页大小</li>
+<li>#define DISKMAX 0x40000000，磁盘在虚拟内存中缓冲块的大小</li>
+<li>#define FILE2BLK (BLOCK_SIZE &#x2F; sizeof(struct File))，一个块有多少文件控制块</li>
+</ul>
+<h3 id="Thinking-5-5"><a href="#Thinking-5-5" class="headerlink" title="Thinking 5.5"></a>Thinking 5.5</h3><p>在 Lab4“系统调用与 fork”的实验中我们实现了极为重要的 fork 函数。那么 fork 前后的父子进程是否会共享文件描述符和定位指针呢？请在完成上述练习的基础上编写一个程序进行验证。<br>答：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-type">int</span> id;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Fd</span>* <span class="hljs-title">fdd</span>;</span><br><span class="hljs-keyword">if</span> ((id = fork()) == <span class="hljs-number">0</span>) &#123;<br>    fd_lookup(r, &amp;fdd);<br>    debugf(<span class="hljs-string">&quot;offset1 == %d\n&quot;</span>, fdd-&gt;fd_offset);<br>&#125; <span class="hljs-keyword">else</span> &#123;<br>    fd_lookup(r, &amp;fdd);<br>    debugf(<span class="hljs-string">&quot;offset2 == %d\n&quot;</span>, fdd-&gt;fd_offset);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>观察输出的offset是否相同即可验证。</p>
+<h3 id="Thinking-5-6"><a href="#Thinking-5-6" class="headerlink" title="Thinking 5.6"></a>Thinking 5.6</h3><p>请解释 File, Fd, Filefd 结构体及其各个域的作用。比如各个结构体会在哪些过程中被使用，是否对应磁盘上的物理实体还是单纯的内存数据等。说明形式自定，要求简洁明了，可大致勾勒出文件系统数据结构与物理实体的对应关系与设计框架。<br>答：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">File</span> &#123;</span><br>    <span class="hljs-type">char</span> f_name[MAXNAMELEN]; <span class="hljs-comment">//文件名称</span><br>    <span class="hljs-type">uint32_t</span> f_size; <span class="hljs-comment">//文件大小</span><br>    <span class="hljs-type">uint32_t</span> f_type; <span class="hljs-comment">//文件类型</span><br>    <span class="hljs-type">uint32_t</span> f_direct[NDIRECT]; <span class="hljs-comment">// 文件直接指针</span><br>    <span class="hljs-type">uint32_t</span> f_indirect; <span class="hljs-comment">// 文件大小大于40KB时，使用间接指针</span><br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">File</span>* <span class="hljs-title">f_dir</span>;</span> <span class="hljs-comment">// 文件所在的目录</span><br>    <span class="hljs-type">char</span> f_pad[FILE_STRUCT_SIZE - MAXNAMELEN - (<span class="hljs-number">3</span> + NDIRECT) * <span class="hljs-number">4</span> - <span class="hljs-keyword">sizeof</span>(<span class="hljs-type">void</span>*)]; <span class="hljs-comment">//进行填充</span><br>&#125; __attribute__((aligned(<span class="hljs-number">4</span>), packed));<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Fd</span> &#123;</span><br>	u_int fd_dev_id;	<span class="hljs-comment">// 设备id</span><br>	u_int fd_offset;	<span class="hljs-comment">// 文件访问时维护的偏移量</span><br>	u_int fd_omode;		<span class="hljs-comment">// 打开方式</span><br>&#125;;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Filefd</span> &#123;</span><br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Fd</span> <span class="hljs-title">f_fd</span>;</span>		<span class="hljs-comment">// 文件描述符</span><br>	u_int f_fileid;		<span class="hljs-comment">// 文件id</span><br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">File</span> <span class="hljs-title">f_file</span>;</span>	<span class="hljs-comment">// fd对应的文件控制块</span><br>&#125;;<br></code></pre></td></tr></table></figure>
+<h3 id="Thinking-5-7"><a href="#Thinking-5-7" class="headerlink" title="Thinking 5.7"></a>Thinking 5.7</h3><p>图 5.9 中有多种不同形式的箭头，请解释这些不同箭头的差别，并思考我们 的操作系统是如何实现对应类型的进程间通信的。、<br>答：实线箭头是同步消息，需要接收者接收并回应后才会继续进行当前进程，虚线箭头是异步消息，简单地发送消息，不需要回复，发送完后当前进程保持执行。</p>
+<h2 id="难点分析"><a href="#难点分析" class="headerlink" title="难点分析"></a>难点分析</h2><p>经过前面包括内存管理等知识的学习，本单元文件系统的组织方式和结构单元理解起来相对轻松了很多，但是从进程角度去观察文件系统需要考虑的东西就变得多了起来，包括各个进程的交互，我认为这是本次实验的难点。同时本次实验中涉及的各个层次的操作以及内核态和用户态的转化也是个难点。</p>
+<h2 id="实验体会"><a href="#实验体会" class="headerlink" title="实验体会"></a>实验体会</h2><p>经过这么多的os实验，我对一个操作系统的各个组成部分以及硬件和软件如何配合工作，产生这样一个精密的操作系统有了一部分认识，但是这些认识仍然浅显，对于操作系统的学习需要进一步进行探索和深入，这便是修行在个人了。</p>
+<h2 id="原创性说明"><a href="#原创性说明" class="headerlink" title="原创性说明"></a>原创性说明</h2><p>本报告为本人原创</p>
 
                 
               </div>
@@ -390,11 +389,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/OO/" class="print-no-link">#OO</a>
+        <a href="/tags/OS/" class="print-no-link">#OS</a>
       
-        <a href="/tags/Java/" class="print-no-link">#Java</a>
-      
-        <a href="/tags/U2/" class="print-no-link">#U2</a>
+        <a href="/tags/Lab5/" class="print-no-link">#Lab5</a>
       
     </div>
   
@@ -406,8 +403,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>【OO】BUAA-OO-U2-电梯调度</div>
-      <div>http://example.com/2025/04/20/【OO】BUAA-OO-U2——电梯调度/</div>
+      <div>【OS】BUAA-OS-Lab5-实验报告</div>
+      <div>http://example.com/2025/05/30/【OS】BUAA-OS-Lab5-实验报告/</div>
     </div>
     <div class="license-meta">
       
@@ -419,7 +416,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年4月20日</div>
+          <div>2025年5月30日</div>
         </div>
       
       
@@ -451,18 +448,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/04/25/%E3%80%90OS%E3%80%91BUAA-OS-Lab3-%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/" title="【OS】BUAA-OS-Lab3-实验报告">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">【OS】BUAA-OS-Lab3-实验报告</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/04/11/%E3%80%90OS%E3%80%91BUAA-OS-Lab2-%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/" title="【OS】BUAA-OS-Lab2-实验报告">
-                        <span class="hidden-mobile">【OS】BUAA-OS-Lab2-实验报告</span>
+                      <a href="/2025/05/19/%E3%80%90OO%E3%80%91BUAA-OO-U3%E2%80%94%E2%80%94JML%E6%A8%A1%E6%8B%9F%E7%A4%BE%E4%BA%A4%E7%BD%91%E7%BB%9C/" title="【OO】BUAA-OO-U3——JML模拟社交网络">
+                        <span class="hidden-mobile">【OO】BUAA-OO-U3——JML模拟社交网络</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
