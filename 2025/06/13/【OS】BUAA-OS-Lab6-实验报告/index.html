@@ -19,25 +19,25 @@
   <meta name="author" content="mRNA">
   <meta name="keywords" content="">
   
-    <meta name="description" content="OS Lab5实验报告思考题Thinking 5.1如果通过 kseg0 读写设备，那么对于设备的写入会缓存到 Cache 中。这是 一种错误的行为，在实际编写代码的时候这么做会引发不可预知的问题。请思考：这么做 这会引发什么问题？对于不同种类的设备（如我们提到的串口设备和IDE磁盘）的操作会 有差异吗？可以从缓存的性质和缓存更新的策略来考虑。答：可能会出现以下问题：  写入延迟：对设备的写入可能">
+    <meta name="description" content="OS Lab实验报告思考题Thinking 6.1示例代码中，父进程操作管道的写端，子进程操作管道的读端。如果现在想让父进程作为“读者”，代码应当如何修改？答：交换case和default即可 123456789101112131415161718192021222324252627282930#include &lt;stdlib.h&gt;#include &lt;unistd.h&gt;in">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【OS】BUAA-OS-Lab5-实验报告">
-<meta property="og:url" content="http://example.com/2025/05/30/%E3%80%90OS%E3%80%91BUAA-OS-Lab5-%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/index.html">
+<meta property="og:title" content="【OS】BUAA-OS-Lab6-实验报告">
+<meta property="og:url" content="http://example.com/2025/06/13/%E3%80%90OS%E3%80%91BUAA-OS-Lab6-%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/index.html">
 <meta property="og:site_name" content="mRNA的碎碎念Blog">
-<meta property="og:description" content="OS Lab5实验报告思考题Thinking 5.1如果通过 kseg0 读写设备，那么对于设备的写入会缓存到 Cache 中。这是 一种错误的行为，在实际编写代码的时候这么做会引发不可预知的问题。请思考：这么做 这会引发什么问题？对于不同种类的设备（如我们提到的串口设备和IDE磁盘）的操作会 有差异吗？可以从缓存的性质和缓存更新的策略来考虑。答：可能会出现以下问题：  写入延迟：对设备的写入可能">
+<meta property="og:description" content="OS Lab实验报告思考题Thinking 6.1示例代码中，父进程操作管道的写端，子进程操作管道的读端。如果现在想让父进程作为“读者”，代码应当如何修改？答：交换case和default即可 123456789101112131415161718192021222324252627282930#include &lt;stdlib.h&gt;#include &lt;unistd.h&gt;in">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/img/lab5/index.jpg">
-<meta property="article:published_time" content="2025-05-30T15:00:19.000Z">
-<meta property="article:modified_time" content="2025-05-30T15:44:46.321Z">
+<meta property="og:image" content="http://example.com/img/lab6/index.jpg">
+<meta property="article:published_time" content="2025-06-13T14:10:14.000Z">
+<meta property="article:modified_time" content="2025-06-13T15:20:24.682Z">
 <meta property="article:author" content="mRNA">
 <meta property="article:tag" content="OS">
-<meta property="article:tag" content="Lab5">
+<meta property="article:tag" content="Lab6">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/img/lab5/index.jpg">
+<meta name="twitter:image" content="http://example.com/img/lab6/index.jpg">
   
   
   
-  <title>【OS】BUAA-OS-Lab5-实验报告 - mRNA的碎碎念Blog</title>
+  <title>【OS】BUAA-OS-Lab6-实验报告 - mRNA的碎碎念Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -235,7 +235,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="【OS】BUAA-OS-Lab5-实验报告"></span>
+            <span id="subtitle" data-typed-text="【OS】BUAA-OS-Lab6-实验报告"></span>
           
         </div>
 
@@ -251,8 +251,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-05-30 23:00" pubdate>
-          2025年5月30日 晚上
+        <time datetime="2025-06-13 22:10" pubdate>
+          2025年6月13日 晚上
         </time>
       </span>
     
@@ -263,7 +263,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.3k 字
+          2.1k 字
         
       </span>
     
@@ -274,7 +274,7 @@
         
         
         
-          11 分钟
+          18 分钟
         
       </span>
     
@@ -320,42 +320,56 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">【OS】BUAA-OS-Lab5-实验报告</h1>
+            <h1 id="seo-header">【OS】BUAA-OS-Lab6-实验报告</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="OS-Lab5实验报告"><a href="#OS-Lab5实验报告" class="headerlink" title="OS Lab5实验报告"></a>OS Lab5实验报告</h1><h2 id="思考题"><a href="#思考题" class="headerlink" title="思考题"></a>思考题</h2><h3 id="Thinking-5-1"><a href="#Thinking-5-1" class="headerlink" title="Thinking 5.1"></a>Thinking 5.1</h3><p>如果通过 kseg0 读写设备，那么对于设备的写入会缓存到 Cache 中。这是 一种错误的行为，在实际编写代码的时候这么做会引发不可预知的问题。请思考：这么做 这会引发什么问题？对于不同种类的设备（如我们提到的串口设备和IDE磁盘）的操作会 有差异吗？可以从缓存的性质和缓存更新的策略来考虑。<br>答：可能会出现以下问题：</p>
+                <h1 id="OS-Lab实验报告"><a href="#OS-Lab实验报告" class="headerlink" title="OS Lab实验报告"></a>OS Lab实验报告</h1><h2 id="思考题"><a href="#思考题" class="headerlink" title="思考题"></a>思考题</h2><h3 id="Thinking-6-1"><a href="#Thinking-6-1" class="headerlink" title="Thinking 6.1"></a>Thinking 6.1</h3><p>示例代码中，父进程操作管道的写端，子进程操作管道的读端。如果现在想让父进程作为“读者”，代码应当如何修改？<br>答：交换case和default即可</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;unistd.h&gt;</span></span><br><span class="hljs-type">int</span> fildes[<span class="hljs-number">2</span>];<br><span class="hljs-type">char</span> buf[<span class="hljs-number">100</span>];<br><span class="hljs-type">int</span> status;<br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span><br>&#123;<br>    status = pipe(fildes);<br><br>    <span class="hljs-keyword">if</span> (status == <span class="hljs-number">-1</span>) &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;error\n&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-keyword">switch</span> (fork()) &#123;<br>    <span class="hljs-keyword">case</span> <span class="hljs-number">-1</span>:<br>        <span class="hljs-keyword">break</span>;<br>    <span class="hljs-keyword">case</span> <span class="hljs-number">0</span>: <span class="hljs-comment">/*子进程-作为管道的写者*/</span><br>        close(fildes[<span class="hljs-number">0</span>]); <br>        write(fildes[<span class="hljs-number">1</span>], <span class="hljs-string">&quot;Hello world\n&quot;</span>, <span class="hljs-number">12</span>); <br>        close(fildes[<span class="hljs-number">1</span>]); <br>        <span class="hljs-built_in">exit</span>(EXIT_SUCCESS);<br><br>    <span class="hljs-keyword">default</span>: <span class="hljs-comment">/*父进程-作为管道的读者*/</span><br>        close(fildes[<span class="hljs-number">1</span>]); <br>        read(fildes[<span class="hljs-number">0</span>], buf, <span class="hljs-number">100</span>); <br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;father-process read:%s\n&quot;</span>, buf); <br>        close(fildes[<span class="hljs-number">0</span>]); <br>        <span class="hljs-built_in">exit</span>(EXIT_SUCCESS);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="Thinking-6-2"><a href="#Thinking-6-2" class="headerlink" title="Thinking 6.2"></a>Thinking 6.2</h3><p>上面这种不同步修改 <code>pp_ref</code> 而导致的进程竞争问题在 <code>user/lib/fd.c</code> 中的 <code>dup</code> 函数中也存在。请结合代码模仿上述情景，分析一下我们的 <code>dup</code> 函数中为什么会出现预想之外的情况？<br>答：在以下这种情况下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c">pipe(p);<br><span class="hljs-keyword">if</span> (fork() == <span class="hljs-number">0</span>) &#123;<br>    read(p[<span class="hljs-number">0</span>], buf, <span class="hljs-keyword">sizeof</span>(buf));<br>&#125; <span class="hljs-keyword">else</span> &#123;<br> dup(p[<span class="hljs-number">0</span>], newfd);<br>    write(p[<span class="hljs-number">1</span>], <span class="hljs-string">&quot;a&quot;</span>, <span class="hljs-number">5</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>可能会出现以下问题：<br>父进程执行 <code>dup(p[0], newfd)</code>， <code>pageref(p[0])</code> 变为2，尚未更新管道数据块的 <code>pp_ref</code>。子进程执行 <code>read(p[0], buf, sizeof(buf))</code> ，发现 <code>pageref(p[0])</code>为2，子进程退出。父进程继续执行 <code>write(p[1], &quot;a&quot;, 5)</code>,子进程退出 <code>read</code>，父进程 <code>write</code> 可能永远无法结束。<br>问题主要是由于<strong>修改<code>pp_ref</code>不是原子操作</strong>。</p>
+<h3 id="Thinking-6-3"><a href="#Thinking-6-3" class="headerlink" title="Thinking 6.3"></a>Thinking 6.3</h3><p>阅读上述材料并思考：为什么系统调用一定是原子操作呢？如果你觉得不是所有的系统调用都是原子操作，请给出反例。希望能结合相关代码进行分析说明。<br>答：MOS中系统调用是原子的，在系统调用前关闭了中断，同时其他进程也无法进入内核，所以系统调用是原子的</p>
+<h3 id="Thinking-6-4"><a href="#Thinking-6-4" class="headerlink" title="Thinking 6.4"></a>Thinking 6.4</h3><p>仔细阅读上面这段话，并思考下列问题</p>
 <ul>
-<li><p><strong>写入延迟</strong>：对设备的写入可能不会立即生效，而是停留在 Cache 中，直到 Cache 被刷新（如通过 <code>sync</code> 或 <code>cache flush</code> 指令）。如果设备需要实时响应（如控制寄存器），会导致设备行为与预期不符。</p>
-</li>
-<li><p><strong>读取脏数据</strong>：如果设备状态被外部修改（如硬件中断更新状态寄存器），CPU 可能从 Cache 中读取旧数据，而非设备的最新状态。</p>
-</li>
-<li><p><strong>写回Cache</strong>：写入操作可能长时间停留在 Cache 中，导致设备无法及时收到数据。</p>
-</li>
+<li>按照上述说法控制 <code>pipe_close</code> 中 <code>fd</code> 和 <code>pipeunmap</code> 的顺序，是否可以解决上述场景的进程竞争问题？给出你的分析过程。</li>
+<li>我们只分析了 <code>close</code> 时的情形，在 <code>fd.c</code> 中有一个 <code>dup</code> 函数，用于复制文件描述符。试想，如果要复制的文件描述符指向一个管道，那么是否会出现与 <code>close</code> 类似的问题？请模仿上述材料写写你的理解。<br>答：</li>
+<li>可以，先 <code>unmap fd</code>，减少 <code>pageref(fd)</code>，再 <code>unmap pipe</code>，减少 <code>pageref(pipe)</code>，保证 <code>pageref(pipe) &gt;= pageref(fd)</code>始终成立。其他进程不会观察到 <code>pageref(fd) &gt; pageref(pipe)</code> ，不会误判管道状态。</li>
+<li>会出现类似问题，<code>dup</code> 先增加 <code>pageref(fd)</code>，后增加 <code>pageref(pipe)</code>，中间状态可能出现 <code>pageref(fd) &gt; pageref(pipe)</code>。其他进程如果观察到这一状态，会误判管道的一端已关闭。</li>
 </ul>
-<h3 id="Thinking-5-2"><a href="#Thinking-5-2" class="headerlink" title="Thinking 5.2"></a>Thinking 5.2</h3><p>查找代码中的相关定义，试回答一个磁盘块中最多能存储多少个文件控制 块？一个目录下最多能有多少个文件？我们的文件系统支持的单个文件最大为多大？<br>答：</p>
+<h3 id="Thinking-6-5"><a href="#Thinking-6-5" class="headerlink" title="Thinking 6.5"></a>Thinking 6.5</h3><ul>
+<li>认真回看 Lab5 文件系统相关代码，弄清打开文件的过程。</li>
+<li>回顾 Lab1 与 Lab3，思考如何读取并加载 ELF 文件。</li>
+<li>在 Lab1 中我们介绍了 <code>data</code> <code>text</code> <code>bss</code> 段及它们的含义，<code>data</code> 段存放初始化过的全局变量，<code>bss</code> 段存放未初始化的全局变量。关于 <code>memsize</code> 和 <code>filesize</code>，我们在 Note 1.3.4 中也解释了它们的含义与特点。关于 Note 1.3.4，注意其中关于“ <code>bss</code> 段并不在文件中占数据”表述的含义。回顾 Lab3 并思考：<code>elf_load_seg()</code> 和<code>load_icode_mapper()</code> 函数是如何确保加载ELF文件时，<code>bss</code> 段数据被正确加载进虚拟内存空间。<code>bss</code> 段在 ELF 中并不占空间，但 ELF 加载进内存后，<code>bss</code>段的数据占据了空间，并且初始值都是 <code>0</code>。请回顾 <code>elf_load_seg()</code> 和 <code>load_icode_mapper()</code> 的实现，思考这一点是如何实现的？<blockquote>
+<p>下面给出一些对于上述问题的提示，以便大家更好地把握加载内核进程和加载用户进程的区别与联系，类比完成 <code>spawn</code> 函数。</p>
+<p>关于第一个问题，在 Lab3 中我们创建进程，并且通过 <code>ENV_CREATE(...)</code> 在内核态加载了初始进程，而我们的 spawn函数则是通过和文件系统交互，取得文件描述块，进而找到 ELF 在“硬盘”中的位置，进而读取。</p>
+<p>关于第二个问题，各位已经在 Lab3 中填写了 <code>load_icode</code> 函数，实现了 ELF 可执行文件中读取数据并加载到内存空间，其中通过调用 <code>elf_load_seg</code> 函数来加载各个程序段。在 Lab3 中我们要填写 <code>load_icode_mapper</code> 回调函数，在内核态下加载 ELF 数据到内存空间；相应地，在 Lab6 中 <code>spawn</code> 函数也需要在用户态下使用系统调用为 ELF 数据分配空间。<br>答：</p>
+</blockquote>
+</li>
+<li>先调用 <code>open()</code> 函数，然后调用 <code>fdipc_open()</code> 联系文件服务进程，文件服务进程接收到消息后调用 <code>serve_open()</code> ，创建文件，打开文件，传递回<code>FileFd</code> 。</li>
+<li>解析ELF头获取程序头表位置，读程序头表定位LOAD段，遍历LOAD段，调用<code>elf_load_seg()</code>，调用<code>load_icode_mapper()</code>分配物理页；文件数据段：复制内容到内存；BSS段：分配零初始化页。</li>
+<li>BSS中 <code>filesize=0</code> ，<code>memsize&gt;0</code>。<code>elf_load_seg()</code> 发现 <code>bin_size &lt; mem_size</code> 时，调用 <code>load_icode_mapper(NULL, size)</code> ，进行 <code>page_insert</code> ，保证有足够空间放置 <code>bss</code> ，同时设置 <code>src = NULL</code> 得到设置初始值为 <code>0</code>。</li>
+</ul>
+<h3 id="Thinking-6-6"><a href="#Thinking-6-6" class="headerlink" title="Thinking 6.6"></a>Thinking 6.6</h3><p>通过阅读代码空白段的注释我们知道，将标准输入或输出定向到文件，需要我们将其 <code>dup</code> 到 0 或 1 号文件描述符（fd）。那么问题来了：在哪步，0 和 1 被“安排”为标准输入和标准输出？请分析代码执行流程，给出答案。<br>答：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// stdin should be 0, because no file descriptors are open yet</span><br> <span class="hljs-keyword">if</span> ((r = opencons()) != <span class="hljs-number">0</span>) &#123;<br>  user_panic(<span class="hljs-string">&quot;opencons: %d&quot;</span>, r);<br> &#125;<br> <span class="hljs-comment">// stdout</span><br> <span class="hljs-keyword">if</span> ((r = dup(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>)) &lt; <span class="hljs-number">0</span>) &#123;<br>  user_panic(<span class="hljs-string">&quot;dup: %d&quot;</span>, r);<br> &#125;<br></code></pre></td></tr></table></figure>
 <ul>
-<li>一个磁盘块4KB，一个文件控制块256B，所以一个磁盘块最多存储16个文件控制块。 </li>
-<li>一个目录下最多1024个磁盘块，所以最多16384个文件。</li>
-<li>单个文件最大占满整个4MB磁盘空间</li>
+<li><code>fd = 0</code>: 打开控制台设备，返回文件描述符，未打开任何 <code>fd</code>，<code>opencons()</code> 返回最小可用 <code>fd</code>，验证返回值为 <code>0</code>，确保<code>fd = 0</code>指向控制台输入。</li>
+<li><code>fd = 1</code>: 复制 <code>fd = 0</code> 文件表项到 <code>fd = 1</code>，使 <code>fd = 1</code> 与 <code>fd = 0</code> 指向同一控制台设备，将标准输出定向到控制台。</li>
 </ul>
-<h3 id="Thinking-5-3"><a href="#Thinking-5-3" class="headerlink" title="Thinking 5.3"></a>Thinking 5.3</h3><p>请思考，在满足磁盘块缓存的设计的前提下，我们实验使用的内核支持的最大磁盘大小是多少？<br>答：1GB</p>
-<h3 id="Thinking-5-4"><a href="#Thinking-5-4" class="headerlink" title="Thinking 5.4"></a>Thinking 5.4</h3><p>在本实验中， fs&#x2F;serv.h、 user&#x2F;include&#x2F;fs.h 等文件中出现了许多宏定义，试列举你认为较为重要的宏定义，同时进行解释，并描述其主要应用之处。<br>答：</p>
+<h3 id="Thinking-6-7"><a href="#Thinking-6-7" class="headerlink" title="Thinking 6.7"></a>Thinking 6.7</h3><p>在 <code>shell</code> 中执行的命令分为内置命令和外部命令。在执行内置命令时 <code>shell</code> 不需要 <code>fork</code> 一个子 <code>shell</code>，如 Linux 系统中的 <code>cd</code> 命令。在执行外部命令时 <code>shell</code> 需要 <code>fork</code> 一个子 <code>shell</code>，然后子 <code>shell</code> 去执行这条命令。<br>据此判断，在 MOS 中我们用到的 <code>shell</code> 命令是内置命令还是外部命令？请思考为什么 Linux 的 <code>cd</code> 命令是内部命令而不是外部命令？<br>答：内置命令是shell的功能，不需要创建新的进程；外部命令是磁盘上的程序，需要创建新的进程来执行。MOS中的shell为外部命令。在<code>sh.c</code>的主循环中，无论何种命令，shell都会先执行<code>fork()</code>创建子进程，再通过<code>runcmd()</code>执。这说明所有命令都在子进程中运行，是外部命令。<code>cd</code>是内置命令，如果是外部命令，在子进程中执行，目录变更不会影响父shell。</p>
+<h3 id="Thinking-6-8"><a href="#Thinking-6-8" class="headerlink" title="Thinking 6.8"></a>Thinking 6.8</h3><blockquote>
+<p>在你的 <code>shell</code> 中输入命令 <code>ls.b | cat.b &gt; motd</code>。</p>
+</blockquote>
 <ul>
-<li>#define BLOCK_SIZE PAGE_SIZE ，指出块大小即页大小</li>
-<li>#define DISKMAX 0x40000000，磁盘在虚拟内存中缓冲块的大小</li>
-<li>#define FILE2BLK (BLOCK_SIZE &#x2F; sizeof(struct File))，一个块有多少文件控制块</li>
+<li>请问你可以在你的 <code>shell</code> 中观察到几次 <code>spawn</code>？分别对应哪个进程？</li>
+<li>请问你可以在你的 <code>shell</code> 中观察到几次进程销毁？分别对应哪个进程？<br>答：观察到两次 spawn ，第一次生成运行 <code>ls.b</code> 的进程;第二次生成运行 <code>cat.b</code> 的进程。观察到四次进程销毁。</li>
 </ul>
-<h3 id="Thinking-5-5"><a href="#Thinking-5-5" class="headerlink" title="Thinking 5.5"></a>Thinking 5.5</h3><p>在 Lab4“系统调用与 fork”的实验中我们实现了极为重要的 fork 函数。那么 fork 前后的父子进程是否会共享文件描述符和定位指针呢？请在完成上述练习的基础上编写一个程序进行验证。<br>答：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-type">int</span> id;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Fd</span>* <span class="hljs-title">fdd</span>;</span><br><span class="hljs-keyword">if</span> ((id = fork()) == <span class="hljs-number">0</span>) &#123;<br>    fd_lookup(r, &amp;fdd);<br>    debugf(<span class="hljs-string">&quot;offset1 == %d\n&quot;</span>, fdd-&gt;fd_offset);<br>&#125; <span class="hljs-keyword">else</span> &#123;<br>    fd_lookup(r, &amp;fdd);<br>    debugf(<span class="hljs-string">&quot;offset2 == %d\n&quot;</span>, fdd-&gt;fd_offset);<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>观察输出的offset是否相同即可验证。</p>
-<h3 id="Thinking-5-6"><a href="#Thinking-5-6" class="headerlink" title="Thinking 5.6"></a>Thinking 5.6</h3><p>请解释 File, Fd, Filefd 结构体及其各个域的作用。比如各个结构体会在哪些过程中被使用，是否对应磁盘上的物理实体还是单纯的内存数据等。说明形式自定，要求简洁明了，可大致勾勒出文件系统数据结构与物理实体的对应关系与设计框架。<br>答：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">File</span> &#123;</span><br>    <span class="hljs-type">char</span> f_name[MAXNAMELEN]; <span class="hljs-comment">//文件名称</span><br>    <span class="hljs-type">uint32_t</span> f_size; <span class="hljs-comment">//文件大小</span><br>    <span class="hljs-type">uint32_t</span> f_type; <span class="hljs-comment">//文件类型</span><br>    <span class="hljs-type">uint32_t</span> f_direct[NDIRECT]; <span class="hljs-comment">// 文件直接指针</span><br>    <span class="hljs-type">uint32_t</span> f_indirect; <span class="hljs-comment">// 文件大小大于40KB时，使用间接指针</span><br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">File</span>* <span class="hljs-title">f_dir</span>;</span> <span class="hljs-comment">// 文件所在的目录</span><br>    <span class="hljs-type">char</span> f_pad[FILE_STRUCT_SIZE - MAXNAMELEN - (<span class="hljs-number">3</span> + NDIRECT) * <span class="hljs-number">4</span> - <span class="hljs-keyword">sizeof</span>(<span class="hljs-type">void</span>*)]; <span class="hljs-comment">//进行填充</span><br>&#125; __attribute__((aligned(<span class="hljs-number">4</span>), packed));<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Fd</span> &#123;</span><br>	u_int fd_dev_id;	<span class="hljs-comment">// 设备id</span><br>	u_int fd_offset;	<span class="hljs-comment">// 文件访问时维护的偏移量</span><br>	u_int fd_omode;		<span class="hljs-comment">// 打开方式</span><br>&#125;;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Filefd</span> &#123;</span><br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Fd</span> <span class="hljs-title">f_fd</span>;</span>		<span class="hljs-comment">// 文件描述符</span><br>	u_int f_fileid;		<span class="hljs-comment">// 文件id</span><br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">File</span> <span class="hljs-title">f_file</span>;</span>	<span class="hljs-comment">// fd对应的文件控制块</span><br>&#125;;<br></code></pre></td></tr></table></figure>
-<h3 id="Thinking-5-7"><a href="#Thinking-5-7" class="headerlink" title="Thinking 5.7"></a>Thinking 5.7</h3><p>图 5.9 中有多种不同形式的箭头，请解释这些不同箭头的差别，并思考我们 的操作系统是如何实现对应类型的进程间通信的。、<br>答：实线箭头是同步消息，需要接收者接收并回应后才会继续进行当前进程，虚线箭头是异步消息，简单地发送消息，不需要回复，发送完后当前进程保持执行。</p>
-<h2 id="难点分析"><a href="#难点分析" class="headerlink" title="难点分析"></a>难点分析</h2><p>经过前面包括内存管理等知识的学习，本单元文件系统的组织方式和结构单元理解起来相对轻松了很多，但是从进程角度去观察文件系统需要考虑的东西就变得多了起来，包括各个进程的交互，我认为这是本次实验的难点。同时本次实验中涉及的各个层次的操作以及内核态和用户态的转化也是个难点。</p>
-<h2 id="实验体会"><a href="#实验体会" class="headerlink" title="实验体会"></a>实验体会</h2><p>经过这么多的os实验，我对一个操作系统的各个组成部分以及硬件和软件如何配合工作，产生这样一个精密的操作系统有了一部分认识，但是这些认识仍然浅显，对于操作系统的学习需要进一步进行探索和深入，这便是修行在个人了。</p>
-<h2 id="原创性说明"><a href="#原创性说明" class="headerlink" title="原创性说明"></a>原创性说明</h2><p>本报告为本人原创</p>
+<h3 id="难点分析"><a href="#难点分析" class="headerlink" title="难点分析"></a>难点分析</h3><p>我认为本次实验并不简单，难点主要是管道关闭存在的竞态条件，但是通过对其解决方案的学习可以帮助理解这些问题。同时Shell的实现也需要仔细思考，理解好ELF文件的加载。</p>
+<h3 id="实验体会"><a href="#实验体会" class="headerlink" title="实验体会"></a>实验体会</h3><p>终于完成了操作系统课程的最后一个Lab，顿感身心轻松，通过本学习的学习，我对于操作系统这座大厦如何拔地而起有了更深刻的了解，也不禁为其中的设计智慧而感叹。虽然课程已经结束，但是对于操作系统的学习不会停止，继续努力！</p>
+<h3 id="原创性说明"><a href="#原创性说明" class="headerlink" title="原创性说明"></a>原创性说明</h3><p>本报告为本人原创</p>
 
                 
               </div>
@@ -391,7 +405,7 @@
       
         <a href="/tags/OS/" class="print-no-link">#OS</a>
       
-        <a href="/tags/Lab5/" class="print-no-link">#Lab5</a>
+        <a href="/tags/Lab6/" class="print-no-link">#Lab6</a>
       
     </div>
   
@@ -403,8 +417,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>【OS】BUAA-OS-Lab5-实验报告</div>
-      <div>http://example.com/2025/05/30/【OS】BUAA-OS-Lab5-实验报告/</div>
+      <div>【OS】BUAA-OS-Lab6-实验报告</div>
+      <div>http://example.com/2025/06/13/【OS】BUAA-OS-Lab6-实验报告/</div>
     </div>
     <div class="license-meta">
       
@@ -416,7 +430,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年5月30日</div>
+          <div>2025年6月13日</div>
         </div>
       
       
@@ -448,18 +462,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/06/13/%E3%80%90OS%E3%80%91BUAA-OS-Lab6-%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/" title="【OS】BUAA-OS-Lab6-实验报告">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">【OS】BUAA-OS-Lab6-实验报告</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/05/19/%E3%80%90OO%E3%80%91BUAA-OO-U3%E2%80%94%E2%80%94JML%E6%A8%A1%E6%8B%9F%E7%A4%BE%E4%BA%A4%E7%BD%91%E7%BB%9C/" title="【OO】BUAA-OO-U3——JML模拟社交网络">
-                        <span class="hidden-mobile">【OO】BUAA-OO-U3——JML模拟社交网络</span>
+                      <a href="/2025/05/30/%E3%80%90OS%E3%80%91BUAA-OS-Lab5-%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/" title="【OS】BUAA-OS-Lab5-实验报告">
+                        <span class="hidden-mobile">【OS】BUAA-OS-Lab5-实验报告</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
