@@ -19,25 +19,26 @@
   <meta name="author" content="mRNA">
   <meta name="keywords" content="">
   
-    <meta name="description" content="OS Lab实验报告思考题Thinking 6.1示例代码中，父进程操作管道的写端，子进程操作管道的读端。如果现在想让父进程作为“读者”，代码应当如何修改？答：交换case和default即可 123456789101112131415161718192021222324252627282930#include &lt;stdlib.h&gt;#include &lt;unistd.h&gt;in">
+    <meta name="description" content="BUAA OO U4总结正向建模与开发本单元以图书馆管理系统为背景，UML为工具，目的在于引导我们体会正向建模与开发的过程。就我个人的体验来说，这是很好的一次架构与开发实践。在本单元第一次作业中设计好的架构帮助我能够很轻松地应对后面作业的迭代开发，能够将一直强调的增量开发和开闭原则等真正实践。在本学期OO四个单元的学习中，一、三单元似乎不太太多对架构进行精心设计，而第二单元重心又在于多线程，所以将">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【OS】BUAA-OS-Lab6-实验报告">
-<meta property="og:url" content="http://example.com/2025/06/13/%E3%80%90OS%E3%80%91BUAA-OS-Lab6-%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/index.html">
+<meta property="og:title" content="【OO】BUAA-OO-U4——UML图书管理系统">
+<meta property="og:url" content="http://example.com/2025/06/15/%E3%80%90OO%E3%80%91BUAA-OO-U4%E2%80%94%E2%80%94UML%E5%9B%BE%E4%B9%A6%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/index.html">
 <meta property="og:site_name" content="mRNA的碎碎念Blog">
-<meta property="og:description" content="OS Lab实验报告思考题Thinking 6.1示例代码中，父进程操作管道的写端，子进程操作管道的读端。如果现在想让父进程作为“读者”，代码应当如何修改？答：交换case和default即可 123456789101112131415161718192021222324252627282930#include &lt;stdlib.h&gt;#include &lt;unistd.h&gt;in">
+<meta property="og:description" content="BUAA OO U4总结正向建模与开发本单元以图书馆管理系统为背景，UML为工具，目的在于引导我们体会正向建模与开发的过程。就我个人的体验来说，这是很好的一次架构与开发实践。在本单元第一次作业中设计好的架构帮助我能够很轻松地应对后面作业的迭代开发，能够将一直强调的增量开发和开闭原则等真正实践。在本学期OO四个单元的学习中，一、三单元似乎不太太多对架构进行精心设计，而第二单元重心又在于多线程，所以将">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/img/lab6/index.jpg">
-<meta property="article:published_time" content="2025-06-13T14:10:14.000Z">
-<meta property="article:modified_time" content="2025-06-13T15:20:24.682Z">
+<meta property="og:image" content="http://example.com/img/u4/index.jpg">
+<meta property="article:published_time" content="2025-06-15T13:08:35.000Z">
+<meta property="article:modified_time" content="2025-06-15T15:54:26.562Z">
 <meta property="article:author" content="mRNA">
-<meta property="article:tag" content="OS">
-<meta property="article:tag" content="Lab6">
+<meta property="article:tag" content="OO">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="U3">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/img/lab6/index.jpg">
+<meta name="twitter:image" content="http://example.com/img/u4/index.jpg">
   
   
   
-  <title>【OS】BUAA-OS-Lab6-实验报告 - mRNA的碎碎念Blog</title>
+  <title>【OO】BUAA-OO-U4——UML图书管理系统 - mRNA的碎碎念Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -235,7 +236,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="【OS】BUAA-OS-Lab6-实验报告"></span>
+            <span id="subtitle" data-typed-text="【OO】BUAA-OO-U4——UML图书管理系统"></span>
           
         </div>
 
@@ -251,8 +252,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-06-13 22:10" pubdate>
-          2025年6月13日 晚上
+        <time datetime="2025-06-15 21:08" pubdate>
+          2025年6月15日 晚上
         </time>
       </span>
     
@@ -263,7 +264,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.1k 字
+          1.7k 字
         
       </span>
     
@@ -274,7 +275,7 @@
         
         
         
-          18 分钟
+          15 分钟
         
       </span>
     
@@ -320,56 +321,18 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">【OS】BUAA-OS-Lab6-实验报告</h1>
+            <h1 id="seo-header">【OO】BUAA-OO-U4——UML图书管理系统</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="OS-Lab实验报告"><a href="#OS-Lab实验报告" class="headerlink" title="OS Lab实验报告"></a>OS Lab实验报告</h1><h2 id="思考题"><a href="#思考题" class="headerlink" title="思考题"></a>思考题</h2><h3 id="Thinking-6-1"><a href="#Thinking-6-1" class="headerlink" title="Thinking 6.1"></a>Thinking 6.1</h3><p>示例代码中，父进程操作管道的写端，子进程操作管道的读端。如果现在想让父进程作为“读者”，代码应当如何修改？<br>答：交换case和default即可</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;unistd.h&gt;</span></span><br><span class="hljs-type">int</span> fildes[<span class="hljs-number">2</span>];<br><span class="hljs-type">char</span> buf[<span class="hljs-number">100</span>];<br><span class="hljs-type">int</span> status;<br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span><br>&#123;<br>    status = pipe(fildes);<br><br>    <span class="hljs-keyword">if</span> (status == <span class="hljs-number">-1</span>) &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;error\n&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-keyword">switch</span> (fork()) &#123;<br>    <span class="hljs-keyword">case</span> <span class="hljs-number">-1</span>:<br>        <span class="hljs-keyword">break</span>;<br>    <span class="hljs-keyword">case</span> <span class="hljs-number">0</span>: <span class="hljs-comment">/*子进程-作为管道的写者*/</span><br>        close(fildes[<span class="hljs-number">0</span>]); <br>        write(fildes[<span class="hljs-number">1</span>], <span class="hljs-string">&quot;Hello world\n&quot;</span>, <span class="hljs-number">12</span>); <br>        close(fildes[<span class="hljs-number">1</span>]); <br>        <span class="hljs-built_in">exit</span>(EXIT_SUCCESS);<br><br>    <span class="hljs-keyword">default</span>: <span class="hljs-comment">/*父进程-作为管道的读者*/</span><br>        close(fildes[<span class="hljs-number">1</span>]); <br>        read(fildes[<span class="hljs-number">0</span>], buf, <span class="hljs-number">100</span>); <br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;father-process read:%s\n&quot;</span>, buf); <br>        close(fildes[<span class="hljs-number">0</span>]); <br>        <span class="hljs-built_in">exit</span>(EXIT_SUCCESS);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h3 id="Thinking-6-2"><a href="#Thinking-6-2" class="headerlink" title="Thinking 6.2"></a>Thinking 6.2</h3><p>上面这种不同步修改 <code>pp_ref</code> 而导致的进程竞争问题在 <code>user/lib/fd.c</code> 中的 <code>dup</code> 函数中也存在。请结合代码模仿上述情景，分析一下我们的 <code>dup</code> 函数中为什么会出现预想之外的情况？<br>答：在以下这种情况下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c">pipe(p);<br><span class="hljs-keyword">if</span> (fork() == <span class="hljs-number">0</span>) &#123;<br>    read(p[<span class="hljs-number">0</span>], buf, <span class="hljs-keyword">sizeof</span>(buf));<br>&#125; <span class="hljs-keyword">else</span> &#123;<br> dup(p[<span class="hljs-number">0</span>], newfd);<br>    write(p[<span class="hljs-number">1</span>], <span class="hljs-string">&quot;a&quot;</span>, <span class="hljs-number">5</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>可能会出现以下问题：<br>父进程执行 <code>dup(p[0], newfd)</code>， <code>pageref(p[0])</code> 变为2，尚未更新管道数据块的 <code>pp_ref</code>。子进程执行 <code>read(p[0], buf, sizeof(buf))</code> ，发现 <code>pageref(p[0])</code>为2，子进程退出。父进程继续执行 <code>write(p[1], &quot;a&quot;, 5)</code>,子进程退出 <code>read</code>，父进程 <code>write</code> 可能永远无法结束。<br>问题主要是由于<strong>修改<code>pp_ref</code>不是原子操作</strong>。</p>
-<h3 id="Thinking-6-3"><a href="#Thinking-6-3" class="headerlink" title="Thinking 6.3"></a>Thinking 6.3</h3><p>阅读上述材料并思考：为什么系统调用一定是原子操作呢？如果你觉得不是所有的系统调用都是原子操作，请给出反例。希望能结合相关代码进行分析说明。<br>答：MOS中系统调用是原子的，在系统调用前关闭了中断，同时其他进程也无法进入内核，所以系统调用是原子的</p>
-<h3 id="Thinking-6-4"><a href="#Thinking-6-4" class="headerlink" title="Thinking 6.4"></a>Thinking 6.4</h3><p>仔细阅读上面这段话，并思考下列问题</p>
-<ul>
-<li>按照上述说法控制 <code>pipe_close</code> 中 <code>fd</code> 和 <code>pipeunmap</code> 的顺序，是否可以解决上述场景的进程竞争问题？给出你的分析过程。</li>
-<li>我们只分析了 <code>close</code> 时的情形，在 <code>fd.c</code> 中有一个 <code>dup</code> 函数，用于复制文件描述符。试想，如果要复制的文件描述符指向一个管道，那么是否会出现与 <code>close</code> 类似的问题？请模仿上述材料写写你的理解。<br>答：</li>
-<li>可以，先 <code>unmap fd</code>，减少 <code>pageref(fd)</code>，再 <code>unmap pipe</code>，减少 <code>pageref(pipe)</code>，保证 <code>pageref(pipe) &gt;= pageref(fd)</code>始终成立。其他进程不会观察到 <code>pageref(fd) &gt; pageref(pipe)</code> ，不会误判管道状态。</li>
-<li>会出现类似问题，<code>dup</code> 先增加 <code>pageref(fd)</code>，后增加 <code>pageref(pipe)</code>，中间状态可能出现 <code>pageref(fd) &gt; pageref(pipe)</code>。其他进程如果观察到这一状态，会误判管道的一端已关闭。</li>
-</ul>
-<h3 id="Thinking-6-5"><a href="#Thinking-6-5" class="headerlink" title="Thinking 6.5"></a>Thinking 6.5</h3><ul>
-<li>认真回看 Lab5 文件系统相关代码，弄清打开文件的过程。</li>
-<li>回顾 Lab1 与 Lab3，思考如何读取并加载 ELF 文件。</li>
-<li>在 Lab1 中我们介绍了 <code>data</code> <code>text</code> <code>bss</code> 段及它们的含义，<code>data</code> 段存放初始化过的全局变量，<code>bss</code> 段存放未初始化的全局变量。关于 <code>memsize</code> 和 <code>filesize</code>，我们在 Note 1.3.4 中也解释了它们的含义与特点。关于 Note 1.3.4，注意其中关于“ <code>bss</code> 段并不在文件中占数据”表述的含义。回顾 Lab3 并思考：<code>elf_load_seg()</code> 和<code>load_icode_mapper()</code> 函数是如何确保加载ELF文件时，<code>bss</code> 段数据被正确加载进虚拟内存空间。<code>bss</code> 段在 ELF 中并不占空间，但 ELF 加载进内存后，<code>bss</code>段的数据占据了空间，并且初始值都是 <code>0</code>。请回顾 <code>elf_load_seg()</code> 和 <code>load_icode_mapper()</code> 的实现，思考这一点是如何实现的？<blockquote>
-<p>下面给出一些对于上述问题的提示，以便大家更好地把握加载内核进程和加载用户进程的区别与联系，类比完成 <code>spawn</code> 函数。</p>
-<p>关于第一个问题，在 Lab3 中我们创建进程，并且通过 <code>ENV_CREATE(...)</code> 在内核态加载了初始进程，而我们的 spawn函数则是通过和文件系统交互，取得文件描述块，进而找到 ELF 在“硬盘”中的位置，进而读取。</p>
-<p>关于第二个问题，各位已经在 Lab3 中填写了 <code>load_icode</code> 函数，实现了 ELF 可执行文件中读取数据并加载到内存空间，其中通过调用 <code>elf_load_seg</code> 函数来加载各个程序段。在 Lab3 中我们要填写 <code>load_icode_mapper</code> 回调函数，在内核态下加载 ELF 数据到内存空间；相应地，在 Lab6 中 <code>spawn</code> 函数也需要在用户态下使用系统调用为 ELF 数据分配空间。<br>答：</p>
-</blockquote>
-</li>
-<li>先调用 <code>open()</code> 函数，然后调用 <code>fdipc_open()</code> 联系文件服务进程，文件服务进程接收到消息后调用 <code>serve_open()</code> ，创建文件，打开文件，传递回<code>FileFd</code> 。</li>
-<li>解析ELF头获取程序头表位置，读程序头表定位LOAD段，遍历LOAD段，调用<code>elf_load_seg()</code>，调用<code>load_icode_mapper()</code>分配物理页；文件数据段：复制内容到内存；BSS段：分配零初始化页。</li>
-<li>BSS中 <code>filesize=0</code> ，<code>memsize&gt;0</code>。<code>elf_load_seg()</code> 发现 <code>bin_size &lt; mem_size</code> 时，调用 <code>load_icode_mapper(NULL, size)</code> ，进行 <code>page_insert</code> ，保证有足够空间放置 <code>bss</code> ，同时设置 <code>src = NULL</code> 得到设置初始值为 <code>0</code>。</li>
-</ul>
-<h3 id="Thinking-6-6"><a href="#Thinking-6-6" class="headerlink" title="Thinking 6.6"></a>Thinking 6.6</h3><p>通过阅读代码空白段的注释我们知道，将标准输入或输出定向到文件，需要我们将其 <code>dup</code> 到 0 或 1 号文件描述符（fd）。那么问题来了：在哪步，0 和 1 被“安排”为标准输入和标准输出？请分析代码执行流程，给出答案。<br>答：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// stdin should be 0, because no file descriptors are open yet</span><br> <span class="hljs-keyword">if</span> ((r = opencons()) != <span class="hljs-number">0</span>) &#123;<br>  user_panic(<span class="hljs-string">&quot;opencons: %d&quot;</span>, r);<br> &#125;<br> <span class="hljs-comment">// stdout</span><br> <span class="hljs-keyword">if</span> ((r = dup(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>)) &lt; <span class="hljs-number">0</span>) &#123;<br>  user_panic(<span class="hljs-string">&quot;dup: %d&quot;</span>, r);<br> &#125;<br></code></pre></td></tr></table></figure>
-<ul>
-<li><code>fd = 0</code>: 打开控制台设备，返回文件描述符，未打开任何 <code>fd</code>，<code>opencons()</code> 返回最小可用 <code>fd</code>，验证返回值为 <code>0</code>，确保<code>fd = 0</code>指向控制台输入。</li>
-<li><code>fd = 1</code>: 复制 <code>fd = 0</code> 文件表项到 <code>fd = 1</code>，使 <code>fd = 1</code> 与 <code>fd = 0</code> 指向同一控制台设备，将标准输出定向到控制台。</li>
-</ul>
-<h3 id="Thinking-6-7"><a href="#Thinking-6-7" class="headerlink" title="Thinking 6.7"></a>Thinking 6.7</h3><p>在 <code>shell</code> 中执行的命令分为内置命令和外部命令。在执行内置命令时 <code>shell</code> 不需要 <code>fork</code> 一个子 <code>shell</code>，如 Linux 系统中的 <code>cd</code> 命令。在执行外部命令时 <code>shell</code> 需要 <code>fork</code> 一个子 <code>shell</code>，然后子 <code>shell</code> 去执行这条命令。<br>据此判断，在 MOS 中我们用到的 <code>shell</code> 命令是内置命令还是外部命令？请思考为什么 Linux 的 <code>cd</code> 命令是内部命令而不是外部命令？<br>答：内置命令是shell的功能，不需要创建新的进程；外部命令是磁盘上的程序，需要创建新的进程来执行。MOS中的shell为外部命令。在<code>sh.c</code>的主循环中，无论何种命令，shell都会先执行<code>fork()</code>创建子进程，再通过<code>runcmd()</code>执。这说明所有命令都在子进程中运行，是外部命令。<code>cd</code>是内置命令，如果是外部命令，在子进程中执行，目录变更不会影响父shell。</p>
-<h3 id="Thinking-6-8"><a href="#Thinking-6-8" class="headerlink" title="Thinking 6.8"></a>Thinking 6.8</h3><blockquote>
-<p>在你的 <code>shell</code> 中输入命令 <code>ls.b | cat.b &gt; motd</code>。</p>
-</blockquote>
-<ul>
-<li>请问你可以在你的 <code>shell</code> 中观察到几次 <code>spawn</code>？分别对应哪个进程？</li>
-<li>请问你可以在你的 <code>shell</code> 中观察到几次进程销毁？分别对应哪个进程？<br>答：观察到两次 spawn ，第一次生成运行 <code>ls.b</code> 的进程;第二次生成运行 <code>cat.b</code> 的进程。观察到四次进程销毁。</li>
-</ul>
-<h3 id="难点分析"><a href="#难点分析" class="headerlink" title="难点分析"></a>难点分析</h3><p>我认为本次实验并不简单，难点主要是管道关闭存在的竞态条件，但是通过对其解决方案的学习可以帮助理解这些问题。同时Shell的实现也需要仔细思考，理解好ELF文件的加载。</p>
-<h3 id="实验体会"><a href="#实验体会" class="headerlink" title="实验体会"></a>实验体会</h3><p>终于完成了操作系统课程的最后一个Lab，顿感身心轻松，通过本学习的学习，我对于操作系统这座大厦如何拔地而起有了更深刻的了解，也不禁为其中的设计智慧而感叹。虽然课程已经结束，但是对于操作系统的学习不会停止，继续努力！</p>
-<h3 id="原创性说明"><a href="#原创性说明" class="headerlink" title="原创性说明"></a>原创性说明</h3><p>本报告为本人原创</p>
+                <h1 id="BUAA-OO-U4总结"><a href="#BUAA-OO-U4总结" class="headerlink" title="BUAA OO U4总结"></a>BUAA OO U4总结</h1><h2 id="正向建模与开发"><a href="#正向建模与开发" class="headerlink" title="正向建模与开发"></a>正向建模与开发</h2><p>本单元以图书馆管理系统为背景，UML为工具，目的在于引导我们体会正向建模与开发的过程。就我个人的体验来说，这是很好的一次架构与开发实践。在本单元第一次作业中设计好的架构帮助我能够很轻松地应对后面作业的迭代开发，能够将一直强调的增量开发和开闭原则等真正实践。<br>在本学期OO四个单元的学习中，一、三单元似乎不太太多对架构进行精心设计，而第二单元重心又在于多线程，所以将正向建模摆到要求上的只有第四单元，通过要求UML作图，将架构放在第一步。我认为架构和开发也是相辅相成的，有一个高屋建瓴的架构能够让开发有条不紊，但是开发也不应该被架构束缚，在实现过程中发现问题也应对架构及时进行调整。</p>
+<h2 id="代码设计与追踪关系"><a href="#代码设计与追踪关系" class="headerlink" title="代码设计与追踪关系"></a>代码设计与追踪关系</h2><p>我认为在本单元的背景下，最能体现代码架构的还是类图，将类内部和类之间的关系设计好就已经成功了一大半。在第一次作业开始时，首先是UML指导程序架构的设计，具体一点就是类的设计和方法的设计；而在后续的迭代过程中，我个人则是根据代码更新类图，绘制状态图和顺序图。我认为这样做也无可厚非，本身最重要的架构已经完成，就没必要再必须要求先画图再编码了。</p>
+<h2 id="引导大模型进行架构"><a href="#引导大模型进行架构" class="headerlink" title="引导大模型进行架构"></a>引导大模型进行架构</h2><p>我尝试了将整个指导书直接喂给大模型，发现其架构效果并不理想，可扩展性很差，只是为了完成指导书中的任务而编码。而经过尝试，我目前认为较好的方法是给予大模型充足的提示词，明确其要完成的任务。<br>而其实这个过程也是一个架构的过程，我们需要将一个复杂任务进行拆分，将小任务交给大模型去完成往往效果会更好。不过相比于自行在脑海中进行架构和设计，我认为利用大模型进行架构是交互式的。可以根据大模型的回复和表现进行下一步的指示，同时其回复也可以为我们提供一些灵感。<br>比如，为了完成这个图书馆管理系统，首先需要设计涉及的类，然后实现类的交互、控制等等。同时要明确向大模型指出，编码过程中要符合面向对象的设计原则，要便于对功能进行扩展。最后利用大模型上下文关联的能力将整个项目进行整合，得到符合要求的设计。我的体会是，不要把大模型想象得很聪明，一定要把提示词写的全面精准，这样才能真正做到利用大模型达到事半功倍的效果</p>
+<h2 id="架构设计思维演进"><a href="#架构设计思维演进" class="headerlink" title="架构设计思维演进"></a>架构设计思维演进</h2><p>在本学习OO的四个单元的学习中，我愈发能感受到架构设计的重要性。<br>首先在第一单元，由于任务和背景本身就具有很强的层次性，我并没有在架构设计上感受到太大的难度，也没有去很重视架构设计。而在第二单元，由于本身多线程的任务就很繁重，而同时对于各个线程的设计又十分重要，第二单元的第一次作业是我本学期花费最多时间和精力进行设计的作业。也就是在第二单元之后，我认识到了架构设计的重要性。但是第三单元不太需要架构设计，甚至不太需要动脑子。第四单元又将架构设计摆在了第一位，这一点我认为是相当好的，能够让我们明确认识到架构的重要。<br>总之，经过四个单元的训练，我对架构设计重要性有了明确的认识，也切身体验了先架构后开发这一模式带来的好处与快感，架构设计的技巧也愈加熟练，未来要继续有意识地对架构设计进行锻炼！</p>
+<h2 id="测试思维演进"><a href="#测试思维演进" class="headerlink" title="测试思维演进"></a>测试思维演进</h2><p>经过一学期强测与互测的毒打，我是深刻体会到了测试的重要性。测试本身就是极其需要敏锐洞察和创造性思维的工作。构造强力的数据点本身就得对要求有着清晰的认识，同时察觉到哪里比较容易出现问题。<br>经过这几个单元的锻炼，我对单元测试、集成测试、边界测试、压力测试等测试方法有了更多的掌握，同时经过评测机的搭建与数据生成，我觉得单纯随机的数据完全不如精心构造的强力数据。但是自动化的测试还是很有必要的，可以大大减轻测试的负担。    </p>
+<p>同时我认为，在编码的过程中始终保持清醒，考虑所有可能出现的状况，迭代时考虑与之前已有代码的关联，这些是很重要的，也与测试思维有着相同的要求。</p>
+<h2 id="收获"><a href="#收获" class="headerlink" title="收获"></a>收获</h2><p>经过一学期OO的学习，我认为我的收获颇多。首先是在技术方面，对Java、Python等编程语言的使用，对多线程、JML、UML等知识的学习和掌握，对层次化设计、SOLID、设计模式、开闭原则的理解，对架构设计的更深认识，对测试、编码的更明确要求，这些都是很宝贵的收获。但是我认为最重要的还是对学习能力的培养和对思维的提高。在繁重的任务下，如何安排自己的时间，如何集中注意力高效完成任务，如何跌倒后爬起，如何处理自己的心态，这些都是在OO课中让我体会颇多的。同时面向对象的思维方式也为我认识世界提供了一个明确的方法论，帮助我更好地去学习、理解这个世界。这些我认为是最弥足珍贵的！<br>最后，感谢课程组、老师、助教们的辛苦付出，没有你们的精心设计，就不会让我在这门精美的课程中有如此收获和成长，向您们致以诚挚感激！</p>
 
                 
               </div>
@@ -403,9 +366,11 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/OS/" class="print-no-link">#OS</a>
+        <a href="/tags/OO/" class="print-no-link">#OO</a>
       
-        <a href="/tags/Lab6/" class="print-no-link">#Lab6</a>
+        <a href="/tags/Java/" class="print-no-link">#Java</a>
+      
+        <a href="/tags/U3/" class="print-no-link">#U3</a>
       
     </div>
   
@@ -417,8 +382,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>【OS】BUAA-OS-Lab6-实验报告</div>
-      <div>http://example.com/2025/06/13/【OS】BUAA-OS-Lab6-实验报告/</div>
+      <div>【OO】BUAA-OO-U4——UML图书管理系统</div>
+      <div>http://example.com/2025/06/15/【OO】BUAA-OO-U4——UML图书管理系统/</div>
     </div>
     <div class="license-meta">
       
@@ -430,7 +395,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年6月13日</div>
+          <div>2025年6月15日</div>
         </div>
       
       
@@ -462,9 +427,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/06/15/%E3%80%90OO%E3%80%91BUAA-OO-U4%E2%80%94%E2%80%94UML%E5%9B%BE%E4%B9%A6%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/" title="【OO】BUAA-OO-U4——UML图书管理系统">
+                      <a href="/2025/06/25/%E3%80%90OS%E3%80%91Shell%E6%8C%91%E6%88%98%E6%80%A7%E4%BB%BB%E5%8A%A1%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/" title="【OS】Shell挑战性任务实验报告">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">【OO】BUAA-OO-U4——UML图书管理系统</span>
+                        <span class="hidden-mobile">【OS】Shell挑战性任务实验报告</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -472,8 +437,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/05/30/%E3%80%90OS%E3%80%91BUAA-OS-Lab5-%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/" title="【OS】BUAA-OS-Lab5-实验报告">
-                        <span class="hidden-mobile">【OS】BUAA-OS-Lab5-实验报告</span>
+                      <a href="/2025/06/13/%E3%80%90OS%E3%80%91BUAA-OS-Lab6-%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/" title="【OS】BUAA-OS-Lab6-实验报告">
+                        <span class="hidden-mobile">【OS】BUAA-OS-Lab6-实验报告</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
